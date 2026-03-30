@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AICE Associate — 5일 합격 커리큘럼</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- BACKGROUND GRID -->
+  <div class="bg-grid"></div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="dot pulse"></span>
+        국가공인 AI 자격증 1호
+      </div>
+      <h1 class="hero-title">
+        <span class="accent">AICE</span> Associate
+        <br />5일 합격 커리큘럼
+      </h1>
+      <p class="hero-sub">파이썬 실기 14문항 · 90분 오픈북 · 합격 기준 80점</p>
+      <div class="hero-meta">
+        <div class="meta-chip"><span class="mono">D-5</span> 남은 시간</div>
+        <div class="meta-chip">시험일 <span class="mono">4월 4일</span></div>
+        <div class="meta-chip chip-green">sklearn + TensorFlow</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- EXAM INFO STRIP -->
+  <section class="info-strip">
+    <div class="container">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">📝</div>
+          <div class="info-label">문항 수</div>
+          <div class="info-value">14문항</div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">⏱</div>
+          <div class="info-label">시험 시간</div>
+          <div class="info-value">90분</div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📖</div>
+          <div class="info-label">시험 방식</div>
+          <div class="info-value">오픈북</div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🎯</div>
+          <div class="info-label">합격 기준</div>
+          <div class="info-value">80점 이상</div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">💻</div>
+          <div class="info-label">사용 언어</div>
+          <div class="info-value">Python</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE NAV -->
+  <section class="timeline-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">5일 학습 로드맵</h2>
+        <p class="section-desc">탭을 클릭해 해당 날의 커리큘럼을 확인하세요</p>
+      </div>
+
+      <div class="day-tabs" id="dayTabs">
+        <button class="day-tab active" data-day="1">
+          <span class="tab-date">3/30</span>
+          <span class="tab-label">Day 1</span>
+          <span class="tab-topic">EDA + 환경세팅</span>
+        </button>
+        <button class="day-tab" data-day="2">
+          <span class="tab-date">3/31</span>
+          <span class="tab-label">Day 2</span>
+          <span class="tab-topic">데이터 전처리</span>
+        </button>
+        <button class="day-tab" data-day="3">
+          <span class="tab-date">4/1</span>
+          <span class="tab-label">Day 3</span>
+          <span class="tab-topic">ML 모델링</span>
+        </button>
+        <button class="day-tab" data-day="4">
+          <span class="tab-date">4/2</span>
+          <span class="tab-label">Day 4</span>
+          <span class="tab-topic">딥러닝</span>
+        </button>
+        <button class="day-tab" data-day="5">
+          <span class="tab-date">4/3</span>
+          <span class="tab-label">Day 5</span>
+          <span class="tab-topic">D-1 최종점검</span>
+        </button>
+      </div>
+
+      <!-- DAY CONTENTS -->
+      <div class="day-contents">
+
+        <!-- ===================== DAY 1 ===================== -->
+        <div class="day-content active" id="day-1">
+          <div class="day-hero">
+            <div class="day-number">01</div>
+            <div class="day-info">
+              <h3 class="day-title">환경 세팅 + EDA 완성</h3>
+              <p class="day-goal">오늘 목표: Pandas + Seaborn으로 데이터 읽고 분석하기</p>
+            </div>
+            <div class="day-tag tag-blue">3월 30일 (오늘)</div>
+          </div>
+
+          <div class="alert alert-info">
+            <span class="alert-icon">💡</span>
+            시험은 오픈북이지만 속도가 관건입니다. 먼저 <strong>aice.study</strong>에서 샘플문항을 확인하고, 시험 환경(Chrome 브라우저, 웹캠)을 세팅하세요.
+          </div>
+
+          <div class="topic-list">
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dbeafe;">⚙️</div>
+                <div class="topic-meta">
+                  <span class="topic-name">시험 환경 점검</span>
+                  <span class="topic-time">30분</span>
+                </div>
+              </div>
+              <p class="topic-desc">aice.study 로그인 → 샘플문항 확인 → 웹캠 / Chrome 브라우저 설정 점검</p>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dbeafe;">📂</div>
+                <div class="topic-meta">
+                  <span class="topic-name">데이터 불러오기 (Pandas)</span>
+                  <span class="topic-time">1시간</span>
+                </div>
+              </div>
+              <p class="topic-desc">CSV / JSON 읽기, DataFrame 기본 조작, merge 함수 완벽 숙지</p>
+              <pre class="code-block"><code><span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+<span class="cm"># 파일 읽기</span>
+df_a = pd.read_json(<span class="str">'data.json'</span>)
+df_b = pd.read_csv(<span class="str">'signal.csv'</span>)
+
+<span class="cm"># 데이터 병합 (시험 단골!)</span>
+df = pd.merge(df_a, df_b, on=<span class="str">'key_col'</span>)
+
+<span class="cm"># 기본 탐색</span>
+df.head()          <span class="cm"># 상위 5행</span>
+df.info()          <span class="cm"># 타입 / 결측치 확인</span>
+df.describe()      <span class="cm"># 기술통계</span>
+df.shape           <span class="cm"># (행, 열) 수</span>
+df.columns         <span class="cm"># 컬럼명 목록</span></code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dbeafe;">📊</div>
+                <div class="topic-meta">
+                  <span class="topic-name">시각화 5종 (Seaborn / Matplotlib)</span>
+                  <span class="topic-time">1.5시간</span>
+                </div>
+              </div>
+              <p class="topic-desc">countplot, jointplot, histplot, boxplot, heatmap — 시험 단골 그래프</p>
+              <pre class="code-block"><code><span class="kw">import</span> seaborn <span class="kw">as</span> sns
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="cm"># 빈도 분포 (범주형)</span>
+sns.countplot(data=df, x=<span class="str">'Address1'</span>)
+plt.show()
+
+<span class="cm"># 두 변수 분포 (연속형)</span>
+sns.jointplot(data=df, x=<span class="str">'Time_Driving'</span>, y=<span class="str">'Speed_Per_Hour'</span>)
+plt.show()
+
+<span class="cm"># 히스토그램</span>
+sns.histplot(data=df, x=<span class="str">'Distance'</span>, bins=20)
+plt.show()
+
+<span class="cm"># 박스플롯 (이상치 확인)</span>
+sns.boxplot(data=df, x=<span class="str">'Weekday'</span>, y=<span class="str">'Speed_Per_Hour'</span>)
+plt.show()</code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dbeafe;">🧪</div>
+                <div class="topic-meta">
+                  <span class="topic-name">샘플문항 1~4번 직접 풀기</span>
+                  <span class="topic-time">1시간</span>
+                </div>
+              </div>
+              <p class="topic-desc">aice.study 공식 샘플문항 → 데이터 읽기 + EDA 파트 직접 코딩 실습</p>
+            </div>
+          </div>
+
+          <div class="alert alert-warn">
+            <span class="alert-icon">⚠️</span>
+            <strong>주의:</strong> 시험 시 답안 셀(# 여기에 답안코드를 작성하세요) 외 다른 셀에 코드 작성하면 채점 안 됨! 변수명 문제에서 지정한 그대로 사용 필수.
+          </div>
+        </div>
+
+        <!-- ===================== DAY 2 ===================== -->
+        <div class="day-content" id="day-2">
+          <div class="day-hero">
+            <div class="day-number">02</div>
+            <div class="day-info">
+              <h3 class="day-title">데이터 전처리 완전 정복</h3>
+              <p class="day-goal">시험 시간의 50% 이상을 차지하는 가장 중요한 파트</p>
+            </div>
+            <div class="day-tag tag-green">3월 31일</div>
+          </div>
+
+          <div class="alert alert-success">
+            <span class="alert-icon">🔥</span>
+            합격자들이 공통적으로 <strong>"전처리에서 시간을 다 썼다"</strong>고 합니다. 5일 중 오늘이 가장 중요합니다. 반복 연습하세요.
+          </div>
+
+          <div class="topic-list">
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dcfce7;">🔍</div>
+                <div class="topic-meta">
+                  <span class="topic-name">결측치 처리</span>
+                  <span class="topic-badge badge-red">시험 필수</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="cm"># 결측치 확인</span>
+df.isnull().sum()
+
+<span class="cm"># 제거</span>
+df = df.dropna()
+
+<span class="cm"># 대체 (수치형)</span>
+df[<span class="str">'col'</span>] = df[<span class="str">'col'</span>].fillna(df[<span class="str">'col'</span>].mean())
+df[<span class="str">'col'</span>] = df[<span class="str">'col'</span>].fillna(df[<span class="str">'col'</span>].median())
+
+<span class="cm"># 대체 (범주형)</span>
+df[<span class="str">'col'</span>] = df[<span class="str">'col'</span>].fillna(df[<span class="str">'col'</span>].mode()[<span class="num">0</span>])</code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dcfce7;">✂️</div>
+                <div class="topic-meta">
+                  <span class="topic-name">이상치 / 특정 행 제거</span>
+                  <span class="topic-badge badge-red">시험 필수</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="cm"># 특정 값 행 제거 (예: '-' 제거)</span>
+df = df[df[<span class="str">'Address1'</span>] != <span class="str">'-'</span>]
+
+<span class="cm"># 조건 필터링</span>
+df = df[df[<span class="str">'value'</span>] > <span class="num">0</span>]
+
+<span class="cm"># 중복 제거</span>
+df = df.drop_duplicates()
+
+<span class="cm"># 인덱스 재정렬</span>
+df = df.reset_index(drop=<span class="kw">True</span>)</code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dcfce7;">🔄</div>
+                <div class="topic-meta">
+                  <span class="topic-name">인코딩 (범주형 → 숫자)</span>
+                  <span class="topic-badge badge-red">시험 필수</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> LabelEncoder
+
+<span class="cm"># Label Encoding (이진/순서 있는 범주)</span>
+le = LabelEncoder()
+df[<span class="str">'col_enc'</span>] = le.fit_transform(df[<span class="str">'col'</span>])
+
+<span class="cm"># One-Hot Encoding (명목형 범주)</span>
+df = pd.get_dummies(df, columns=[<span class="str">'col'</span>], drop_first=<span class="kw">True</span>)</code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dcfce7;">📏</div>
+                <div class="topic-meta">
+                  <span class="topic-name">스케일링</span>
+                  <span class="topic-badge badge-red">시험 필수</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler, MinMaxScaler
+
+<span class="cm"># StandardScaler: 평균0, 표준편차1 (정규 분포 가정)</span>
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)  <span class="cm"># test는 transform만!</span>
+
+<span class="cm"># MinMaxScaler: 0~1 범위</span>
+scaler2 = MinMaxScaler()
+X_scaled2 = scaler2.fit_transform(X_train)</code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#dcfce7;">✂️</div>
+                <div class="topic-meta">
+                  <span class="topic-name">train / test 분할</span>
+                  <span class="topic-badge badge-red">시험 필수</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+
+X = df.drop(<span class="str">'target'</span>, axis=<span class="num">1</span>)
+y = df[<span class="str">'target'</span>]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=<span class="num">0.2</span>,       <span class="cm"># 20%를 테스트로</span>
+    random_state=<span class="num">42</span>    <span class="cm"># 재현성 고정</span>
+)</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================== DAY 3 ===================== -->
+        <div class="day-content" id="day-3">
+          <div class="day-hero">
+            <div class="day-number">03</div>
+            <div class="day-info">
+              <h3 class="day-title">머신러닝 모델링 (sklearn)</h3>
+              <p class="day-goal">분류 · 회귀 알고리즘과 평가지표 완벽 마스터</p>
+            </div>
+            <div class="day-tag tag-amber">4월 1일</div>
+          </div>
+
+          <div class="alert alert-info">
+            <span class="alert-icon">💡</span>
+            모델 패턴은 항상 동일합니다: <strong>import → 객체 생성 → fit → predict → 평가</strong>. 이 흐름을 손에 익혀두세요.
+          </div>
+
+          <div class="topic-list">
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#fef3c7;">🌳</div>
+                <div class="topic-meta">
+                  <span class="topic-name">분류 모델 3종 세트</span>
+                  <span class="topic-badge badge-amber">핵심</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+<span class="kw">from</span> sklearn.tree <span class="kw">import</span> DecisionTreeClassifier
+<span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LogisticRegression
+
+<span class="cm"># 랜덤 포레스트 (가장 많이 출제)</span>
+model = RandomForestClassifier(n_estimators=<span class="num">100</span>, random_state=<span class="num">42</span>)
+model.fit(X_train, y_train)
+pred = model.predict(X_test)
+
+<span class="cm"># 결정 트리</span>
+model2 = DecisionTreeClassifier(random_state=<span class="num">42</span>)
+model2.fit(X_train, y_train)
+
+<span class="cm"># 로지스틱 회귀 (이진 분류)</span>
+model3 = LogisticRegression(random_state=<span class="num">42</span>)
+model3.fit(X_train, y_train)</code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#fef3c7;">📈</div>
+                <div class="topic-meta">
+                  <span class="topic-name">회귀 모델</span>
+                  <span class="topic-badge badge-amber">핵심</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestRegressor
+<span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LinearRegression
+
+model = RandomForestRegressor(n_estimators=<span class="num">100</span>, random_state=<span class="num">42</span>)
+model.fit(X_train, y_train)
+pred = model.predict(X_test)</code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#fef3c7;">🎯</div>
+                <div class="topic-meta">
+                  <span class="topic-name">평가지표 — 반드시 암기</span>
+                  <span class="topic-badge badge-red">시험 단골</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="kw">from</span> sklearn.metrics <span class="kw">import</span> (
+    accuracy_score, f1_score,
+    precision_score, recall_score,   <span class="cm"># 분류용</span>
+    mean_squared_error,
+    mean_absolute_error, r2_score    <span class="cm"># 회귀용</span>
+)
+
+<span class="cm"># 분류 평가</span>
+acc  = accuracy_score(y_test, pred)
+f1   = f1_score(y_test, pred, average=<span class="str">'weighted'</span>)
+prec = precision_score(y_test, pred, average=<span class="str">'weighted'</span>)
+rec  = recall_score(y_test, pred, average=<span class="str">'weighted'</span>)
+
+<span class="cm"># 회귀 평가</span>
+mse  = mean_squared_error(y_test, pred)
+rmse = mse ** <span class="num">0.5</span>   <span class="cm"># RMSE = MSE의 제곱근</span>
+mae  = mean_absolute_error(y_test, pred)
+r2   = r2_score(y_test, pred)</code></pre>
+            </div>
+
+            <div class="tip-box">
+              <div class="tip-title">📌 분류 vs 회귀 구분법</div>
+              <div class="tip-content">
+                <div class="tip-row"><span class="tip-label">분류</span> 이산값 예측 (합격/불합격, 종류) → accuracy, f1, precision, recall</div>
+                <div class="tip-row"><span class="tip-label">회귀</span> 연속값 예측 (가격, 시간, 점수) → MSE, RMSE, MAE, R²</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================== DAY 4 ===================== -->
+        <div class="day-content" id="day-4">
+          <div class="day-hero">
+            <div class="day-number">04</div>
+            <div class="day-info">
+              <h3 class="day-title">딥러닝 모델링 (TensorFlow / Keras)</h3>
+              <p class="day-goal">신경망 구성 · 컴파일 · 학습 · 평가 완성</p>
+            </div>
+            <div class="day-tag tag-red">4월 2일</div>
+          </div>
+
+          <div class="topic-list">
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#fee2e2;">🧠</div>
+                <div class="topic-meta">
+                  <span class="topic-name">회귀 딥러닝 모델</span>
+                  <span class="topic-badge badge-red">핵심</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="kw">import</span> tensorflow <span class="kw">as</span> tf
+<span class="kw">from</span> tensorflow <span class="kw">import</span> keras
+
+model = keras.Sequential([
+    keras.layers.Dense(<span class="num">64</span>, activation=<span class="str">'relu'</span>, input_shape=(n_features,)),
+    keras.layers.Dense(<span class="num">32</span>, activation=<span class="str">'relu'</span>),
+    keras.layers.Dense(<span class="num">1</span>)         <span class="cm"># 회귀: 출력 노드 1개, activation 없음</span>
+])
+
+model.compile(
+    optimizer=<span class="str">'adam'</span>,
+    loss=<span class="str">'mse'</span>,
+    metrics=[<span class="str">'mae'</span>]
+)
+
+history = model.fit(
+    X_train, y_train,
+    epochs=<span class="num">50</span>,
+    batch_size=<span class="num">32</span>,
+    validation_split=<span class="num">0.2</span>,
+    verbose=<span class="num">1</span>
+)
+
+loss, mae = model.evaluate(X_test, y_test)</code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#fee2e2;">🧠</div>
+                <div class="topic-meta">
+                  <span class="topic-name">분류 딥러닝 모델</span>
+                  <span class="topic-badge badge-red">핵심</span>
+                </div>
+              </div>
+              <pre class="code-block"><code>model = keras.Sequential([
+    keras.layers.Dense(<span class="num">64</span>, activation=<span class="str">'relu'</span>, input_shape=(n_features,)),
+    keras.layers.Dense(<span class="num">32</span>, activation=<span class="str">'relu'</span>),
+    <span class="cm"># 다중 분류: softmax + n_classes개 뉴런</span>
+    keras.layers.Dense(n_classes, activation=<span class="str">'softmax'</span>)
+    <span class="cm"># 이진 분류: sigmoid + 1개 뉴런</span>
+    <span class="cm"># keras.layers.Dense(1, activation='sigmoid')</span>
+])
+
+model.compile(
+    optimizer=<span class="str">'adam'</span>,
+    loss=<span class="str">'sparse_categorical_crossentropy'</span>,  <span class="cm"># 다중분류</span>
+    <span class="cm"># loss='binary_crossentropy',              # 이진분류</span>
+    metrics=[<span class="str">'accuracy'</span>]
+)
+
+<span class="cm"># 예측</span>
+pred_prob = model.predict(X_test)
+pred = pred_prob.argmax(axis=<span class="num">1</span>)  <span class="cm"># 확률 → 클래스 인덱스</span></code></pre>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#fee2e2;">📉</div>
+                <div class="topic-meta">
+                  <span class="topic-name">학습 곡선 시각화</span>
+                  <span class="topic-badge badge-amber">종종 출제</span>
+                </div>
+              </div>
+              <pre class="code-block"><code><span class="cm"># loss 곡선 (과적합 여부 확인)</span>
+plt.figure(figsize=(<span class="num">8</span>, <span class="num">4</span>))
+plt.plot(history.history[<span class="str">'loss'</span>], label=<span class="str">'train loss'</span>)
+plt.plot(history.history[<span class="str">'val_loss'</span>], label=<span class="str">'val loss'</span>)
+plt.xlabel(<span class="str">'Epoch'</span>)
+plt.ylabel(<span class="str">'Loss'</span>)
+plt.legend()
+plt.show()</code></pre>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-title">⚠️ 딥러닝 자주 실수하는 포인트</div>
+            <div class="tip-content">
+              <div class="tip-row"><span class="tip-label">input_shape</span> 첫 번째 레이어에만 명시</div>
+              <div class="tip-row"><span class="tip-label">활성함수</span> 은닉층 relu / 출력층 sigmoid(이진) or softmax(다중)</div>
+              <div class="tip-row"><span class="tip-label">loss</span> 회귀 mse / 이진 binary_crossentropy / 다중 sparse_categorical_crossentropy</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================== DAY 5 ===================== -->
+        <div class="day-content" id="day-5">
+          <div class="day-hero">
+            <div class="day-number">05</div>
+            <div class="day-info">
+              <h3 class="day-title">D-1 최종 점검 + 실전 전략</h3>
+              <p class="day-goal">새로운 내용 금지 · 실수 줄이기와 시간 배분에 집중</p>
+            </div>
+            <div class="day-tag tag-purple">4월 3일 (D-1)</div>
+          </div>
+
+          <div class="alert alert-success">
+            <span class="alert-icon">✨</span>
+            오늘은 새로운 것을 배우지 마세요. 지금까지 공부한 내용을 빠르게 복습하고, 실수 패턴을 줄이는 것이 목표입니다.
+          </div>
+
+          <div class="topic-list">
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#ede9fe;">✅</div>
+                <div class="topic-meta">
+                  <span class="topic-name">D-1 체크리스트</span>
+                </div>
+              </div>
+              <div class="checklist">
+                <label class="check-item"><input type="checkbox" /><span>샘플문항 전체 재풀이 (aice.study 공식 문제)</span></label>
+                <label class="check-item"><input type="checkbox" /><span>내 실수 패턴 정리 — 틀린 부분 위주로 복습</span></label>
+                <label class="check-item"><input type="checkbox" /><span>자주 쓰는 코드 스니펫 정리 (북마크 / 메모)</span></label>
+                <label class="check-item"><input type="checkbox" /><span>변수명 실수 유의 — 문제 지정 변수명 그대로 사용</span></label>
+                <label class="check-item"><input type="checkbox" /><span>답안 셀 위치 확인 습관화 (임시저장 버튼 자주 클릭)</span></label>
+                <label class="check-item"><input type="checkbox" /><span>웹캠 각도 / 조명 사전 점검 완료</span></label>
+                <label class="check-item"><input type="checkbox" /><span>시험 당일 얼굴 인식 불일치 시 조명 조절 요령 숙지</span></label>
+                <label class="check-item"><input type="checkbox" /><span>Chrome 브라우저 최신 버전 확인</span></label>
+              </div>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#ede9fe;">⏱</div>
+                <div class="topic-meta">
+                  <span class="topic-name">90분 시간 배분 전략</span>
+                </div>
+              </div>
+              <div class="time-plan">
+                <div class="time-row">
+                  <div class="time-label">📂 데이터 로딩 + EDA</div>
+                  <div class="time-bar-wrap">
+                    <div class="time-bar" style="width:17%;background:#3b82f6;"></div>
+                  </div>
+                  <div class="time-value">약 15분 (문항 1~3)</div>
+                </div>
+                <div class="time-row">
+                  <div class="time-label">🔄 전처리</div>
+                  <div class="time-bar-wrap">
+                    <div class="time-bar" style="width:39%;background:#f59e0b;"></div>
+                  </div>
+                  <div class="time-value">약 35분 (문항 4~8)</div>
+                </div>
+                <div class="time-row">
+                  <div class="time-label">🌳 ML 모델링</div>
+                  <div class="time-bar-wrap">
+                    <div class="time-bar" style="width:22%;background:#10b981;"></div>
+                  </div>
+                  <div class="time-value">약 20분 (문항 9~11)</div>
+                </div>
+                <div class="time-row">
+                  <div class="time-label">🧠 딥러닝 + 마무리</div>
+                  <div class="time-bar-wrap">
+                    <div class="time-bar" style="width:22%;background:#8b5cf6;"></div>
+                  </div>
+                  <div class="time-value">약 20분 (문항 12~14)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="topic-item">
+              <div class="topic-header">
+                <div class="topic-icon-wrap" style="background:#ede9fe;">🔗</div>
+                <div class="topic-meta">
+                  <span class="topic-name">시험 당일 허용 오픈북 사이트</span>
+                </div>
+              </div>
+              <div class="link-list">
+                <a href="https://aice.study" target="_blank" class="ref-link">aice.study — 공식 샘플문항</a>
+                <a href="https://scikit-learn.org/stable/modules/classes.html" target="_blank" class="ref-link">scikit-learn 공식 문서</a>
+                <a href="https://www.tensorflow.org/api_docs/python/tf/keras" target="_blank" class="ref-link">TensorFlow / Keras API</a>
+                <a href="https://pandas.pydata.org/docs/reference/" target="_blank" class="ref-link">Pandas 공식 레퍼런스</a>
+                <a href="https://seaborn.pydata.org/api.html" target="_blank" class="ref-link">Seaborn API</a>
+              </div>
+              <p style="margin-top:10px;font-size:13px;color:#9ca3af;">* 허용 사이트는 시험 당일 공지 기준 — 반드시 사전 확인</p>
+            </div>
+          </div>
+
+          <div class="alert alert-warn">
+            <span class="alert-icon">🎯</span>
+            4월 4일 시험 당일은 새로운 학습 없이 컨디션 관리에 집중하세요. 합격 컷 80점 — 완벽하지 않아도 됩니다!
+          </div>
+        </div>
+
+      </div><!-- /day-contents -->
+    </div>
+  </section>
+
+  <!-- QUICK REF CHEATSHEET -->
+  <section class="cheatsheet-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">📌 핵심 코드 치트시트</h2>
+        <p class="section-desc">시험 중 빠르게 참고할 수 있는 핵심 패턴 모음</p>
+      </div>
+      <div class="cheat-grid">
+        <div class="cheat-card">
+          <div class="cheat-title">데이터 읽기</div>
+          <pre class="code-block sm"><code>pd.read_csv(<span class="str">'file.csv'</span>)
+pd.read_json(<span class="str">'file.json'</span>)
+pd.merge(df_a, df_b, on=<span class="str">'key'</span>)</code></pre>
+        </div>
+        <div class="cheat-card">
+          <div class="cheat-title">결측치</div>
+          <pre class="code-block sm"><code>df.isnull().sum()
+df.fillna(df.mean())
+df.dropna()</code></pre>
+        </div>
+        <div class="cheat-card">
+          <div class="cheat-title">인코딩</div>
+          <pre class="code-block sm"><code>LabelEncoder().fit_transform(df[<span class="str">'col'</span>])
+pd.get_dummies(df, columns=[<span class="str">'col'</span>])</code></pre>
+        </div>
+        <div class="cheat-card">
+          <div class="cheat-title">스케일링</div>
+          <pre class="code-block sm"><code>StandardScaler().fit_transform(X)
+MinMaxScaler().fit_transform(X)</code></pre>
+        </div>
+        <div class="cheat-card">
+          <div class="cheat-title">분류 평가</div>
+          <pre class="code-block sm"><code>accuracy_score(y, pred)
+f1_score(y, pred, average=<span class="str">'weighted'</span>)</code></pre>
+        </div>
+        <div class="cheat-card">
+          <div class="cheat-title">회귀 평가</div>
+          <pre class="code-block sm"><code>mean_squared_error(y, pred)
+r2_score(y, pred)
+mse ** <span class="num">0.5</span>  <span class="cm"># RMSE</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand"><span class="accent">AICE</span> Study Guide</div>
+        <div class="footer-note">시험 전 반드시 aice.study 공식 샘플문항 직접 풀기 · 합격 기준 80점 · 합격을 응원합니다 🎉</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

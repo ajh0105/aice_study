@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AICE Associate 치트시트</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ── TOP HEADER ── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-title">
+      <span class="badge">AICE Associate</span>
+      <h1>최종 치트시트</h1>
+      <p class="header-sub">14문제 · 100분 · 70점 합격 | D-2 핵심 정복</p>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="다크/라이트 모드">🌙</button>
+  </div>
+
+  <!-- STAT CHIPS -->
+  <div class="stat-bar">
+    <div class="stat-chip"><span class="stat-num">14</span><span class="stat-label">문항</span></div>
+    <div class="stat-chip"><span class="stat-num">100</span><span class="stat-label">분</span></div>
+    <div class="stat-chip accent"><span class="stat-num">70+</span><span class="stat-label">점 합격</span></div>
+    <div class="stat-chip"><span class="stat-num">CBT</span><span class="stat-label">방식</span></div>
+  </div>
+</header>
+
+<!-- ── TAB NAV ── -->
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="strategy">📋 전략</button>
+  <button class="tab-btn" data-tab="preprocess">🔧 전처리</button>
+  <button class="tab-btn" data-tab="model">🤖 모델</button>
+  <button class="tab-btn" data-tab="deeplearning">🧠 딥러닝</button>
+  <button class="tab-btn" data-tab="pitfalls">⚠️ 함정</button>
+  <button class="tab-btn" data-tab="plan">📅 전략</button>
+</nav>
+
+<!-- ── SEARCH BAR ── -->
+<div class="search-wrap">
+  <input class="search-input" id="searchInput" type="text" placeholder="🔍  코드 검색... (예: GridSearch, Dropout)" />
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<main class="main-content">
+
+<!-- ══════════════════════════════════════
+     TAB 1: 문제 유형별 전략
+══════════════════════════════════════ -->
+<section class="tab-panel active" id="tab-strategy">
+  <h2 class="section-title">문제 유형별 접근 전략</h2>
+
+  <div class="strategy-grid" id="strategyGrid">
+
+    <div class="sq-card" data-q="1">
+      <div class="sq-header">
+        <span class="q-num">Q1</span>
+        <span class="q-type">Import & 데이터 로드</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ <code>pd.read_csv()</code> 경로 확인, <code>shape/info/head</code> 출력</p>
+        <p class="sq-warn">⚠️ 경로 오타 주의 — <code>../data/파일명.csv</code></p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="2">
+      <div class="sq-header">
+        <span class="q-num">Q2</span>
+        <span class="q-type">데이터 탐색 (EDA)</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ <code>describe()</code>, <code>isnull().sum()</code>, <code>value_counts()</code></p>
+        <p class="sq-warn">⚠️ 결측치 수 반드시 확인</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="3">
+      <div class="sq-header">
+        <span class="q-num">Q3</span>
+        <span class="q-type">시각화 (seaborn)</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ <code>histplot / boxplot / heatmap / countplot</code></p>
+        <p class="sq-warn">⚠️ <code>plt.show()</code> 호출 잊지 말기</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="4">
+      <div class="sq-header">
+        <span class="q-num">Q4</span>
+        <span class="q-type">결측치 처리</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ <code>fillna(median/mode)</code>, <code>dropna()</code></p>
+        <p class="sq-warn">⚠️ 수치형→median, 범주형→mode</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="5">
+      <div class="sq-header">
+        <span class="q-num">Q5</span>
+        <span class="q-type">이상치 처리</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ IQR 방식, <code>clip()</code> 또는 행 제거</p>
+        <p class="sq-warn">⚠️ IQR = Q3-Q1, fence = 1.5×IQR</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="6">
+      <div class="sq-header">
+        <span class="q-num">Q6</span>
+        <span class="q-type">인코딩</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ <code>pd.get_dummies()</code> 또는 <code>LabelEncoder</code></p>
+        <p class="sq-warn">⚠️ 이진→LabelEncoder, 다중→get_dummies</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="7">
+      <div class="sq-header">
+        <span class="q-num">Q7</span>
+        <span class="q-type">피처/타겟 분리 & 분할</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ <code>X=df.drop(target)</code>, <code>train_test_split</code></p>
+        <p class="sq-warn">⚠️ <code>test_size=0.2, random_state=42, stratify=y</code></p>
+      </div>
+    </div>
+
+    <div class="sq-card highlight" data-q="8">
+      <div class="sq-header">
+        <span class="q-num">Q8</span>
+        <span class="q-type">스케일링 🔥 핵심</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ train: <code>fit_transform()</code> / test: <code>transform()</code>만!</p>
+        <p class="sq-warn">⚠️ test에 fit_transform → 데이터 누출 발생!</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="9">
+      <div class="sq-header">
+        <span class="q-num">Q9</span>
+        <span class="q-type">머신러닝 모델 학습</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ RandomForest / GradientBoosting / LogisticRegression</p>
+        <p class="sq-warn">⚠️ <code>clf.fit(X_train_s, y_train)</code></p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="10">
+      <div class="sq-header">
+        <span class="q-num">Q10</span>
+        <span class="q-type">모델 평가</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ 분류: accuracy + AUC / 회귀: RMSE + R²</p>
+        <p class="sq-warn">⚠️ AUC: <code>predict_proba[:,1]</code> 사용!</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="11">
+      <div class="sq-header">
+        <span class="q-num">Q11</span>
+        <span class="q-type">하이퍼파라미터 튜닝</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ <code>GridSearchCV(estimator, param_grid, cv=5)</code></p>
+        <p class="sq-warn">⚠️ <code>best_params_</code>, <code>best_score_</code> 출력</p>
+      </div>
+    </div>
+
+    <div class="sq-card highlight" data-q="12">
+      <div class="sq-header">
+        <span class="q-num">Q12</span>
+        <span class="q-type">딥러닝 모델 구성 🔥</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ Sequential → Dense → compile → fit</p>
+        <p class="sq-warn">⚠️ 이진→sigmoid, 다중→softmax, 회귀→linear(없음)</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="13">
+      <div class="sq-header">
+        <span class="q-num">Q13</span>
+        <span class="q-type">딥러닝 성능 향상</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ Dropout, EarlyStopping, BatchNormalization</p>
+        <p class="sq-warn">⚠️ <code>validation_split=0.2</code> 반드시 설정</p>
+      </div>
+    </div>
+
+    <div class="sq-card" data-q="14">
+      <div class="sq-header">
+        <span class="q-num">Q14</span>
+        <span class="q-type">예측 & 최종 제출</span>
+      </div>
+      <div class="sq-body">
+        <p class="sq-check">✅ <code>predict()</code> / <code>predict_proba()[:,1]</code></p>
+        <p class="sq-warn">⚠️ 제출 컬럼명 확인 필수!</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TAB 2: 전처리 코드
+══════════════════════════════════════ -->
+<section class="tab-panel" id="tab-preprocess">
+  <h2 class="section-title">전처리 핵심 코드</h2>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">📦 Import 완전판</span>
+      <button class="copy-btn" data-target="code-import">복사</button>
+    </div>
+    <pre class="code-block" id="code-import"><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import (accuracy_score, roc_auc_score, f1_score,
+    mean_squared_error, r2_score, classification_report)
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
+from tensorflow.keras.callbacks import EarlyStopping</code></pre>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">🔍 EDA 기본 패턴</span>
+      <button class="copy-btn" data-target="code-eda">복사</button>
+    </div>
+    <pre class="code-block" id="code-eda"><code>df = pd.read_csv('../data/파일명.csv')
+print(df.shape)           # (rows, cols)
+print(df.info())          # dtype + 결측치
+print(df.describe())      # 통계량
+print(df.isnull().sum())  # 결측치 수
+print(df['target'].value_counts())  # 클래스 분포</code></pre>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">🩹 결측치 처리</span>
+      <button class="copy-btn" data-target="code-missing">복사</button>
+    </div>
+    <pre class="code-block" id="code-missing"><code># 수치형 → 중앙값
+for col in df.select_dtypes(include='number').columns:
+    df[col].fillna(df[col].median(), inplace=True)
+
+# 범주형 → 최빈값
+for col in df.select_dtypes(include='object').columns:
+    df[col].fillna(df[col].mode()[0], inplace=True)</code></pre>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">🏷️ 인코딩</span>
+      <button class="copy-btn" data-target="code-encode">복사</button>
+    </div>
+    <pre class="code-block" id="code-encode"><code># 방법1: get_dummies (원-핫 인코딩)
+df = pd.get_dummies(df, drop_first=True)
+
+# 방법2: LabelEncoder
+le = LabelEncoder()
+df['col'] = le.fit_transform(df['col'])
+
+# 방법3: map (이진 직접 매핑)
+df['gender'] = df['gender'].map({'M': 1, 'F': 0})</code></pre>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">✂️ 피처/타겟 분리 & 분할</span>
+      <button class="copy-btn" data-target="code-split">복사</button>
+    </div>
+    <pre class="code-block" id="code-split"><code>X = df.drop(columns=['target'])
+y = df['target']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y)
+# ※ 회귀는 stratify 제거!</code></pre>
+  </div>
+
+  <div class="code-section warn-section">
+    <div class="code-header">
+      <span class="code-label">⚖️ 스케일링 ⚠️ 가장 중요!</span>
+      <button class="copy-btn" data-target="code-scale">복사</button>
+    </div>
+    <pre class="code-block" id="code-scale"><code>scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)  # fit + transform
+X_test_s  = scaler.transform(X_test)       # transform만!!
+
+# ❌ 절대 금지: X_test_s = scaler.fit_transform(X_test)
+# → test에 fit 하면 데이터 누출 발생!</code></pre>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">📊 시각화 패턴</span>
+      <button class="copy-btn" data-target="code-viz">복사</button>
+    </div>
+    <pre class="code-block" id="code-viz"><code># 분포 확인
+sns.histplot(df['col'], kde=True); plt.show()
+sns.boxplot(x='target', y='col', data=df); plt.show()
+
+# 상관관계 히트맵
+corr = df.corr(numeric_only=True)
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm')
+plt.tight_layout(); plt.show()
+
+# 범주형 분포
+sns.countplot(x='target', data=df); plt.show()</code></pre>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TAB 3: 머신러닝 모델
+══════════════════════════════════════ -->
+<section class="tab-panel" id="tab-model">
+  <h2 class="section-title">머신러닝 모델 & 평가</h2>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">🎯 분류 모델 학습 & 평가</span>
+      <button class="copy-btn" data-target="code-clf">복사</button>
+    </div>
+    <pre class="code-block" id="code-clf"><code>clf = RandomForestClassifier(n_estimators=100, random_state=42)
+clf.fit(X_train_s, y_train)
+y_pred = clf.predict(X_test_s)
+y_prob = clf.predict_proba(X_test_s)[:, 1]
+
+print('Accuracy:', accuracy_score(y_test, y_pred))
+print('AUC:     ', roc_auc_score(y_test, y_prob))
+print('F1:      ', f1_score(y_test, y_pred))
+print(classification_report(y_test, y_pred))</code></pre>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">📈 회귀 모델 학습 & 평가</span>
+      <button class="copy-btn" data-target="code-reg">복사</button>
+    </div>
+    <pre class="code-block" id="code-reg"><code>reg = RandomForestRegressor(n_estimators=100, random_state=42)
+reg.fit(X_train_s, y_train)
+y_pred = reg.predict(X_test_s)
+
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2   = r2_score(y_test, y_pred)
+print(f'RMSE: {rmse:.4f}, R2: {r2:.4f}')</code></pre>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">🔎 GridSearchCV 하이퍼파라미터 튜닝</span>
+      <button class="copy-btn" data-target="code-grid">복사</button>
+    </div>
+    <pre class="code-block" id="code-grid"><code>param_grid = {
+    'n_estimators': [100, 200],
+    'max_depth': [3, 5, None],
+}
+gs = GridSearchCV(clf, param_grid, cv=5, scoring='roc_auc', n_jobs=-1)
+gs.fit(X_train_s, y_train)
+print('Best params:', gs.best_params_)
+print('Best score: ', gs.best_score_)
+best_model = gs.best_estimator_</code></pre>
+  </div>
+
+  <!-- 평가지표 표 -->
+  <h3 class="subsection-title">📏 평가지표 정리</h3>
+  <div class="table-wrap">
+    <table class="info-table">
+      <thead>
+        <tr><th>지표</th><th>코드</th><th>용도</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Accuracy</td><td><code>accuracy_score(y_test, y_pred)</code></td><td>균형 데이터 분류</td></tr>
+        <tr><td>AUC-ROC</td><td><code>roc_auc_score(y_test, y_prob)</code></td><td>불균형 이진 분류</td></tr>
+        <tr><td>F1-Score</td><td><code>f1_score(y_test, y_pred)</code></td><td>불균형 분류</td></tr>
+        <tr><td>RMSE</td><td><code>np.sqrt(mean_squared_error(y, yp))</code></td><td>회귀 (낮을수록 좋음)</td></tr>
+        <tr><td>R²</td><td><code>r2_score(y_test, y_pred)</code></td><td>회귀 (1에 가까울수록 좋음)</td></tr>
+        <tr><td>MAE</td><td><code>mean_absolute_error(y_test, y_pred)</code></td><td>이상치 강건 회귀</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">⚖️ 클래스 불균형 처리</span>
+      <button class="copy-btn" data-target="code-imbalance">복사</button>
+    </div>
+    <pre class="code-block" id="code-imbalance"><code># 방법1: class_weight='balanced'
+clf = RandomForestClassifier(class_weight='balanced', random_state=42)
+
+# 방법2: compute_class_weight
+from sklearn.utils.class_weight import compute_class_weight
+cw = compute_class_weight('balanced', classes=np.unique(y_train), y=y_train)
+cw_dict = dict(enumerate(cw))
+
+# 방법3: 예측 임계값 조정
+threshold = 0.3  # 기본 0.5 대신 낮춰서 소수 클래스 더 잘 잡기
+y_pred = (y_prob >= threshold).astype(int)</code></pre>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TAB 4: 딥러닝
+══════════════════════════════════════ -->
+<section class="tab-panel" id="tab-deeplearning">
+  <h2 class="section-title">딥러닝 (Keras) 완전 정복</h2>
+
+  <!-- 딥러닝 3가지 유형 비교 -->
+  <h3 class="subsection-title">🧠 유형별 핵심 비교 — 반드시 암기!</h3>
+  <div class="table-wrap">
+    <table class="info-table dl-table">
+      <thead>
+        <tr><th>유형</th><th>출력층 활성화</th><th>loss</th><th>metrics</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td><strong>이진 분류</strong></td>
+          <td><code>sigmoid</code> (units=1)</td>
+          <td><code>binary_crossentropy</code></td>
+          <td><code>['accuracy']</code></td>
+        </tr>
+        <tr>
+          <td><strong>다중 분류</strong></td>
+          <td><code>softmax</code> (units=클래스수)</td>
+          <td><code>sparse_categorical_crossentropy</code></td>
+          <td><code>['accuracy']</code></td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>회귀</strong></td>
+          <td><code>linear</code> / 없음 (units=1)</td>
+          <td><code>mse</code></td>
+          <td><code>['mae']</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">🔵 이진 분류 딥러닝 전체 코드</span>
+      <button class="copy-btn" data-target="code-dl-binary">복사</button>
+    </div>
+    <pre class="code-block" id="code-dl-binary"><code>model = Sequential([
+    Dense(128, activation='relu', input_shape=(X_train_s.shape[1],)),
+    Dropout(0.3),
+    Dense(64, activation='relu'),
+    Dropout(0.2),
+    Dense(1, activation='sigmoid')   # 이진 분류
+])
+
+model.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+es = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+
+history = model.fit(
+    X_train_s, y_train,
+    epochs=100, batch_size=32,
+    validation_split=0.2,
+    callbacks=[es], verbose=0
+)
+
+y_prob = model.predict(X_test_s).flatten()
+y_pred = (y_prob >= 0.5).astype(int)
+print('AUC:', roc_auc_score(y_test, y_prob))
+print('Acc:', accuracy_score(y_test, y_pred))</code></pre>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">🟢 회귀 딥러닝 전체 코드</span>
+      <button class="copy-btn" data-target="code-dl-reg">복사</button>
+    </div>
+    <pre class="code-block" id="code-dl-reg"><code>model = Sequential([
+    Dense(128, activation='relu', input_shape=(X_train_s.shape[1],)),
+    Dropout(0.3),
+    Dense(64, activation='relu'),
+    Dense(1)   # 회귀: 활성화 없음 (linear)
+])
+
+model.compile(optimizer='adam', loss='mse', metrics=['mae'])
+
+es = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+
+history = model.fit(
+    X_train_s, y_train,
+    epochs=100, batch_size=32,
+    validation_split=0.2,
+    callbacks=[es], verbose=0
+)
+
+y_pred = model.predict(X_test_s).flatten()
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2   = r2_score(y_test, y_pred)
+print(f'RMSE: {rmse:.4f}, R2: {r2:.4f}')</code></pre>
+  </div>
+
+  <h3 class="subsection-title">⚡ 성능 향상 기법</h3>
+  <div class="table-wrap">
+    <table class="info-table">
+      <thead>
+        <tr><th>기법</th><th>코드</th><th>효과</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Dropout</td><td><code>Dropout(0.3)</code></td><td>과적합 방지</td></tr>
+        <tr><td>EarlyStopping</td><td><code>EarlyStopping(patience=10, restore_best_weights=True)</code></td><td>최적 가중치 복원</td></tr>
+        <tr><td>BatchNorm</td><td><code>BatchNormalization()</code></td><td>학습 안정화</td></tr>
+        <tr><td>Learning Rate</td><td><code>Adam(learning_rate=0.001)</code></td><td>기본값 권장</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-label">⚖️ 딥러닝 클래스 불균형 처리</span>
+      <button class="copy-btn" data-target="code-dl-imbalance">복사</button>
+    </div>
+    <pre class="code-block" id="code-dl-imbalance"><code>from sklearn.utils.class_weight import compute_class_weight
+cw = compute_class_weight('balanced', classes=np.unique(y_train), y=y_train)
+cw_dict = dict(enumerate(cw))
+
+model.fit(X_train_s, y_train,
+          class_weight=cw_dict,
+          epochs=100, batch_size=32,
+          validation_split=0.2,
+          callbacks=[es], verbose=0)</code></pre>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TAB 5: 함정 TOP 10
+══════════════════════════════════════ -->
+<section class="tab-panel" id="tab-pitfalls">
+  <h2 class="section-title">⚠️ 자주 틀리는 함정 TOP 10</h2>
+
+  <div class="pitfall-list">
+
+    <div class="pitfall-card critical">
+      <div class="pitfall-num">01</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">test에 fit_transform 사용 🔥 최다 실수</div>
+        <div class="pitfall-bad">❌ <code>X_test_s = scaler.fit_transform(X_test)</code></div>
+        <div class="pitfall-good">✅ <code>X_test_s = scaler.transform(X_test)</code></div>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-num">02</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">stratify 빼먹기 (분류)</div>
+        <div class="pitfall-good">✅ <code>train_test_split(X, y, stratify=y, test_size=0.2, random_state=42)</code></div>
+      </div>
+    </div>
+
+    <div class="pitfall-card critical">
+      <div class="pitfall-num">03</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">predict vs predict_proba 혼동 🔥</div>
+        <div class="pitfall-bad">❌ AUC에 <code>predict()</code> 사용</div>
+        <div class="pitfall-good">✅ AUC: <code>predict_proba()[:,1]</code> / Accuracy: <code>predict()</code></div>
+      </div>
+    </div>
+
+    <div class="pitfall-card critical">
+      <div class="pitfall-num">04</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">딥러닝 출력층 활성화 오류 🔥</div>
+        <div class="pitfall-good">✅ 이진분류 → <code>sigmoid</code> / 다중분류 → <code>softmax</code> / 회귀 → 없음</div>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-num">05</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">loss 함수와 활성화 불일치</div>
+        <div class="pitfall-good">✅ <code>binary_crossentropy</code> ↔ <code>sigmoid</code> / <code>mse</code> ↔ linear</div>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-num">06</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">결측치 처리 후 인코딩 안 함</div>
+        <div class="pitfall-good">✅ fillna 후 반드시 <code>get_dummies</code> 또는 <code>LabelEncoder</code> 적용</div>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-num">07</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">inplace=True 생략</div>
+        <div class="pitfall-bad">❌ <code>df['col'].fillna(val)</code> — 원본 변경 안 됨!</div>
+        <div class="pitfall-good">✅ <code>df['col'].fillna(val, inplace=True)</code></div>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-num">08</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">피처 중요도 인덱스 오류</div>
+        <div class="pitfall-good">✅ <code>pd.Series(clf.feature_importances_, index=X.columns)</code></div>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-num">09</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">GridSearchCV scoring 부호 주의</div>
+        <div class="pitfall-good">✅ 회귀: <code>scoring='neg_mean_squared_error'</code> (음수 값!)</div>
+      </div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-num">10</div>
+      <div class="pitfall-content">
+        <div class="pitfall-title">Boolean 인덱싱 원본 변경 안 됨</div>
+        <div class="pitfall-bad">❌ <code>df[df['col'] < upper]</code> 만 쓰면 원본 그대로</div>
+        <div class="pitfall-good">✅ <code>df_clean = df[df['col'] < upper]</code> 새 변수 할당!</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TAB 6: D-2 공부 전략
+══════════════════════════════════════ -->
+<section class="tab-panel" id="tab-plan">
+  <h2 class="section-title">📅 D-2 최종 공부 전략</h2>
+
+  <div class="plan-grid">
+    <div class="plan-day day1">
+      <div class="plan-day-header">D-2 오늘</div>
+      <div class="plan-slots">
+        <div class="plan-slot">
+          <div class="plan-time">☀️ 오전 (2~3시간)</div>
+          <ul>
+            <li>치트시트 정독 + 핵심 코드 손으로 써보기</li>
+            <li>1~10회차 노트북 직접 실행</li>
+          </ul>
+        </div>
+        <div class="plan-slot">
+          <div class="plan-time">🌤 오후 (2~3시간)</div>
+          <ul>
+            <li>11~20회차 노트북 실행</li>
+            <li>모르는 패턴 체크 후 반복</li>
+          </ul>
+        </div>
+        <div class="plan-slot">
+          <div class="plan-time">🌙 저녁 (1~2시간)</div>
+          <ul>
+            <li>오답/어려운 유형만 재복습</li>
+            <li>함정 TOP 10 재확인</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-day day2">
+      <div class="plan-day-header">D-1 내일</div>
+      <div class="plan-slots">
+        <div class="plan-slot">
+          <div class="plan-time">☀️ 오전 (2~3시간)</div>
+          <ul>
+            <li>21~30회차 노트북 실행</li>
+            <li>딥러닝 코드 집중 반복</li>
+          </ul>
+        </div>
+        <div class="plan-slot">
+          <div class="plan-time">🌤 오후 (1~2시간)</div>
+          <ul>
+            <li>전체 치트시트 빠르게 복습</li>
+            <li>스케일링/딥러닝 활성화 최종 확인</li>
+          </ul>
+        </div>
+        <div class="plan-slot">
+          <div class="plan-time">🌙 저녁</div>
+          <ul>
+            <li>충분한 휴식 🛌</li>
+            <li>시험 환경 설정 확인</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">✅ 시험 당일 체크리스트</h3>
+  <div class="checklist" id="checklist">
+    <label class="check-item"><input type="checkbox" /><span>Jupyter Notebook 환경 동작 확인 (<kbd>Shift+Enter</kbd> = 셀 실행)</span></label>
+    <label class="check-item"><input type="checkbox" /><span>문제 읽자마자 <strong>분류/회귀</strong> 여부 먼저 파악 → 적절한 모델/지표 선택</span></label>
+    <label class="check-item"><input type="checkbox" /><span><code>target</code> 컬럼명 확인 후 <code>X = df.drop(columns=[target])</code> 실행</span></label>
+    <label class="check-item"><input type="checkbox" /><span>스케일링: train → <code>fit_transform</code> / test → <code>transform</code>만!</span></label>
+    <label class="check-item"><input type="checkbox" /><span>딥러닝 <code>input_shape=(X_train_s.shape[1],)</code> 잊지 말기</span></label>
+    <label class="check-item"><input type="checkbox" /><span>시간 배분: Q1~Q8 (50분) / Q9~Q14 (50분)</span></label>
+    <label class="check-item"><input type="checkbox" /><span>막히면 넘어가고 아는 문제부터! 나중에 돌아오기</span></label>
+    <label class="check-item"><input type="checkbox" /><span>AUC 계산 시 <code>predict_proba()[:,1]</code> 사용</span></label>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-icon">💡</div>
+    <div class="tip-text">
+      <strong>합격 공식:</strong> 스케일링 test엔 transform만 + 딥러닝 출력층 활성화 3가지 암기 + AUC엔 predict_proba ← 이 3가지만 완벽하면 70점 이상!
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast">📋 복사됨!</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -835,6 +835,90 @@
     </div>
   </div>
 
+  <!-- Upper Fence / Lower Fence -->
+  <div class="formula-card">
+    <div class="formula-header prep">📐 <span>Step 2-2-1 — IQR 기반 이상치 탐지 (Upper Fence &amp; Lower Fence)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🏫 비유: "정상 범위"의 울타리(Fence) 세우기</strong><br>
+        데이터의 가운데 50%(<strong>IQR</strong>)를 기준으로 위아래로 울타리를 치고,
+        울타리를 <span class="hl-yellow">벗어난 값</span>을 이상치로 판단합니다.<br>
+        <small>※ IQR (Interquartile Range) = Q3 − Q1 &nbsp;(75번째 백분위 − 25번째 백분위)</small>
+      </div>
+
+      <!-- 공식 박스 -->
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin:10px 0;">
+        <div style="flex:1; min-width:200px; background:#1e3a5f; border:2px solid #4a9eff; border-radius:10px; padding:14px; text-align:center;">
+          <div style="font-size:0.75rem; color:#93c5fd; margin-bottom:6px; font-weight:700;">🔼 UPPER FENCE (상한 울타리)</div>
+          <div style="font-size:1.1rem; color:#fbbf24; font-weight:700; letter-spacing:0.5px;">Q3 + 1.5 × IQR</div>
+          <div style="font-size:0.72rem; color:#94a3b8; margin-top:6px;">이 값보다 <strong style="color:#f87171">크면</strong> 이상치</div>
+        </div>
+        <div style="flex:1; min-width:200px; background:#1e3a5f; border:2px solid #4a9eff; border-radius:10px; padding:14px; text-align:center;">
+          <div style="font-size:0.75rem; color:#93c5fd; margin-bottom:6px; font-weight:700;">🔽 LOWER FENCE (하한 울타리)</div>
+          <div style="font-size:1.1rem; color:#fbbf24; font-weight:700; letter-spacing:0.5px;">Q1 − 1.5 × IQR</div>
+          <div style="font-size:0.72rem; color:#94a3b8; margin-top:6px;">이 값보다 <strong style="color:#f87171">작으면</strong> 이상치</div>
+        </div>
+      </div>
+
+      <div class="code-wrapper">
+        <span class="code-label">Python — IQR 방식으로 이상치 제거 (전체 흐름)</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># ── ① 사분위수(Q1, Q3) 계산 ─────────────────────────────</span>
+<span class="var">Q1</span> = <span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">quantile</span>(<span class="nm">0.25</span>)   <span class="cm"># 25번째 백분위 (하위 25%)</span>
+<span class="var">Q3</span> = <span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">quantile</span>(<span class="nm">0.75</span>)   <span class="cm"># 75번째 백분위 (상위 25%)</span>
+
+<span class="cm"># ── ② IQR 계산 ──────────────────────────────────────────</span>
+<span class="var">IQR</span> = <span class="var">Q3</span> - <span class="var">Q1</span>
+
+<span class="cm"># ── ③ 울타리(Fence) 계산 ────────────────────────────────</span>
+<span class="var">upper_fence</span> = <span class="var">Q3</span> + <span class="nm">1.5</span> * <span class="var">IQR</span>   <span class="cm"># 상한 울타리 — 이보다 크면 이상치</span>
+<span class="var">lower_fence</span> = <span class="var">Q1</span> - <span class="nm">1.5</span> * <span class="var">IQR</span>   <span class="cm"># 하한 울타리 — 이보다 작으면 이상치</span>
+
+<span class="cm"># ── ④ 울타리 안쪽 데이터만 남기기 ──────────────────────</span>
+<span class="var">df_clean</span> = <span class="var">df</span>[(<span class="var">df</span>[<span class="st">'컬럼명'</span>] &gt;= <span class="var">lower_fence</span>) &amp; (<span class="var">df</span>[<span class="st">'컬럼명'</span>] &lt;= <span class="var">upper_fence</span>)]</pre>
+      </div>
+
+      <div class="code-wrapper">
+        <span class="code-label">Python — 여러 컬럼에 한 번에 적용하기</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># 여러 컬럼을 순서대로 처리할 때</span>
+<span class="kw">for</span> <span class="var">col</span> <span class="kw">in</span> [<span class="st">'나이'</span>, <span class="st">'키'</span>, <span class="st">'몸무게'</span>]:
+    <span class="var">Q1</span> = <span class="var">df</span>[<span class="var">col</span>].<span class="fn">quantile</span>(<span class="nm">0.25</span>)
+    <span class="var">Q3</span> = <span class="var">df</span>[<span class="var">col</span>].<span class="fn">quantile</span>(<span class="nm">0.75</span>)
+    <span class="var">IQR</span> = <span class="var">Q3</span> - <span class="var">Q1</span>
+    <span class="var">df</span> = <span class="var">df</span>[(<span class="var">df</span>[<span class="var">col</span>] &gt;= <span class="var">Q1</span> - <span class="nm">1.5</span> * <span class="var">IQR</span>) &amp; (<span class="var">df</span>[<span class="var">col</span>] &lt;= <span class="var">Q3</span> + <span class="nm">1.5</span> * <span class="var">IQR</span>)]</pre>
+      </div>
+
+      <!-- 시각적 설명 -->
+      <div style="background:#0f2744; border-radius:10px; padding:14px; margin:10px 0; font-size:0.82rem; line-height:1.9;">
+        <div style="color:#93c5fd; font-weight:700; margin-bottom:6px;">📊 박스플롯(Boxplot)과의 관계</div>
+        <div style="color:#cbd5e1;">
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f87171;">●</span> 이상치 &nbsp;&nbsp;
+          <span style="color:#94a3b8;">|——</span>
+          <span style="color:#fbbf24; font-weight:700;">[&nbsp;&nbsp;&nbsp;Q1&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;중앙값&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Q3&nbsp;&nbsp;&nbsp;]</span>
+          <span style="color:#94a3b8;">——|</span>
+          &nbsp;&nbsp;<span style="color:#f87171;">●</span> 이상치
+        </div>
+        <div style="color:#94a3b8; margin-top:6px;">
+          &nbsp;&nbsp;↑ Lower Fence &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Upper Fence ↑
+        </div>
+        <div style="color:#94a3b8; margin-top:8px; font-size:0.78rem;">
+          박스플롯의 수염(whisker) 끝이 바로 Fence이며, 수염 밖의 점(●)이 이상치입니다.
+        </div>
+      </div>
+
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚡</span>
+        <div>
+          <strong>시험 핵심 암기!</strong><br>
+          • <span class="hl-yellow">Upper Fence = Q3 + 1.5 × IQR</span> (초과 → 이상치)<br>
+          • <span class="hl-yellow">Lower Fence = Q1 − 1.5 × IQR</span> (미만 → 이상치)<br>
+          • 1.5 대신 <strong>3.0</strong>을 쓰면 "극단적 이상치(extreme outlier)"만 제거 (더 관대한 기준)
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- drop() inplace 설명 -->
   <div class="formula-card">
     <div class="formula-header prep">🗑️ <span>Step 2-3 — drop() 옵션 완전 해설</span></div>

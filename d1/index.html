@@ -1,0 +1,2008 @@
+ <!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AICE Associate 합격 공식 📚</title>
+  <style>
+    /* ===== 전역 변수 & 리셋 ===== */
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #818cf8;
+      --primary-dark: #3730a3;
+      --secondary: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --highlight-yellow: #fef08a;
+      --highlight-green: #bbf7d0;
+      --highlight-blue: #bfdbfe;
+      --highlight-pink: #fecdd3;
+      --code-bg: #1e1e2e;
+      --code-text: #cdd6f4;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(79,70,229,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ===== 헤더 ===== */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--secondary) 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+    header h1 { font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 800; position: relative; }
+    header p { opacity: 0.85; margin-top: 8px; font-size: clamp(0.85rem, 2.5vw, 1rem); position: relative; }
+    .header-badges {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+      margin-top: 16px; position: relative;
+    }
+    .badge {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== 내비게이션 ===== */
+    nav {
+      background: var(--card);
+      border-bottom: 2px solid var(--border);
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 4px;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    nav a {
+      display: inline-block;
+      padding: 14px 16px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* ===== 메인 레이아웃 ===== */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    /* ===== 섹션 ===== */
+    section {
+      margin-bottom: 48px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--primary);
+    }
+    .section-title .icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .section-title h2 {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: var(--primary-dark);
+    }
+
+    /* ===== 카드 ===== */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-title .emoji { font-size: 1.2rem; }
+
+    /* ===== 스케줄 테이블 ===== */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 768px) {
+      .schedule-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .day-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .day-header {
+      padding: 14px 20px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: white;
+    }
+    .day1 .day-header { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+    .day2 .day-header { background: linear-gradient(135deg, #0891b2, #0d9488); }
+    .time-block {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .time-block:last-child { border-bottom: none; }
+    .time-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: white;
+      background: var(--primary);
+      padding: 2px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      min-width: 70px;
+      text-align: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .day2 .time-label { background: var(--secondary); }
+    .time-content h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
+    .time-content p { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* ===== 하이라이트 ===== */
+    .hl-yellow { background: var(--highlight-yellow); padding: 1px 4px; border-radius: 3px; font-weight: 600; }
+    .hl-green  { background: var(--highlight-green);  padding: 1px 4px; border-radius: 3px; font-weight: 600; }
+    .hl-blue   { background: var(--highlight-blue);   padding: 1px 4px; border-radius: 3px; font-weight: 600; }
+    .hl-pink   { background: var(--highlight-pink);   padding: 1px 4px; border-radius: 3px; font-weight: 600; }
+
+    /* ===== 코드 블록 ===== */
+    .code-wrapper {
+      position: relative;
+      margin: 12px 0;
+    }
+    .code-label {
+      background: var(--primary);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 8px 8px 0 0;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 16px 18px;
+      border-radius: 0 8px 8px 8px;
+      font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
+      font-size: clamp(0.72rem, 2.2vw, 0.85rem);
+      overflow-x: auto;
+      line-height: 1.65;
+      tab-size: 4;
+      white-space: pre;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 30px;
+      right: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #94a3b8;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.22); color: white; }
+    .copy-btn.copied { background: #10b981; color: white; border-color: #10b981; }
+
+    /* 코드 색상 */
+    .kw  { color: #cba6f7; font-weight: 600; } /* keyword: import, from, def */
+    .fn  { color: #89dceb; }                   /* function */
+    .st  { color: #a6e3a1; }                   /* string */
+    .cm  { color: #6c7086; font-style: italic; } /* comment */
+    .nm  { color: #fab387; }                   /* number */
+    .var { color: #cdd6f4; }                   /* variable */
+    .op  { color: #89b4fa; }                   /* operator / special */
+
+    /* ===== 공식 카드 ===== */
+    .formula-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .formula-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(79,70,229,0.12);
+    }
+    .formula-header {
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .formula-header.clf  { background: #ede9fe; color: #5b21b6; border-bottom: 2px solid #c4b5fd; }
+    .formula-header.reg  { background: #dcfce7; color: #15803d; border-bottom: 2px solid #86efac; }
+    .formula-header.prep { background: #dbeafe; color: #1d4ed8; border-bottom: 2px solid #93c5fd; }
+    .formula-header.dl   { background: #fce7f3; color: #9d174d; border-bottom: 2px solid #f9a8d4; }
+    .formula-body { padding: 14px 18px; }
+    .analogy {
+      background: #fffbeb;
+      border-left: 4px solid var(--warning);
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.85rem;
+      color: #78350f;
+    }
+    .analogy strong { display: block; margin-bottom: 3px; }
+
+    /* ===== 비교 테이블 ===== */
+    .table-scroll { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.75rem, 2vw, 0.88rem);
+    }
+    th {
+      background: var(--primary);
+      color: white;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+    tr:hover td { background: #eef2ff; }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .tag-clf  { background: #ede9fe; color: #5b21b6; }
+    .tag-reg  { background: #dcfce7; color: #15803d; }
+    .tag-bin  { background: #fce7f3; color: #9d174d; }
+    .tag-multi{ background: #dbeafe; color: #1d4ed8; }
+
+    /* ===== Dense 레이어 시각화 ===== */
+    .layer-viz {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .layer-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .layer-box {
+      flex: 1;
+      min-width: 200px;
+      background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+      border: 2px solid #c7d7fe;
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+    .layer-box.output-box {
+      background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+      border-color: #f9a8d4;
+    }
+    .layer-box h4 { font-size: 0.82rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 4px; }
+    .layer-box p  { font-size: 0.76rem; color: var(--text-muted); }
+    .layer-arrow { font-size: 1.4rem; color: var(--primary-light); flex-shrink: 0; }
+
+    /* ===== 알림 박스 ===== */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin: 12px 0;
+      font-size: 0.87rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .alert-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .alert-warning { background: #fffbeb; border: 1px solid #fde68a; color: #78350f; }
+    .alert-info    { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+    .alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #14532d; }
+    .alert-danger  { background: #fff1f2; border: 1px solid #fecdd3; color: #881337; }
+
+    /* ===== 파라미터 그리드 ===== */
+    .param-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .param-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .param-name {
+      font-family: 'Consolas', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .param-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ===== 체크리스트 ===== */
+    .checklist {
+      list-style: none;
+    }
+    .checklist li {
+      padding: 6px 0;
+      padding-left: 28px;
+      position: relative;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: '☐';
+      position: absolute;
+      left: 4px;
+      color: var(--primary);
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .checklist li.checked::before { content: '☑'; color: var(--success); }
+    .checklist li.checked { text-decoration: line-through; color: var(--text-muted); }
+
+    /* ===== 프로그레스 ===== */
+    .progress-bar {
+      background: var(--border);
+      border-radius: 999px;
+      height: 8px;
+      overflow: hidden;
+      margin: 6px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.5s ease;
+    }
+
+    /* ===== 탭 ===== */
+    .tab-group {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 7px 16px;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      background: transparent;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-muted);
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ===== 빠른 참조 카드 ===== */
+    .quick-ref {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+    }
+    .qr-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .qr-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .qr-card .qr-emoji { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+    .qr-card .qr-title { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); }
+    .qr-card .qr-code {
+      font-family: 'Consolas', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      word-break: break-all;
+    }
+
+    /* ===== 푸터 ===== */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      background: var(--card);
+      margin-top: 40px;
+    }
+
+    /* ===== 반응형 ===== */
+    @media (max-width: 600px) {
+      nav a { padding: 12px 10px; font-size: 0.78rem; }
+      .param-grid { grid-template-columns: 1fr; }
+      .quick-ref { grid-template-columns: repeat(2, 1fr); }
+      th, td { padding: 7px 10px; }
+    }
+
+    /* ===== 스크롤 탑 버튼 ===== */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 24px; right: 20px;
+      width: 44px; height: 44px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: none;
+      align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(79,70,229,0.35);
+      z-index: 999;
+      transition: all 0.2s;
+    }
+    #scrollTopBtn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    #scrollTopBtn.show { display: flex; }
+  </style>
+</head>
+<body>
+
+<!-- ===== 헤더 ===== -->
+<header>
+  <h1>🎯 AICE Associate 합격 공식집</h1>
+  <p>이번 주 토요일까지 D-2 벼락치기 완전정복 가이드</p>
+  <div class="header-badges">
+    <span class="badge">📅 2일 스케줄</span>
+    <span class="badge">🧪 분류/회귀 공식</span>
+    <span class="badge">🧠 딥러닝 가이드</span>
+    <span class="badge">📋 즉시 복사 코드</span>
+  </div>
+</header>
+
+<!-- ===== 내비게이션 ===== -->
+<nav>
+  <div class="nav-inner">
+    <a href="#schedule">📅 학습 스케줄</a>
+    <a href="#prep">🔧 데이터 전처리</a>
+    <a href="#ml">🤖 ML 공식</a>
+    <a href="#dl">🧠 딥러닝 공식</a>
+    <a href="#viz">🎨 시각화</a>
+    <a href="#table">📊 비교표</a>
+    <a href="#checklist">✅ 체크리스트</a>
+  </div>
+</nav>
+
+<!-- ===== 메인 ===== -->
+<main>
+
+<!-- =============== 1. 학습 스케줄 =============== -->
+<section id="schedule">
+  <div class="section-title">
+    <div class="icon">📅</div>
+    <div>
+      <h2>2일 단기 학습 스케줄</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted)">1~10회차 유형파악 → 11~20회차 코랩 실습</p>
+    </div>
+  </div>
+
+  <div class="alert alert-warning">
+    <span class="alert-icon">⚡</span>
+    <div><strong>벼락치기 핵심 전략:</strong> 공식을 "외우기"보다 "패턴을 손에 익히기"가 목표입니다.
+    1~10회차 기출 → 문제 유형 분류 → 11~20회차 → 직접 타이핑 실습 순서로 진행하세요.</div>
+  </div>
+
+  <div class="schedule-grid">
+    <!-- Day 1 -->
+    <div class="day-card day1">
+      <div class="day-header">📆 Day 1 — 유형 파악 & 공식 암기</div>
+      <div class="time-block">
+        <span class="time-label">06:00~08:00</span>
+        <div class="time-content">
+          <h4>🌅 워밍업: 전체 흐름 파악</h4>
+          <p>이 공식집 전체 읽기 (30분) → 1~3회차 기출 훑어보기 (90분). 풀지 말고 <span class="hl-yellow">문제 유형만 분류</span>할 것 (분류/회귀/전처리 구분)</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">08:00~10:00</span>
+        <div class="time-content">
+          <h4>🔧 전처리 공식 암기</h4>
+          <p>결측치 처리, 인코딩, 스케일링 3가지 공식 반복 타이핑. 4~6회차 기출의 <span class="hl-blue">전처리 문제 집중</span> 분석</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">10:00~12:00</span>
+        <div class="time-content">
+          <h4>🤖 ML 분류 공식 암기</h4>
+          <p>RandomForest, LogisticRegression, SVM 3개 모델. 7~8회차 기출의 분류 문제 풀어보기. <span class="hl-green">평가지표(accuracy, f1)</span> 공식 암기</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">13:00~15:00</span>
+        <div class="time-content">
+          <h4>📈 ML 회귀 공식 암기</h4>
+          <p>LinearRegression, RandomForestRegressor. 9~10회차 기출 회귀 문제. <span class="hl-pink">평가지표(MAE, MSE, RMSE, R²)</span> 공식 암기</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">15:00~18:00</span>
+        <div class="time-content">
+          <h4>🧠 딥러닝 공식 암기</h4>
+          <p>Sequential 모델 구조 통째 암기. Dense 층 의미 이해. <span class="hl-yellow">이진/다중/회귀별 마지막 층 + loss 함수 차이</span> 표 암기</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">19:00~22:00</span>
+        <div class="time-content">
+          <h4>🔄 오늘 배운 내용 복습</h4>
+          <p>1~10회차 기출 중 틀린/모르는 문제만 재분류. 손으로 공식 써보기 (타이핑 X, 펜으로). <span class="hl-blue">내일 실습할 11~15회차 훑어보기</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-card day2">
+      <div class="day-header">📆 Day 2 — 코랩 실습 & 실전 마무리</div>
+      <div class="time-block">
+        <span class="time-label">06:00~08:00</span>
+        <div class="time-content">
+          <h4>☕ 어제 복습 + 워밍업</h4>
+          <p>공식집 다시 훑기 (30분). 11~12회차 CSV 불러오기 + EDA 실습. <span class="hl-green">df.info(), df.describe(), df.isnull().sum()</span> 손에 익히기</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">08:00~11:00</span>
+        <div class="time-content">
+          <h4>🤖 ML 분류 실습</h4>
+          <p>13~14회차 CSV로 분류 전체 파이프라인 직접 작성. 전처리→모델→학습→예측→평가 <span class="hl-yellow">공식 그대로 복붙 후 변수만 바꾸는 연습</span></p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">11:00~13:00</span>
+        <div class="time-content">
+          <h4>📈 ML 회귀 실습</h4>
+          <p>15~16회차 CSV로 회귀 파이프라인 작성. 분류와 회귀의 <span class="hl-pink">코드 차이점 3가지</span> 직접 체감 (모델명, 평가지표, 없음/있음)</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">14:00~17:00</span>
+        <div class="time-content">
+          <h4>🧠 딥러닝 실습</h4>
+          <p>17~18회차로 Sequential 모델 3종 작성. 이진분류, 다중분류, 회귀 각 1개씩. <span class="hl-blue">activation + loss 조합</span> 바꿔보며 차이 체감</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">17:00~19:00</span>
+        <div class="time-content">
+          <h4>⚡ 19~20회차 실전 모의고사</h4>
+          <p>시간 재고 실제 시험처럼 풀기. 모르면 공식집 참고 OK. <span class="hl-green">틀린 문제 원인 분류</span> (공식 미숙 / 개념 미숙)</p>
+        </div>
+      </div>
+      <div class="time-block">
+        <span class="time-label">20:00~22:00</span>
+        <div class="time-content">
+          <h4>🎯 최종 마무리</h4>
+          <p>비교표 집중 암기 (activation+loss 조합). 내일 시험 전 <span class="hl-yellow">이 공식집만 보기</span>. 9시간 수면 필수!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 2. 데이터 전처리 공식 =============== -->
+<section id="prep">
+  <div class="section-title">
+    <div class="icon">🔧</div>
+    <div>
+      <h2>데이터 전처리 공식</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted)">모든 ML/DL 문제의 공통 첫 단계</p>
+    </div>
+  </div>
+
+  <!-- 라이브러리 임포트 -->
+  <div class="formula-card">
+    <div class="formula-header prep">🚀 <span>Step 0 — 라이브러리 임포트 (매번 맨 위에 붙여넣기)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🍳 비유: 요리 전 재료 꺼내기</strong>
+        요리하기 전에 냉장고에서 재료를 꺼내야 하듯, 코드 실행 전에 필요한 도구를 불러옵니다.
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 필수 임포트</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># ── 데이터 다루기 ──────────────────────────────</span>
+<span class="kw">import</span> <span class="var">pandas</span> <span class="kw">as</span> <span class="var">pd</span>
+<span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+
+<span class="cm"># ── 머신러닝 (ML) ───────────────────────────────</span>
+<span class="kw">from</span> <span class="var">sklearn.model_selection</span> <span class="kw">import</span> <span class="fn">train_test_split</span>
+<span class="kw">from</span> <span class="var">sklearn.preprocessing</span> <span class="kw">import</span> <span class="fn">StandardScaler</span>, <span class="fn">LabelEncoder</span>, <span class="fn">MinMaxScaler</span>
+<span class="kw">from</span> <span class="var">sklearn.ensemble</span> <span class="kw">import</span> <span class="fn">RandomForestClassifier</span>, <span class="fn">RandomForestRegressor</span>
+<span class="kw">from</span> <span class="var">sklearn.linear_model</span> <span class="kw">import</span> <span class="fn">LogisticRegression</span>, <span class="fn">LinearRegression</span>
+<span class="kw">from</span> <span class="var">sklearn.metrics</span> <span class="kw">import</span> <span class="fn">accuracy_score</span>, <span class="fn">f1_score</span>
+<span class="kw">from</span> <span class="var">sklearn.metrics</span> <span class="kw">import</span> <span class="fn">mean_absolute_error</span>, <span class="fn">mean_squared_error</span>, <span class="fn">r2_score</span>
+
+<span class="cm"># ── 딥러닝 (DL) ─────────────────────────────────</span>
+<span class="kw">from</span> <span class="var">tensorflow.keras.models</span> <span class="kw">import</span> <span class="fn">Sequential</span>
+<span class="kw">from</span> <span class="var">tensorflow.keras.layers</span> <span class="kw">import</span> <span class="fn">Dense</span>
+<span class="kw">from</span> <span class="var">tensorflow.keras.callbacks</span> <span class="kw">import</span> <span class="fn">EarlyStopping</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 데이터 로드 & EDA -->
+  <div class="formula-card">
+    <div class="formula-header prep">🔍 <span>Step 1 — 데이터 로드 & 탐색 (EDA)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🗺️ 비유: 요리 전 재료 확인</strong>
+        "재료가 신선한지, 부족한 게 없는지" 먼저 확인하는 단계입니다.
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 데이터 탐색 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># 파일 불러오기</span>
+<span class="var">df</span> = <span class="var">pd</span>.<span class="fn">read_csv</span>(<span class="st">'파일명.csv'</span>)
+
+<span class="cm"># 기본 탐색 (항상 이 순서로!)</span>
+<span class="fn">print</span>(<span class="var">df</span>.<span class="fn">shape</span>)          <span class="cm"># (행 수, 열 수) → 데이터 크기 확인</span>
+<span class="fn">print</span>(<span class="var">df</span>.<span class="fn">head</span>())         <span class="cm"># 처음 5행 보기</span>
+<span class="fn">print</span>(<span class="var">df</span>.<span class="fn">info</span>())         <span class="cm"># 컬럼명, 타입, 결측치 개수 한눈에</span>
+<span class="fn">print</span>(<span class="var">df</span>.<span class="fn">describe</span>())     <span class="cm"># 숫자 컬럼 통계 (평균, 최솟값, 최댓값 등)</span>
+<span class="fn">print</span>(<span class="var">df</span>.<span class="fn">isnull</span>().<span class="fn">sum</span>()) <span class="cm"># 컬럼별 결측치(NaN) 개수</span>
+<span class="fn">print</span>(<span class="var">df</span>.<span class="fn">columns</span>)        <span class="cm"># 컬럼명 목록</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결측치 처리 -->
+  <div class="formula-card">
+    <div class="formula-header prep">🩹 <span>Step 2 — 결측치 처리</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🕳️ 비유: 빠진 퍼즐 조각 채우기</strong>
+        데이터에 구멍(NaN)이 있으면 모델이 오류를 냅니다. 구멍을 채우거나 제거해야 합니다.
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 결측치 처리 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># 방법1: 결측치 있는 행 통째로 제거 (가장 간단)</span>
+<span class="var">df</span> = <span class="var">df</span>.<span class="fn">dropna</span>()
+
+<span class="cm"># 방법2: 숫자 컬럼 → 평균값으로 채우기</span>
+<span class="var">df</span>[<span class="st">'컬럼명'</span>] = <span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">fillna</span>(<span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">mean</span>())
+
+<span class="cm"># 방법3: 숫자 컬럼 → 중앙값으로 채우기 (이상치 있을 때)</span>
+<span class="var">df</span>[<span class="st">'컬럼명'</span>] = <span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">fillna</span>(<span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">median</span>())
+
+<span class="cm"># 방법4: 문자(범주) 컬럼 → 가장 많이 나오는 값으로 채우기</span>
+<span class="var">df</span>[<span class="st">'컬럼명'</span>] = <span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">fillna</span>(<span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">mode</span>()[<span class="nm">0</span>])</pre>
+      </div>
+      <div class="alert alert-info">
+        <span class="alert-icon">💡</span>
+        <div><strong>시험 팁:</strong> 문제에서 "결측치를 처리하시오"라고 하면 보통 <span class="hl-yellow">dropna() 또는 fillna(mean())</span>이 정답입니다.</div>
+      </div>
+      <div class="alert alert-success">
+        <span class="alert-icon">🔤</span>
+        <div>
+          <strong>따옴표는 작은따옴표(' ')와 큰따옴표(" ") 둘 다 OK!</strong><br>
+          파이썬에서 문자열은 두 가지 모두 완전히 동일합니다. 컬럼명 자리에는 실제 컬럼 이름을 넣으면 됩니다.<br><br>
+          <code style="background:#1e1e2e;color:#a6e3a1;padding:6px 10px;border-radius:6px;font-size:0.82rem;display:inline-block;margin-top:4px">
+            df['나이'] == df["나이"]  ← 완전히 같습니다!
+          </code><br><br>
+          <span style="color:#166534">✔ 컬럼명을 모를 땐 먼저 <strong>df.columns</strong> 로 확인 후 그대로 복붙하세요. 대소문자·띄어쓰기까지 정확히 일치해야 합니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이상치 제거 -->
+  <div class="formula-card">
+    <div class="formula-header prep">✂️ <span>Step 2-2 — 이상치 제거 (조건 필터링 / 불리언 인덱싱)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🏫 비유: 시속이 300km/h 초과한 데이터 골라내기</strong>
+        <code>drop()</code>은 "이 행 번호를 지워라"는 방식이고,<br>
+        조건 필터링은 <span class="hl-yellow">"이 조건에 맞는 것만 남겨라"</span>는 방식입니다. 결과는 같지만 코드가 훨씬 간결합니다!
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 조건 필터링 원리 (2단계로 쪼개서 이해)</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># ── 작동 원리 ──────────────────────────────────────────</span>
+<span class="cm"># 단계①: 조건 확인 → 각 행에 True/False 딱지 붙이기</span>
+<span class="var">df</span>.<span class="var">Speed_Per_Hour</span> &lt; <span class="nm">300</span>
+<span class="cm"># 결과: 0     True</span>
+<span class="cm">#       1     True</span>
+<span class="cm">#       2     False  ← 이 행이 300 이상 (이상치!)</span>
+<span class="cm">#       3     True</span>
+
+<span class="cm"># 단계②: True인 행만 골라내기</span>
+<span class="var">df_temp</span> = <span class="var">df</span>[ <span class="var">df</span>.<span class="var">Speed_Per_Hour</span> &lt; <span class="nm">300</span> ]
+<span class="cm">#          ↑전체df  ↑조건(안쪽) → True인 행만 통과!</span></pre>
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 두 가지 쓰는 방법 (완전히 같은 결과)</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># 방법1: 점(.) 표기법  ← 컬럼명에 띄어쓰기/특수문자 없을 때</span>
+<span class="var">df_temp</span> = <span class="var">df</span>[<span class="var">df</span>.<span class="var">Speed_Per_Hour</span> &lt; <span class="nm">300</span>]
+
+<span class="cm"># 방법2: 대괄호 표기법  ← 컬럼명에 띄어쓰기나 특수문자 있을 때 필수</span>
+<span class="var">df_temp</span> = <span class="var">df</span>[<span class="var">df</span>[<span class="st">'Speed_Per_Hour'</span>] &lt; <span class="nm">300</span>]</pre>
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 자주 쓰는 조건 패턴 모음</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="var">df</span>[<span class="var">df</span>[<span class="st">'컬럼'</span>] &lt; <span class="nm">300</span>]       <span class="cm"># 300 미만만 남기기  (이상치 제거)</span>
+<span class="var">df</span>[<span class="var">df</span>[<span class="st">'컬럼'</span>] &gt;= <span class="nm">0</span>]         <span class="cm"># 0 이상만 남기기   (음수 제거)</span>
+<span class="var">df</span>[<span class="var">df</span>[<span class="st">'컬럼'</span>] == <span class="st">'남'</span>]      <span class="cm"># 특정 값만 남기기</span>
+<span class="var">df</span>[<span class="var">df</span>[<span class="st">'컬럼'</span>] != <span class="st">'기타'</span>]    <span class="cm"># 특정 값 제외하기</span>
+
+<span class="cm"># 조건 2개 동시 적용 (AND: &amp;, OR: |)</span>
+<span class="var">df</span>[(<span class="var">df</span>[<span class="st">'나이'</span>] &gt;= <span class="nm">20</span>) &amp; (<span class="var">df</span>[<span class="st">'나이'</span>] &lt;= <span class="nm">60</span>)]  <span class="cm"># 20 이상 AND 60 이하</span>
+<span class="var">df</span>[(<span class="var">df</span>[<span class="st">'컬럼'</span>] == <span class="st">'A'</span>) | (<span class="var">df</span>[<span class="st">'컬럼'</span>] == <span class="st">'B'</span>)] <span class="cm"># A 또는 B</span></pre>
+      </div>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <div><strong>AND/OR 조건 사용 시 주의!</strong> 파이썬의 <code>and</code>/<code>or</code>가 아니라 반드시 <span class="hl-yellow"><code>&amp;</code> / <code>|</code></span> 를 쓰고, 각 조건을 <span class="hl-pink">괄호 ( )</span>로 감싸야 합니다!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- drop() inplace 설명 -->
+  <div class="formula-card">
+    <div class="formula-header prep">🗑️ <span>Step 2-3 — drop() 옵션 완전 해설</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>📋 비유: 표에서 특정 열(컬럼) 또는 행을 가위로 잘라내기</strong>
+        <code>drop()</code>은 컬럼 또는 행을 삭제하는 함수입니다.
+        <span class="hl-yellow">inplace=True</span>는 "원본 df를 바로 바꿔라"는 명령입니다. 없으면 원본은 그대로이고 결과만 반환합니다.
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — drop() 기본 사용법 비교</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># ── inplace=False (기본값) ─────────────────────────────</span>
+<span class="cm"># 원본 df는 그대로 유지되고, 삭제된 결과를 새 변수에 담아야 함</span>
+<span class="var">df_new</span> = <span class="var">df</span>.<span class="fn">drop</span>(<span class="st">'RID'</span>, <span class="var">axis</span>=<span class="nm">1</span>)
+<span class="cm"># df는 그대로, df_new에만 RID 컬럼이 없는 데이터가 담김</span>
+
+<span class="cm"># ── inplace=True ──────────────────────────────────────</span>
+<span class="cm"># 원본 df 자체를 바로 수정 → 새 변수 불필요</span>
+<span class="var">df</span>.<span class="fn">drop</span>(<span class="st">'RID'</span>, <span class="var">axis</span>=<span class="nm">1</span>, <span class="var">inplace</span>=<span class="op">True</span>)
+<span class="cm"># 이제 df에서 RID 컬럼이 영구적으로 사라짐</span></pre>
+      </div>
+      <div class="param-grid">
+        <div class="param-card">
+          <div class="param-name">첫 번째 인자 (labels)</div>
+          <div class="param-desc">
+            삭제할 <strong>컬럼명 또는 행 인덱스</strong><br>
+            • 하나: <code>'RID'</code><br>
+            • 여러 개: <code>['RID', 'ID', 'Name']</code>
+          </div>
+        </div>
+        <div class="param-card">
+          <div class="param-name">axis</div>
+          <div class="param-desc">
+            삭제 방향<br>
+            • <span class="hl-blue">axis=1</span> : <strong>컬럼(열)</strong> 삭제 → 가장 많이 사용<br>
+            • <span class="hl-pink">axis=0</span> : <strong>행</strong> 삭제 (기본값)
+          </div>
+        </div>
+        <div class="param-card">
+          <div class="param-name">inplace</div>
+          <div class="param-desc">
+            원본 수정 여부<br>
+            • <span class="hl-yellow">True</span>: 원본 df 자체를 바꿈 (반환값 없음)<br>
+            • <span class="hl-green">False</span>: 원본 유지, 새 df 반환 (기본값)
+          </div>
+        </div>
+        <div class="param-card">
+          <div class="param-name">errors</div>
+          <div class="param-desc">
+            없는 컬럼명 삭제 시 처리<br>
+            • <code>'raise'</code>: 오류 발생 (기본값)<br>
+            • <code>'ignore'</code>: 오류 무시하고 넘어감
+          </div>
+        </div>
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — drop() 활용 패턴 모음</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># 컬럼 1개 삭제 (inplace 방식)</span>
+<span class="var">df</span>.<span class="fn">drop</span>(<span class="st">'RID'</span>, <span class="var">axis</span>=<span class="nm">1</span>, <span class="var">inplace</span>=<span class="op">True</span>)
+
+<span class="cm"># 컬럼 여러 개 동시 삭제</span>
+<span class="var">df</span>.<span class="fn">drop</span>([<span class="st">'RID'</span>, <span class="st">'ID'</span>, <span class="st">'Name'</span>], <span class="var">axis</span>=<span class="nm">1</span>, <span class="var">inplace</span>=<span class="op">True</span>)
+
+<span class="cm"># 특정 행(인덱스) 삭제 → axis=0 또는 생략</span>
+<span class="var">df</span>.<span class="fn">drop</span>(<span class="nm">0</span>, <span class="var">axis</span>=<span class="nm">0</span>, <span class="var">inplace</span>=<span class="op">True</span>)     <span class="cm"># 0번 행 삭제</span>
+<span class="var">df</span>.<span class="fn">drop</span>([<span class="nm">0</span>, <span class="nm">1</span>, <span class="nm">5</span>], <span class="var">inplace</span>=<span class="op">True</span>)      <span class="cm"># 0,1,5번 행 삭제</span>
+
+<span class="cm"># 새 변수에 담는 방식 (inplace=False)</span>
+<span class="var">X</span> = <span class="var">df</span>.<span class="fn">drop</span>(<span class="st">'정답컬럼'</span>, <span class="var">axis</span>=<span class="nm">1</span>)         <span class="cm"># 피처 분리 시 자주 사용!</span></pre>
+      </div>
+      <div class="alert alert-warning">
+        <span class="alert-icon">💡</span>
+        <div>
+          <strong>inplace 선택 기준:</strong><br>
+          • 원본 df를 이후에도 그대로 쓰고 싶다 → <span class="hl-green">inplace=False</span> (새 변수에 저장)<br>
+          • 원본 df가 더 이상 필요 없고 바로 적용 → <span class="hl-yellow">inplace=True</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 인코딩 -->
+  <div class="formula-card">
+    <div class="formula-header prep">🔤 <span>Step 3 — 범주형 인코딩 (문자 → 숫자)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🔢 비유: 언어 번역기</strong>
+        컴퓨터는 "남/여"같은 글자를 모릅니다. "0/1"로 번역해줘야 합니다.
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 인코딩 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># 방법1: Label Encoding (순서가 있는 범주 또는 타겟 레이블)</span>
+<span class="cm">#        예: "소/중/대" → 0/1/2</span>
+<span class="var">le</span> = <span class="fn">LabelEncoder</span>()
+<span class="var">df</span>[<span class="st">'컬럼명'</span>] = <span class="var">le</span>.<span class="fn">fit_transform</span>(<span class="var">df</span>[<span class="st">'컬럼명'</span>])
+
+<span class="cm"># 방법2: One-Hot Encoding (순서 없는 범주)</span>
+<span class="cm">#        예: "서울/부산/제주" → 각각 독립된 0/1 컬럼 3개 생성</span>
+<span class="var">df</span> = <span class="var">pd</span>.<span class="fn">get_dummies</span>(<span class="var">df</span>, <span class="var">columns</span>=[<span class="st">'컬럼명'</span>])
+<span class="cm">#                    ↑ drop_first=True 옵션 추가 가능 (다중공선성 제거)</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 데이터 분할 -->
+  <div class="formula-card">
+    <div class="formula-header prep">✂️ <span>Step 4 — 피처/레이블 분리 & 데이터 분할</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>📚 비유: 문제지와 답지 분리</strong>
+        X(피처) = 문제지, y(레이블) = 답지. 그리고 전체를 훈련용(train)과 시험용(test)으로 나눕니다.
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 데이터 분할 공식 (★암기 필수★)</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># ① 피처(X)와 레이블(y) 분리</span>
+<span class="var">X</span> = <span class="var">df</span>.<span class="fn">drop</span>(<span class="st">'정답컬럼명'</span>, <span class="var">axis</span>=<span class="nm">1</span>)  <span class="cm"># 정답 컬럼 제외한 나머지</span>
+<span class="var">y</span> = <span class="var">df</span>[<span class="st">'정답컬럼명'</span>]              <span class="cm"># 정답 컬럼만</span>
+
+<span class="cm"># ② train/test 분리</span>
+<span class="var">X_train</span>, <span class="var">X_test</span>, <span class="var">y_train</span>, <span class="var">y_test</span> = <span class="fn">train_test_split</span>(
+    <span class="var">X</span>, <span class="var">y</span>,
+    <span class="var">test_size</span>=<span class="nm">0.2</span>,    <span class="cm"># 20%를 테스트용으로 분리</span>
+    <span class="var">random_state</span>=<span class="nm">42</span>  <span class="cm"># 매번 같은 결과 → 고정값(보통 42 사용)</span>
+)
+
+<span class="cm"># 확인</span>
+<span class="fn">print</span>(<span class="var">X_train</span>.<span class="fn">shape</span>, <span class="var">X_test</span>.<span class="fn">shape</span>)</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 스케일링 -->
+  <div class="formula-card">
+    <div class="formula-header prep">⚖️ <span>Step 5 — 스케일링 (크기 통일)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>📏 비유: 단위 통일</strong>
+        키(cm)와 몸무게(kg)의 단위가 다르면 모델이 혼란스럽습니다. 같은 범위로 통일시켜줍니다.
+        딥러닝, SVM, KNN에서는 <strong>필수</strong>이고, 트리 계열(랜덤포레스트)은 없어도 됩니다.
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 스케일링 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># 방법1: StandardScaler — 평균 0, 표준편차 1 (z-점수 정규화)</span>
+<span class="cm">#        언제? → 데이터가 정규분포에 가까울 때 (일반적으로 가장 많이 사용)</span>
+<span class="var">scaler</span> = <span class="fn">StandardScaler</span>()
+<span class="var">X_train</span> = <span class="var">scaler</span>.<span class="fn">fit_transform</span>(<span class="var">X_train</span>)  <span class="cm"># fit + transform 동시에 (훈련셋만)</span>
+<span class="var">X_test</span>  = <span class="var">scaler</span>.<span class="fn">transform</span>(<span class="var">X_test</span>)       <span class="cm"># transform만! (fit 하면 안 됨)</span>
+
+<span class="cm"># 방법2: MinMaxScaler — 0~1 범위로 압축</span>
+<span class="cm">#        언제? → 딥러닝, 범위를 0~1로 맞춰야 할 때</span>
+<span class="var">scaler</span> = <span class="fn">MinMaxScaler</span>()
+<span class="var">X_train</span> = <span class="var">scaler</span>.<span class="fn">fit_transform</span>(<span class="var">X_train</span>)
+<span class="var">X_test</span>  = <span class="var">scaler</span>.<span class="fn">transform</span>(<span class="var">X_test</span>)</pre>
+      </div>
+      <div class="alert alert-danger">
+        <span class="alert-icon">⚠️</span>
+        <div><strong>절대 주의!</strong> X_test에는 반드시 <span class="hl-pink">.transform()만</span> 사용하세요. .fit_transform()을 쓰면 정보 누수(data leakage)가 발생합니다!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 3. ML 공식 =============== -->
+<section id="ml">
+  <div class="section-title">
+    <div class="icon">🤖</div>
+    <div>
+      <h2>머신러닝(ML) 분류 & 회귀 공식</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted)">모델 생성 → 학습 → 예측 → 평가 4단계 반복</p>
+    </div>
+  </div>
+
+  <div class="tab-group">
+    <button class="tab-btn active" onclick="showTab('clf-tab', this)">🏷️ 분류 (Classification)</button>
+    <button class="tab-btn" onclick="showTab('reg-tab', this)">📈 회귀 (Regression)</button>
+  </div>
+
+  <!-- 분류 탭 -->
+  <div id="clf-tab" class="tab-content active">
+    <div class="alert alert-info">
+      <span class="alert-icon">🎯</span>
+      <div><strong>분류란?</strong> 정답이 <span class="hl-blue">카테고리</span>인 문제입니다. 예: "이 이메일은 스팸인가 아닌가?", "이 꽃은 무슨 종류인가?"</div>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula-header clf">🌲 <span>랜덤포레스트 분류 — 완전 공식 (★★★)</span></div>
+      <div class="formula-body">
+        <div class="analogy">
+          <strong>🌳 비유: 여러 전문가에게 의견 구하기</strong>
+          결정 트리(나무) 여러 그루를 만들어서 다수결로 결론을 냅니다. 가장 안정적이고 자주 출제됩니다!
+        </div>
+        <div class="code-wrapper">
+          <span class="code-label">Python — 랜덤포레스트 분류 전체 파이프라인</span>
+          <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          <pre><span class="cm"># ① 모델 생성</span>
+<span class="var">model</span> = <span class="fn">RandomForestClassifier</span>(
+    <span class="var">n_estimators</span>=<span class="nm">100</span>,   <span class="cm"># 나무 개수 (기본값 100)</span>
+    <span class="var">random_state</span>=<span class="nm">42</span>    <span class="cm"># 재현성 고정</span>
+)
+
+<span class="cm"># ② 학습 (훈련 데이터로 배우기)</span>
+<span class="var">model</span>.<span class="fn">fit</span>(<span class="var">X_train</span>, <span class="var">y_train</span>)
+
+<span class="cm"># ③ 예측 (테스트 데이터로 정답 맞추기)</span>
+<span class="var">y_pred</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>)
+
+<span class="cm"># ④ 평가</span>
+<span class="fn">print</span>(<span class="st">"정확도:"</span>, <span class="fn">accuracy_score</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))
+<span class="fn">print</span>(<span class="st">"F1 Score:"</span>, <span class="fn">f1_score</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>, <span class="var">average</span>=<span class="st">'weighted'</span>))
+<span class="cm">#                                       ↑ 다중분류면 'weighted', 이진분류면 생략 가능</span>
+
+<span class="cm"># ⑤ 특성 중요도 확인 (보너스)</span>
+<span class="fn">print</span>(<span class="var">model</span>.<span class="var">feature_importances_</span>)</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula-header clf">🔵 <span>로지스틱 회귀 분류</span></div>
+      <div class="formula-body">
+        <div class="analogy">
+          <strong>📊 비유: 시험 합격/불합격 예측기</strong>
+          이름에 "회귀"가 있지만 <strong>분류 모델</strong>입니다! 확률(0~1)로 클래스를 예측합니다.
+        </div>
+        <div class="code-wrapper">
+          <span class="code-label">Python — 로지스틱 회귀 분류</span>
+          <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          <pre><span class="var">model</span> = <span class="fn">LogisticRegression</span>(<span class="var">max_iter</span>=<span class="nm">1000</span>) <span class="cm"># max_iter: 학습 반복 횟수 (수렴 안되면 늘림)</span>
+<span class="var">model</span>.<span class="fn">fit</span>(<span class="var">X_train</span>, <span class="var">y_train</span>)
+<span class="var">y_pred</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>)
+<span class="fn">print</span>(<span class="st">"정확도:"</span>, <span class="fn">accuracy_score</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))
+
+<span class="cm"># 확률값으로 예측 (0과 1 사이 값)</span>
+<span class="var">y_prob</span> = <span class="var">model</span>.<span class="fn">predict_proba</span>(<span class="var">X_test</span>)</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula-header clf">🌿 <span>결정 트리 분류 (DecisionTreeClassifier)</span></div>
+      <div class="formula-body">
+        <div class="analogy">
+          <strong>🤔 비유: 스무고개 게임</strong>
+          "나이 30 이상?" → "예" → "소득 높아?" → "예" → "VIP 고객" 처럼
+          질문을 트리(나무) 구조로 쌓아가며 분류합니다.
+          랜덤포레스트는 이 트리 여러 개를 묶어 다수결로 결정하는 방식입니다!
+        </div>
+        <div class="code-wrapper">
+          <span class="code-label">Python — 결정 트리 분류</span>
+          <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          <pre><span class="kw">from</span> <span class="var">sklearn.tree</span> <span class="kw">import</span> <span class="fn">DecisionTreeClassifier</span>, <span class="fn">plot_tree</span>
+<span class="kw">import</span> <span class="var">matplotlib.pyplot</span> <span class="kw">as</span> <span class="var">plt</span>
+
+<span class="cm"># 모델 생성</span>
+<span class="var">model</span> = <span class="fn">DecisionTreeClassifier</span>(
+    <span class="var">max_depth</span>=<span class="nm">5</span>,          <span class="cm"># 트리 최대 깊이 (깊을수록 복잡 → 과적합 위험)</span>
+    <span class="var">min_samples_split</span>=<span class="nm">2</span>, <span class="cm"># 노드 분할 최소 샘플 수 (기본 2)</span>
+    <span class="var">min_samples_leaf</span>=<span class="nm">1</span>,  <span class="cm"># 리프 노드 최소 샘플 수</span>
+    <span class="var">random_state</span>=<span class="nm">42</span>
+)
+<span class="var">model</span>.<span class="fn">fit</span>(<span class="var">X_train</span>, <span class="var">y_train</span>)
+<span class="var">y_pred</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>)
+<span class="fn">print</span>(<span class="st">"정확도:"</span>, <span class="fn">accuracy_score</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))
+
+<span class="cm"># 트리 시각화 (어떤 기준으로 분기했는지 그림으로 확인)</span>
+<span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">14</span>, <span class="nm">6</span>))
+<span class="fn">plot_tree</span>(<span class="var">model</span>, <span class="var">filled</span>=<span class="op">True</span>,
+          <span class="var">feature_names</span>=<span class="var">X_train</span>.<span class="var">columns</span>,
+          <span class="var">class_names</span>=<span class="op">True</span>,
+          <span class="var">max_depth</span>=<span class="nm">3</span>)  <span class="cm"># 시각화는 3단계까지만 표시해도 충분</span>
+<span class="var">plt</span>.<span class="fn">show</span>()</pre>
+        </div>
+        <div class="param-grid">
+          <div class="param-card">
+            <div class="param-name">max_depth</div>
+            <div class="param-desc">트리 최대 깊이. None이면 제한 없음(과적합 위험). 보통 3~10 사용</div>
+          </div>
+          <div class="param-card">
+            <div class="param-name">min_samples_split</div>
+            <div class="param-desc">노드를 분할하기 위한 최소 샘플 수(기본값 2). 클수록 단순한 트리</div>
+          </div>
+          <div class="param-card">
+            <div class="param-name">min_samples_leaf</div>
+            <div class="param-desc">리프 노드(끝 노드)에 있어야 할 최소 샘플 수. 클수록 일반화 향상</div>
+          </div>
+          <div class="param-card">
+            <div class="param-name">criterion</div>
+            <div class="param-desc">분할 기준. 분류: <code>'gini'</code>(기본값) / <code>'entropy'</code>. 회귀: <code>'squared_error'</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 회귀 탭 -->
+  <div id="reg-tab" class="tab-content">
+    <div class="alert alert-success">
+      <span class="alert-icon">📈</span>
+      <div><strong>회귀란?</strong> 정답이 <span class="hl-green">연속된 숫자</span>인 문제입니다. 예: "이 아파트의 가격은 얼마?", "내일 기온은 몇 도?"</div>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula-header reg">🌲 <span>랜덤포레스트 회귀 — 완전 공식 (★★★)</span></div>
+      <div class="formula-body">
+        <div class="analogy">
+          <strong>💰 비유: 여러 부동산 전문가에게 집값 물어보기</strong>
+          분류와 모델명만 다르고, 평가지표가 다릅니다!
+        </div>
+        <div class="code-wrapper">
+          <span class="code-label">Python — 랜덤포레스트 회귀 전체 파이프라인</span>
+          <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          <pre><span class="cm"># ① 모델 생성 (Classifier → Regressor 로 바뀜!)</span>
+<span class="var">model</span> = <span class="fn">RandomForestRegressor</span>(<span class="var">n_estimators</span>=<span class="nm">100</span>, <span class="var">random_state</span>=<span class="nm">42</span>)
+
+<span class="cm"># ② 학습</span>
+<span class="var">model</span>.<span class="fn">fit</span>(<span class="var">X_train</span>, <span class="var">y_train</span>)
+
+<span class="cm"># ③ 예측</span>
+<span class="var">y_pred</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>)
+
+<span class="cm"># ④ 평가 (회귀 전용 평가지표!)</span>
+<span class="fn">print</span>(<span class="st">"MAE:"</span>,  <span class="fn">mean_absolute_error</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))    <span class="cm"># 평균 절대 오차</span>
+<span class="fn">print</span>(<span class="st">"MSE:"</span>,  <span class="fn">mean_squared_error</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))     <span class="cm"># 평균 제곱 오차</span>
+<span class="fn">print</span>(<span class="st">"RMSE:"</span>, <span class="fn">mean_squared_error</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>)**<span class="nm">0.5</span>)  <span class="cm"># RMSE = √MSE</span>
+<span class="fn">print</span>(<span class="st">"R²:"</span>,   <span class="fn">r2_score</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))              <span class="cm"># 1에 가까울수록 좋음</span></pre>
+        </div>
+        <div class="alert alert-warning">
+          <span class="alert-icon">📐</span>
+          <div><strong>평가지표 해석:</strong> MAE/MSE/RMSE는 <span class="hl-yellow">낮을수록 좋고</span>, R²는 <span class="hl-green">1에 가까울수록 좋습니다</span> (최대 1.0)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula-header reg">📉 <span>선형 회귀 (Linear Regression)</span></div>
+      <div class="formula-body">
+        <div class="analogy">
+          <strong>📏 비유: 점수로 연봉 예측하는 직선 그리기</strong>
+          가장 간단한 회귀 모델. 데이터가 선형 관계일 때 잘 맞습니다.
+        </div>
+        <div class="code-wrapper">
+          <span class="code-label">Python — 선형 회귀</span>
+          <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          <pre><span class="var">model</span> = <span class="fn">LinearRegression</span>()   <span class="cm"># 파라미터 없어도 됨</span>
+<span class="var">model</span>.<span class="fn">fit</span>(<span class="var">X_train</span>, <span class="var">y_train</span>)
+<span class="var">y_pred</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>)
+<span class="fn">print</span>(<span class="st">"R²:"</span>, <span class="fn">r2_score</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula-header reg">🌿 <span>결정 트리 회귀 (DecisionTreeRegressor)</span></div>
+      <div class="formula-body">
+        <div class="analogy">
+          <strong>🌡️ 비유: 조건별 구간으로 숫자 예측</strong>
+          "속도 50 이하면 연비 15, 50~100이면 연비 12, 100 초과면 연비 8" 처럼
+          범위를 쪼개서 각 구간의 평균값으로 예측합니다.
+        </div>
+        <div class="code-wrapper">
+          <span class="code-label">Python — 결정 트리 회귀</span>
+          <button class="copy-btn" onclick="copyCode(this)">복사</button>
+          <pre><span class="kw">from</span> <span class="var">sklearn.tree</span> <span class="kw">import</span> <span class="fn">DecisionTreeRegressor</span>
+
+<span class="var">model</span> = <span class="fn">DecisionTreeRegressor</span>(
+    <span class="var">max_depth</span>=<span class="nm">5</span>,      <span class="cm"># 깊이 제한 (과적합 방지)</span>
+    <span class="var">random_state</span>=<span class="nm">42</span>
+)
+<span class="var">model</span>.<span class="fn">fit</span>(<span class="var">X_train</span>, <span class="var">y_train</span>)
+<span class="var">y_pred</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>)
+
+<span class="fn">print</span>(<span class="st">"MAE:"</span>,  <span class="fn">mean_absolute_error</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))
+<span class="fn">print</span>(<span class="st">"RMSE:"</span>, <span class="fn">mean_squared_error</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>)**<span class="nm">0.5</span>)
+<span class="fn">print</span>(<span class="st">"R²:"</span>,   <span class="fn">r2_score</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))</pre>
+        </div>
+        <div class="alert alert-info">
+          <span class="alert-icon">🔗</span>
+          <div><strong>랜덤포레스트 vs 결정 트리 관계:</strong><br>
+          결정 트리 1개 = 스무고개 1번<br>
+          랜덤포레스트 = 스무고개 100번 해서 다수결 → 더 안정적, 정확도 높음<br>
+          <span class="hl-yellow">시험에서 단일 트리 구조 파악 문제가 나오면 DecisionTree, 성능 중심이면 RandomForest!</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 4. 딥러닝 공식 =============== -->
+<section id="dl">
+  <div class="section-title">
+    <div class="icon">🧠</div>
+    <div>
+      <h2>딥러닝(DL) Sequential 모델 공식</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted)">Dense 층 쌓기 → 컴파일 → 학습 → 예측</p>
+    </div>
+  </div>
+
+  <!-- Dense 레이어 설명 -->
+  <div class="card" style="border: 2px solid #c4b5fd;">
+    <div class="card-title"><span class="emoji">🏗️</span> Dense 레이어의 4가지 파라미터 — 완전 해설</div>
+    <div class="analogy">
+      <strong>🏢 비유: 회사 부서 설계하기</strong>
+      Sequential 모델 = 여러 부서(층)가 순서대로 일을 처리하는 회사.<br>
+      Dense(128, activation='relu', input_shape=(10,)) = "128명이 일하고, relu방식으로 처리하며, 입력서류는 10장인 첫 번째 부서"
+    </div>
+    <div class="param-grid">
+      <div class="param-card">
+        <div class="param-name">units (첫 번째 숫자)</div>
+        <div class="param-desc">
+          <strong>뉴런(노드) 수</strong><br>
+          해당 층이 처리하는 특징의 수.<br>
+          <span class="hl-yellow">32, 64, 128, 256</span> 등 2의 거듭제곱 사용.<br>
+          보통 입력층~중간층: 크게, 출력층: 문제에 따라 고정.
+        </div>
+      </div>
+      <div class="param-card">
+        <div class="param-name">activation</div>
+        <div class="param-desc">
+          <strong>활성화 함수</strong> — "어떤 방식으로 신호를 처리할까?"<br>
+          • <span class="hl-blue">relu</span>: 은닉층 기본값 (음수 → 0, 양수 → 그대로)<br>
+          • <span class="hl-green">sigmoid</span>: 이진분류 출력층 (0~1 확률)<br>
+          • <span class="hl-pink">softmax</span>: 다중분류 출력층 (합계=1 확률)<br>
+          • <span class="hl-yellow">없음(None/linear)</span>: 회귀 출력층
+        </div>
+      </div>
+      <div class="param-card">
+        <div class="param-name">input_shape</div>
+        <div class="param-desc">
+          <strong>입력 데이터 형상</strong> — 첫 번째 층에만 필요!<br>
+          피처(컬럼) 수 = <span class="hl-blue">X_train.shape[1]</span><br>
+          형식: <code>input_shape=(피처수,)</code><br>
+          예: 10개 컬럼 → <code>input_shape=(10,)</code>
+        </div>
+      </div>
+      <div class="param-card">
+        <div class="param-name">출력층 units 결정법</div>
+        <div class="param-desc">
+          • <strong>이진 분류:</strong> <span class="hl-pink">1</span> (0 또는 1 확률 하나만)<br>
+          • <strong>다중 분류:</strong> <span class="hl-blue">클래스 수</span> (예: 3종류 → 3)<br>
+          • <strong>회귀:</strong> <span class="hl-green">1</span> (하나의 숫자 예측)
+        </div>
+      </div>
+    </div>
+
+    <!-- 레이어 시각화 -->
+    <div class="layer-viz">
+      <div class="layer-row">
+        <div class="layer-box">
+          <h4>🔵 입력층 (Input Layer)</h4>
+          <p>Dense(<strong>128</strong>, activation=<strong>'relu'</strong>, input_shape=<strong>(피처수,)</strong>)</p>
+          <p style="font-size:0.72rem;margin-top:4px;color:#5b21b6">→ 첫 번째 층만 input_shape 지정</p>
+        </div>
+        <div class="layer-arrow">→</div>
+        <div class="layer-box">
+          <h4>🟡 은닉층 (Hidden Layer)</h4>
+          <p>Dense(<strong>64</strong>, activation=<strong>'relu'</strong>)</p>
+          <p style="font-size:0.72rem;margin-top:4px;color:#5b21b6">→ relu가 기본. 층 수, 노드 수는 자유</p>
+        </div>
+        <div class="layer-arrow">→</div>
+        <div class="layer-box output-box">
+          <h4>🔴 출력층 (Output Layer)</h4>
+          <p>Dense(<strong>?</strong>, activation=<strong>'?'</strong>)</p>
+          <p style="font-size:0.72rem;margin-top:4px;color:#9d174d">→ 문제 유형에 따라 달라짐 (아래 표 참고)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이진 분류 딥러닝 -->
+  <div class="formula-card">
+    <div class="formula-header dl">⚫⚪ <span>딥러닝 이진 분류 (Binary Classification)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🚪 비유: 문이 열렸냐(1) 닫혔냐(0) 예측</strong>
+        정답이 2가지(예/아니오, 합격/불합격, 정상/이상)인 경우
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 이진 분류 Sequential 전체 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="var">model</span> = <span class="fn">Sequential</span>([
+    <span class="fn">Dense</span>(<span class="nm">128</span>, <span class="var">activation</span>=<span class="st">'relu'</span>, <span class="var">input_shape</span>=(<span class="var">X_train</span>.<span class="var">shape</span>[<span class="nm">1</span>],)),
+    <span class="cm">#          ↑은닉층  ↑음수제거    ↑피처 수 자동 지정</span>
+    <span class="fn">Dense</span>(<span class="nm">64</span>,  <span class="var">activation</span>=<span class="st">'relu'</span>),
+    <span class="fn">Dense</span>(<span class="nm">1</span>,   <span class="var">activation</span>=<span class="st">'sigmoid'</span>)  <span class="cm"># 출력: 1개 확률값 (0~1)</span>
+])
+
+<span class="var">model</span>.<span class="fn">compile</span>(
+    <span class="var">optimizer</span>=<span class="st">'adam'</span>,           <span class="cm"># 학습 최적화 알고리즘 (항상 adam)</span>
+    <span class="var">loss</span>=<span class="st">'binary_crossentropy'</span>, <span class="cm"># 이진분류 전용 손실함수</span>
+    <span class="var">metrics</span>=[<span class="st">'accuracy'</span>]         <span class="cm"># 학습 중 표시할 지표</span>
+)
+
+<span class="var">early_stop</span> = <span class="fn">EarlyStopping</span>(<span class="var">patience</span>=<span class="nm">5</span>, <span class="var">restore_best_weights</span>=<span class="op">True</span>)
+<span class="cm">#                           ↑ 5번 연속 개선 없으면 조기 중단 (과적합 방지)</span>
+
+<span class="var">model</span>.<span class="fn">fit</span>(
+    <span class="var">X_train</span>, <span class="var">y_train</span>,
+    <span class="var">epochs</span>=<span class="nm">100</span>,            <span class="cm"># 최대 반복 학습 횟수</span>
+    <span class="var">batch_size</span>=<span class="nm">32</span>,         <span class="cm"># 한 번에 학습하는 데이터 묶음 크기</span>
+    <span class="var">validation_split</span>=<span class="nm">0.2</span>, <span class="cm"># 훈련 데이터의 20%를 검증용으로</span>
+    <span class="var">callbacks</span>=[<span class="var">early_stop</span>]
+)
+
+<span class="cm"># 예측 (0.5 기준으로 0 또는 1 분류)</span>
+<span class="var">y_prob</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>)
+<span class="var">y_pred</span> = (<span class="var">y_prob</span> > <span class="nm">0.5</span>).<span class="fn">astype</span>(<span class="nm">int</span>)
+<span class="fn">print</span>(<span class="st">"정확도:"</span>, <span class="fn">accuracy_score</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 다중 분류 딥러닝 -->
+  <div class="formula-card">
+    <div class="formula-header dl">🌈 <span>딥러닝 다중 분류 (Multi-class Classification)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🌺 비유: 꽃 종류 3가지 중 어느 것인지 예측</strong>
+        정답이 3가지 이상인 경우. 마지막 Dense의 units = 클래스 수!
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 다중 분류 Sequential 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># 레이블을 One-Hot 인코딩으로 변환 (다중분류 필수!)</span>
+<span class="kw">from</span> <span class="var">tensorflow.keras.utils</span> <span class="kw">import</span> <span class="fn">to_categorical</span>
+<span class="var">y_train_cat</span> = <span class="fn">to_categorical</span>(<span class="var">y_train</span>)  <span class="cm"># [0,1,2] → [[1,0,0],[0,1,0],[0,0,1]]</span>
+<span class="var">y_test_cat</span>  = <span class="fn">to_categorical</span>(<span class="var">y_test</span>)
+
+<span class="var">num_classes</span> = <span class="nm">3</span>  <span class="cm"># 클래스 수 (문제에 따라 변경)</span>
+
+<span class="var">model</span> = <span class="fn">Sequential</span>([
+    <span class="fn">Dense</span>(<span class="nm">128</span>, <span class="var">activation</span>=<span class="st">'relu'</span>, <span class="var">input_shape</span>=(<span class="var">X_train</span>.<span class="var">shape</span>[<span class="nm">1</span>],)),
+    <span class="fn">Dense</span>(<span class="nm">64</span>,  <span class="var">activation</span>=<span class="st">'relu'</span>),
+    <span class="fn">Dense</span>(<span class="var">num_classes</span>, <span class="var">activation</span>=<span class="st">'softmax'</span>)  <span class="cm"># 출력: 클래스 수만큼, 합계=1</span>
+])
+
+<span class="var">model</span>.<span class="fn">compile</span>(
+    <span class="var">optimizer</span>=<span class="st">'adam'</span>,
+    <span class="var">loss</span>=<span class="st">'categorical_crossentropy'</span>,  <span class="cm"># 다중분류 전용 손실함수</span>
+    <span class="var">metrics</span>=[<span class="st">'accuracy'</span>]
+)
+
+<span class="var">model</span>.<span class="fn">fit</span>(<span class="var">X_train</span>, <span class="var">y_train_cat</span>, <span class="var">epochs</span>=<span class="nm">100</span>, <span class="var">batch_size</span>=<span class="nm">32</span>, <span class="var">validation_split</span>=<span class="nm">0.2</span>)
+
+<span class="cm"># 예측 (확률 중 가장 큰 인덱스가 예측 클래스)</span>
+<span class="var">y_prob</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>)
+<span class="var">y_pred</span> = <span class="var">y_prob</span>.<span class="fn">argmax</span>(<span class="var">axis</span>=<span class="nm">1</span>)</pre>
+      </div>
+      <div class="alert alert-warning">
+        <span class="alert-icon">💡</span>
+        <div><strong>sparse_categorical_crossentropy 사용 시:</strong> to_categorical() 없이도 됩니다.
+        <code>loss='sparse_categorical_crossentropy'</code>로 바꾸고 y_train 그대로 사용 가능!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 회귀 딥러닝 -->
+  <div class="formula-card">
+    <div class="formula-header dl">📊 <span>딥러닝 회귀 (Regression)</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>💰 비유: 아파트 가격을 숫자로 예측</strong>
+        마지막 Dense의 activation이 없고(None/linear), 출력 노드는 항상 1개!
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — 딥러닝 회귀 Sequential 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="var">model</span> = <span class="fn">Sequential</span>([
+    <span class="fn">Dense</span>(<span class="nm">128</span>, <span class="var">activation</span>=<span class="st">'relu'</span>, <span class="var">input_shape</span>=(<span class="var">X_train</span>.<span class="var">shape</span>[<span class="nm">1</span>],)),
+    <span class="fn">Dense</span>(<span class="nm">64</span>,  <span class="var">activation</span>=<span class="st">'relu'</span>),
+    <span class="fn">Dense</span>(<span class="nm">1</span>)                           <span class="cm"># 회귀: activation 없음! 그냥 숫자 출력</span>
+])
+
+<span class="var">model</span>.<span class="fn">compile</span>(
+    <span class="var">optimizer</span>=<span class="st">'adam'</span>,
+    <span class="var">loss</span>=<span class="st">'mse'</span>,               <span class="cm"># Mean Squared Error (회귀 전용)</span>
+    <span class="var">metrics</span>=[<span class="st">'mae'</span>]            <span class="cm"># Mean Absolute Error 표시</span>
+)
+
+<span class="var">model</span>.<span class="fn">fit</span>(<span class="var">X_train</span>, <span class="var">y_train</span>, <span class="var">epochs</span>=<span class="nm">100</span>, <span class="var">batch_size</span>=<span class="nm">32</span>, <span class="var">validation_split</span>=<span class="nm">0.2</span>)
+
+<span class="cm"># 예측 (바로 숫자값)</span>
+<span class="var">y_pred</span> = <span class="var">model</span>.<span class="fn">predict</span>(<span class="var">X_test</span>).<span class="fn">flatten</span>()  <span class="cm"># 2D → 1D 변환</span>
+<span class="fn">print</span>(<span class="st">"MAE:"</span>,  <span class="fn">mean_absolute_error</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>))
+<span class="fn">print</span>(<span class="st">"RMSE:"</span>, <span class="fn">mean_squared_error</span>(<span class="var">y_test</span>, <span class="var">y_pred</span>)**<span class="nm">0.5</span>)</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 시각화 섹션 =============== -->
+<section id="viz">
+  <div class="section-title">
+    <div class="icon">🎨</div>
+    <div>
+      <h2>데이터 시각화 공식 (Matplotlib & Seaborn)</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted)">EDA 단계에서 데이터 분포·관계·패턴을 눈으로 확인</p>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <span class="alert-icon">📦</span>
+    <div>
+      <strong>두 라이브러리 역할 차이:</strong><br>
+      <span class="hl-blue">Matplotlib</span> = 기본 도구. 세부 조정 가능하지만 코드가 길다. 자동차로 치면 수동 기어.<br>
+      <span class="hl-green">Seaborn</span> = Matplotlib 위에 올린 자동 기어. 코드 짧고 이쁜 그래프 기본 제공. 데이터프레임과 궁합 최고!
+    </div>
+  </div>
+
+  <!-- 임포트 -->
+  <div class="formula-card">
+    <div class="formula-header prep">🚀 <span>시각화 임포트 & 기본 설정</span></div>
+    <div class="formula-body">
+      <div class="code-wrapper">
+        <span class="code-label">Python — 시각화 임포트 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="kw">import</span> <span class="var">matplotlib.pyplot</span> <span class="kw">as</span> <span class="var">plt</span>
+<span class="kw">import</span> <span class="var">seaborn</span> <span class="kw">as</span> <span class="var">sns</span>
+
+<span class="cm"># 코랩 한글 깨짐 방지 (필요시)</span>
+<span class="kw">import</span> <span class="var">matplotlib</span>
+<span class="var">matplotlib</span>.<span class="var">rcParams</span>[<span class="st">'font.family'</span>] = <span class="st">'NanumGothic'</span>
+<span class="var">matplotlib</span>.<span class="var">rcParams</span>[<span class="st">'axes.unicode_minus'</span>] = <span class="op">False</span>
+
+<span class="cm"># 그래프 크기 설정 (그림 전에 먼저 선언)</span>
+<span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">10</span>, <span class="nm">6</span>))  <span class="cm"># 가로 10인치, 세로 6인치</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matplotlib 기본 -->
+  <div class="formula-card">
+    <div class="formula-header prep">📊 <span>Matplotlib — 기본 plot 공식 모음</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>🖌️ 비유: 빈 캔버스에 그림 그리기</strong>
+        plt.figure()로 캔버스를 펼치고 → 원하는 그림을 그리고 → plt.show()로 화면에 띄웁니다.
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — Matplotlib 주요 그래프 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># ── ① 선 그래프 (Line Plot) ─────────────────────────────</span>
+<span class="cm">#    언제? 시간 흐름에 따른 변화 (학습 곡선, 주가 등)</span>
+<span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">10</span>, <span class="nm">4</span>))
+<span class="var">plt</span>.<span class="fn">plot</span>(<span class="var">df</span>[<span class="st">'x컬럼'</span>], <span class="var">df</span>[<span class="st">'y컬럼'</span>], <span class="var">color</span>=<span class="st">'blue'</span>, <span class="var">linewidth</span>=<span class="nm">2</span>)
+<span class="var">plt</span>.<span class="fn">title</span>(<span class="st">'그래프 제목'</span>)
+<span class="var">plt</span>.<span class="fn">xlabel</span>(<span class="st">'x축 이름'</span>)
+<span class="var">plt</span>.<span class="fn">ylabel</span>(<span class="st">'y축 이름'</span>)
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ② 막대 그래프 (Bar Chart) ───────────────────────────</span>
+<span class="cm">#    언제? 범주별 값 비교 (지역별 매출, 등급별 개수 등)</span>
+<span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">8</span>, <span class="nm">5</span>))
+<span class="var">plt</span>.<span class="fn">bar</span>(<span class="var">df</span>[<span class="st">'범주컬럼'</span>], <span class="var">df</span>[<span class="st">'값컬럼'</span>], <span class="var">color</span>=<span class="st">'skyblue'</span>)
+<span class="var">plt</span>.<span class="fn">title</span>(<span class="st">'막대 그래프'</span>)
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ③ 히스토그램 (Histogram) ────────────────────────────</span>
+<span class="cm">#    언제? 숫자 데이터의 분포 확인 (나이 분포, 점수 분포 등)</span>
+<span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">8</span>, <span class="nm">5</span>))
+<span class="var">plt</span>.<span class="fn">hist</span>(<span class="var">df</span>[<span class="st">'컬럼명'</span>], <span class="var">bins</span>=<span class="nm">20</span>, <span class="var">color</span>=<span class="st">'steelblue'</span>, <span class="var">edgecolor</span>=<span class="st">'white'</span>)
+<span class="cm">#              ↑bins: 막대 개수 (촘촘할수록 큼)</span>
+<span class="var">plt</span>.<span class="fn">title</span>(<span class="st">'분포 히스토그램'</span>)
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ④ 산점도 (Scatter Plot) ─────────────────────────────</span>
+<span class="cm">#    언제? 두 컬럼의 관계 확인 (키-몸무게, 공부시간-점수)</span>
+<span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">8</span>, <span class="nm">5</span>))
+<span class="var">plt</span>.<span class="fn">scatter</span>(<span class="var">df</span>[<span class="st">'x컬럼'</span>], <span class="var">df</span>[<span class="st">'y컬럼'</span>], <span class="var">alpha</span>=<span class="nm">0.5</span>, <span class="var">c</span>=<span class="st">'coral'</span>)
+<span class="cm">#                                       ↑투명도(0~1)</span>
+<span class="var">plt</span>.<span class="fn">title</span>(<span class="st">'산점도'</span>)
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ⑤ 파이 차트 (Pie Chart) ────────────────────────────</span>
+<span class="cm">#    언제? 비율·구성 비교 (카테고리 비율)</span>
+<span class="var">counts</span> = <span class="var">df</span>[<span class="st">'컬럼명'</span>].<span class="fn">value_counts</span>()
+<span class="var">plt</span>.<span class="fn">pie</span>(<span class="var">counts</span>, <span class="var">labels</span>=<span class="var">counts</span>.<span class="var">index</span>, <span class="var">autopct</span>=<span class="st">'%1.1f%%'</span>)
+<span class="cm">#                                       ↑ 퍼센트 표시 형식</span>
+<span class="var">plt</span>.<span class="fn">title</span>(<span class="st">'파이 차트'</span>)
+<span class="var">plt</span>.<span class="fn">show</span>()</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seaborn -->
+  <div class="formula-card">
+    <div class="formula-header dl">🐦 <span>Seaborn — 더 쉽고 예쁜 시각화 공식 모음</span></div>
+    <div class="formula-body">
+      <div class="analogy">
+        <strong>✨ 비유: 스마트폰 자동 보정 카메라</strong>
+        Matplotlib이 수동 DSLR이라면, Seaborn은 버튼 하나로 예쁘게 찍어주는 스마트폰 카메라입니다.
+        <code>data=df</code>, <code>x='컬럼'</code>, <code>y='컬럼'</code>만 넣으면 알아서 예쁘게 그려줍니다!
+      </div>
+      <div class="code-wrapper">
+        <span class="code-label">Python — Seaborn 주요 그래프 공식</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="cm"># ── ① countplot — 범주별 개수 막대 (★가장 자주 출제★)</span>
+<span class="cm">#    언제? 각 카테고리가 몇 개인지 확인 (클래스 불균형 확인)</span>
+<span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">8</span>, <span class="nm">5</span>))
+<span class="var">sns</span>.<span class="fn">countplot</span>(<span class="var">data</span>=<span class="var">df</span>, <span class="var">x</span>=<span class="st">'범주컬럼'</span>)
+<span class="var">plt</span>.<span class="fn">title</span>(<span class="st">'범주별 개수'</span>)
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ② histplot — 분포 히스토그램 (kde 곡선 추가 가능)</span>
+<span class="cm">#    언제? 숫자 컬럼의 분포 시각화</span>
+<span class="var">sns</span>.<span class="fn">histplot</span>(<span class="var">data</span>=<span class="var">df</span>, <span class="var">x</span>=<span class="st">'숫자컬럼'</span>, <span class="var">kde</span>=<span class="op">True</span>, <span class="var">bins</span>=<span class="nm">30</span>)
+<span class="cm">#                                       ↑kde: 부드러운 분포 곡선 추가</span>
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ③ boxplot — 분포 & 이상치 동시 확인 (★자주 출제★)</span>
+<span class="cm">#    언제? 이상치 확인, 그룹 간 분포 비교</span>
+<span class="var">sns</span>.<span class="fn">boxplot</span>(<span class="var">data</span>=<span class="var">df</span>, <span class="var">x</span>=<span class="st">'범주컬럼'</span>, <span class="var">y</span>=<span class="st">'숫자컬럼'</span>)
+<span class="cm">#    상자 밖 점 = 이상치! 박스 = 25~75 퍼센타일</span>
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ④ heatmap — 상관관계 시각화 (★★자주 출제★★)</span>
+<span class="cm">#    언제? 컬럼 간 상관관계 파악 (1에 가까울수록 강한 양의 상관)</span>
+<span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">10</span>, <span class="nm">8</span>))
+<span class="var">sns</span>.<span class="fn">heatmap</span>(
+    <span class="var">df</span>.<span class="fn">corr</span>(),        <span class="cm"># .corr() = 상관계수 행렬 계산</span>
+    <span class="var">annot</span>=<span class="op">True</span>,      <span class="cm"># 각 칸에 숫자 표시</span>
+    <span class="var">fmt</span>=<span class="st">'.2f'</span>,        <span class="cm"># 소수점 2자리</span>
+    <span class="var">cmap</span>=<span class="st">'coolwarm'</span>  <span class="cm"># 색상 팔레트 (파랑=음의 상관, 빨강=양의 상관)</span>
+)
+<span class="var">plt</span>.<span class="fn">title</span>(<span class="st">'상관관계 히트맵'</span>)
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ⑤ scatterplot — 관계 산점도 (색상으로 클래스 구분)</span>
+<span class="var">sns</span>.<span class="fn">scatterplot</span>(<span class="var">data</span>=<span class="var">df</span>, <span class="var">x</span>=<span class="st">'x컬럼'</span>, <span class="var">y</span>=<span class="st">'y컬럼'</span>, <span class="var">hue</span>=<span class="st">'클래스컬럼'</span>)
+<span class="cm">#                                                    ↑ hue: 색상으로 구분할 컬럼</span>
+<span class="var">plt</span>.<span class="fn">show</span>()
+
+<span class="cm"># ── ⑥ pairplot — 모든 컬럼 쌍 한번에 보기</span>
+<span class="cm">#    언제? 어떤 컬럼이 레이블과 관계 있는지 빠르게 탐색</span>
+<span class="var">sns</span>.<span class="fn">pairplot</span>(<span class="var">df</span>, <span class="var">hue</span>=<span class="st">'레이블컬럼'</span>)
+<span class="var">plt</span>.<span class="fn">show</span>()</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 그래프 선택 가이드 -->
+  <div class="card" style="border: 2px solid #c4b5fd;">
+    <div class="card-title"><span class="emoji">🗺️</span> 상황별 그래프 선택 가이드 (★시험용★)</div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>상황</th>
+            <th>추천 그래프</th>
+            <th>핵심 코드</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>범주별 <strong>개수</strong> 확인</td>
+            <td><span class="tag tag-clf">sns.countplot</span></td>
+            <td><code>sns.countplot(data=df, x='컬럼')</code></td>
+          </tr>
+          <tr>
+            <td>숫자 컬럼 <strong>분포</strong> 확인</td>
+            <td><span class="tag tag-clf">sns.histplot</span> / plt.hist</td>
+            <td><code>sns.histplot(data=df, x='컬럼', kde=True)</code></td>
+          </tr>
+          <tr>
+            <td><strong>이상치</strong> 시각화</td>
+            <td><span class="tag tag-multi">sns.boxplot</span></td>
+            <td><code>sns.boxplot(data=df, x='범주', y='숫자')</code></td>
+          </tr>
+          <tr>
+            <td>컬럼 간 <strong>상관관계</strong></td>
+            <td><span class="tag tag-multi">sns.heatmap</span></td>
+            <td><code>sns.heatmap(df.corr(), annot=True)</code></td>
+          </tr>
+          <tr>
+            <td>두 변수 <strong>관계</strong> 확인</td>
+            <td><span class="tag tag-reg">sns.scatterplot</span></td>
+            <td><code>sns.scatterplot(data=df, x=..., y=..., hue=...)</code></td>
+          </tr>
+          <tr>
+            <td>시간에 따른 <strong>변화</strong></td>
+            <td><span class="tag tag-reg">plt.plot</span></td>
+            <td><code>plt.plot(df['x'], df['y'])</code></td>
+          </tr>
+          <tr>
+            <td>전체 컬럼 <strong>한번에 탐색</strong></td>
+            <td><span class="tag tag-clf">sns.pairplot</span></td>
+            <td><code>sns.pairplot(df, hue='레이블')</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-warning" style="margin-top:12px">
+      <span class="alert-icon">⚡</span>
+      <div><strong>EDA 3종 세트 (항상 이 순서로!):</strong><br>
+        ① <span class="hl-blue">heatmap</span>으로 상관관계 파악 → ② <span class="hl-green">histplot/boxplot</span>으로 분포·이상치 확인 → ③ <span class="hl-yellow">countplot</span>으로 클래스 불균형 확인
+      </div>
+    </div>
+  </div>
+
+  <!-- plt 자주 쓰는 꾸미기 -->
+  <div class="formula-card">
+    <div class="formula-header prep">🖼️ <span>그래프 꾸미기 옵션 — 자주 쓰는 것만</span></div>
+    <div class="formula-body">
+      <div class="code-wrapper">
+        <span class="code-label">Python — 그래프 공통 꾸미기 옵션</span>
+        <button class="copy-btn" onclick="copyCode(this)">복사</button>
+        <pre><span class="var">plt</span>.<span class="fn">figure</span>(<span class="var">figsize</span>=(<span class="nm">10</span>, <span class="nm">6</span>))  <span class="cm"># 크기 설정 (가로, 세로 인치)</span>
+
+<span class="cm"># ─ 그래프 그리는 코드 여기에 ─</span>
+
+<span class="var">plt</span>.<span class="fn">title</span>(<span class="st">'제목'</span>, <span class="var">fontsize</span>=<span class="nm">14</span>)   <span class="cm"># 그래프 제목</span>
+<span class="var">plt</span>.<span class="fn">xlabel</span>(<span class="st">'x축 이름'</span>)             <span class="cm"># x축 레이블</span>
+<span class="var">plt</span>.<span class="fn">ylabel</span>(<span class="st">'y축 이름'</span>)             <span class="cm"># y축 레이블</span>
+<span class="var">plt</span>.<span class="fn">legend</span>()                       <span class="cm"># 범례 표시</span>
+<span class="var">plt</span>.<span class="fn">xticks</span>(<span class="var">rotation</span>=<span class="nm">45</span>)           <span class="cm"># x축 레이블 45도 회전 (겹칠 때)</span>
+<span class="var">plt</span>.<span class="fn">tight_layout</span>()                 <span class="cm"># 레이아웃 자동 정렬 (잘림 방지)</span>
+<span class="var">plt</span>.<span class="fn">show</span>()                         <span class="cm"># 화면에 출력 (마지막에 항상!</span>)
+
+<span class="cm"># ─ 여러 그래프 한 화면에 (서브플롯) ─</span>
+<span class="var">fig</span>, <span class="var">axes</span> = <span class="var">plt</span>.<span class="fn">subplots</span>(<span class="nm">1</span>, <span class="nm">2</span>, <span class="var">figsize</span>=(<span class="nm">14</span>, <span class="nm">5</span>))  <span class="cm"># 1행 2열</span>
+<span class="var">axes</span>[<span class="nm">0</span>].<span class="fn">hist</span>(<span class="var">df</span>[<span class="st">'컬럼1'</span>])          <span class="cm"># 왼쪽 그래프</span>
+<span class="var">axes</span>[<span class="nm">1</span>].<span class="fn">hist</span>(<span class="var">df</span>[<span class="st">'컬럼2'</span>])          <span class="cm"># 오른쪽 그래프</span>
+<span class="var">plt</span>.<span class="fn">show</span>()</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 5. 비교 표 =============== -->
+<section id="table">
+  <div class="section-title">
+    <div class="icon">📊</div>
+    <div>
+      <h2>상황별 공식 비교표 (★최중요 암기★)</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted)">시험 전날 이 표만 외워도 합격 가능!</p>
+    </div>
+  </div>
+
+  <!-- ML vs DL 비교 -->
+  <div class="card">
+    <div class="card-title"><span class="emoji">🔄</span> 분류 vs 회귀 — 코드 차이점 한눈에</div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>🏷️ 분류 (Classification)</th>
+            <th>📈 회귀 (Regression)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>정답 형태</strong></td>
+            <td>카테고리 (남/여, 0/1/2)</td>
+            <td>연속 숫자 (34.5, 2억 등)</td>
+          </tr>
+          <tr>
+            <td><strong>ML 모델명</strong></td>
+            <td><span class="hl-blue">RandomForestClassifier</span></td>
+            <td><span class="hl-green">RandomForestRegressor</span></td>
+          </tr>
+          <tr>
+            <td><strong>ML 평가지표</strong></td>
+            <td>accuracy_score, f1_score</td>
+            <td>MAE, MSE, RMSE, R²</td>
+          </tr>
+          <tr>
+            <td><strong>DL 출력층</strong></td>
+            <td>Dense(1, 'sigmoid') 또는 Dense(N, 'softmax')</td>
+            <td><span class="hl-yellow">Dense(1)</span> — activation 없음!</td>
+          </tr>
+          <tr>
+            <td><strong>DL loss 함수</strong></td>
+            <td>binary_crossentropy / categorical_crossentropy</td>
+            <td><span class="hl-pink">mse</span> (mean_squared_error)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 딥러닝 3종 비교 -->
+  <div class="card" style="margin-top:16px">
+    <div class="card-title"><span class="emoji">🧠</span> 딥러닝 3가지 유형 — activation & loss 완전 정리 (★반드시 암기★)</div>
+    <div class="alert alert-danger" style="margin-bottom:12px">
+      <span class="alert-icon">🔥</span>
+      <div><strong>이 표가 시험의 핵심!</strong> 문제 유형을 파악하고 아래 조합을 그대로 쓰면 됩니다.</div>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>유형</th>
+            <th>언제 쓰나요?</th>
+            <th>출력층 units</th>
+            <th>출력층 activation</th>
+            <th>loss 함수</th>
+            <th>예측 후 처리</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-bin">이진 분류</span></td>
+            <td>정답 2가지<br>(예/아니오, 0/1)</td>
+            <td style="text-align:center"><span class="hl-pink"><strong>1</strong></span></td>
+            <td><code>sigmoid</code></td>
+            <td><code>binary_crossentropy</code></td>
+            <td>(y_prob &gt; 0.5).astype(int)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-multi">다중 분류</span></td>
+            <td>정답 3가지 이상<br>(종류A/B/C)</td>
+            <td style="text-align:center"><span class="hl-blue"><strong>클래스 수</strong></span></td>
+            <td><code>softmax</code></td>
+            <td><code>categorical_crossentropy</code><br><small>(또는 sparse_categorical)</small></td>
+            <td>y_prob.argmax(axis=1)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-reg">회귀</span></td>
+            <td>숫자 예측<br>(가격, 온도 등)</td>
+            <td style="text-align:center"><span class="hl-green"><strong>1</strong></span></td>
+            <td><strong>없음</strong><br><small>(linear / 생략)</small></td>
+            <td><code>mse</code><br><small>(또는 mae)</small></td>
+            <td>model.predict().flatten()</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- activation 함수 비교 -->
+  <div class="card" style="margin-top:16px">
+    <div class="card-title"><span class="emoji">⚡</span> 활성화 함수(activation) 완전 정리</div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>함수명</th>
+            <th>출력 범위</th>
+            <th>사용 위치</th>
+            <th>비유</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="hl-blue">relu</code></td>
+            <td>0 ~ ∞</td>
+            <td><strong>은닉층 기본값</strong></td>
+            <td>음수 신호는 무시, 양수만 통과시키는 필터</td>
+          </tr>
+          <tr>
+            <td><code class="hl-pink">sigmoid</code></td>
+            <td>0 ~ 1</td>
+            <td><strong>이진분류 출력층</strong></td>
+            <td>0~1 사이 확률로 변환하는 S자 곡선</td>
+          </tr>
+          <tr>
+            <td><code class="hl-yellow">softmax</code></td>
+            <td>0~1 (합=1)</td>
+            <td><strong>다중분류 출력층</strong></td>
+            <td>모든 클래스 확률의 합이 100%가 되도록 정규화</td>
+          </tr>
+          <tr>
+            <td><code>linear</code> / 생략</td>
+            <td>-∞ ~ ∞</td>
+            <td><strong>회귀 출력층</strong></td>
+            <td>아무 처리 없이 숫자 그대로 출력</td>
+          </tr>
+          <tr>
+            <td><code>tanh</code></td>
+            <td>-1 ~ 1</td>
+            <td>은닉층 (덜 사용)</td>
+            <td>relu보다 오래된 방식, 음수도 표현</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 6. 체크리스트 =============== -->
+<section id="checklist">
+  <div class="section-title">
+    <div class="icon">✅</div>
+    <div>
+      <h2>시험 전 최종 체크리스트</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted)">클릭해서 체크 표시!</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📋</span> 전처리 체크리스트</div>
+    <ul class="checklist" id="prep-check">
+      <li onclick="toggleCheck(this)">pd.read_csv() 로 데이터 불러오기</li>
+      <li onclick="toggleCheck(this)">df.info(), df.isnull().sum() 으로 결측치 확인</li>
+      <li onclick="toggleCheck(this)">결측치 처리 (dropna 또는 fillna)</li>
+      <li onclick="toggleCheck(this)">범주형 컬럼 인코딩 (LabelEncoder 또는 get_dummies)</li>
+      <li onclick="toggleCheck(this)">X = df.drop('레이블', axis=1) / y = df['레이블']</li>
+      <li onclick="toggleCheck(this)">train_test_split (test_size=0.2, random_state=42)</li>
+      <li onclick="toggleCheck(this)">스케일링 (fit_transform은 train만, transform은 test만)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🤖</span> ML 체크리스트</div>
+    <ul class="checklist" id="ml-check">
+      <li onclick="toggleCheck(this)">분류 문제 → RandomForestClassifier</li>
+      <li onclick="toggleCheck(this)">회귀 문제 → RandomForestRegressor</li>
+      <li onclick="toggleCheck(this)">model.fit(X_train, y_train) 으로 학습</li>
+      <li onclick="toggleCheck(this)">y_pred = model.predict(X_test) 로 예측</li>
+      <li onclick="toggleCheck(this)">분류 평가: accuracy_score, f1_score</li>
+      <li onclick="toggleCheck(this)">회귀 평가: MAE, RMSE, R² (r2_score)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🧠</span> 딥러닝 체크리스트</div>
+    <ul class="checklist" id="dl-check">
+      <li onclick="toggleCheck(this)">이진분류: 출력 Dense(1, activation='sigmoid') + loss='binary_crossentropy'</li>
+      <li onclick="toggleCheck(this)">다중분류: 출력 Dense(N, activation='softmax') + loss='categorical_crossentropy'</li>
+      <li onclick="toggleCheck(this)">회귀: 출력 Dense(1) — activation 없음 + loss='mse'</li>
+      <li onclick="toggleCheck(this)">은닉층은 activation='relu' 사용</li>
+      <li onclick="toggleCheck(this)">첫 번째 Dense에만 input_shape=(피처수,) 지정</li>
+      <li onclick="toggleCheck(this)">model.compile(optimizer='adam', loss=..., metrics=[...])</li>
+      <li onclick="toggleCheck(this)">EarlyStopping(patience=5, restore_best_weights=True) 사용</li>
+      <li onclick="toggleCheck(this)">이진분류 예측: (y_prob > 0.5).astype(int)</li>
+      <li onclick="toggleCheck(this)">다중분류 예측: y_prob.argmax(axis=1)</li>
+    </ul>
+  </div>
+
+  <!-- 빠른 참조 -->
+  <div class="card" style="margin-top: 24px;">
+    <div class="card-title"><span class="emoji">⚡</span> 빠른 복사 — 자주 쓰는 코드 한 줄</div>
+    <div class="quick-ref">
+      <div class="qr-card" onclick="quickCopy('X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)')">
+        <span class="qr-emoji">✂️</span>
+        <div class="qr-title">데이터 분할</div>
+        <div class="qr-code">train_test_split()</div>
+      </div>
+      <div class="qr-card" onclick="quickCopy('scaler = StandardScaler()\nX_train = scaler.fit_transform(X_train)\nX_test = scaler.transform(X_test)')">
+        <span class="qr-emoji">⚖️</span>
+        <div class="qr-title">StandardScaler</div>
+        <div class="qr-code">fit_transform / transform</div>
+      </div>
+      <div class="qr-card" onclick="quickCopy('model = RandomForestClassifier(n_estimators=100, random_state=42)\nmodel.fit(X_train, y_train)\ny_pred = model.predict(X_test)')">
+        <span class="qr-emoji">🌲</span>
+        <div class="qr-title">RF 분류</div>
+        <div class="qr-code">Classifier</div>
+      </div>
+      <div class="qr-card" onclick="quickCopy('model = RandomForestRegressor(n_estimators=100, random_state=42)\nmodel.fit(X_train, y_train)\ny_pred = model.predict(X_test)')">
+        <span class="qr-emoji">📈</span>
+        <div class="qr-title">RF 회귀</div>
+        <div class="qr-code">Regressor</div>
+      </div>
+      <div class="qr-card" onclick="quickCopy('Dense(1, activation=\'sigmoid\')  # 이진분류\nDense(N, activation=\'softmax\')  # 다중분류\nDense(1)                         # 회귀')">
+        <span class="qr-emoji">🔴</span>
+        <div class="qr-title">출력층 3종</div>
+        <div class="qr-code">sigmoid/softmax/없음</div>
+      </div>
+      <div class="qr-card" onclick="quickCopy('print(\"MAE:\",  mean_absolute_error(y_test, y_pred))\nprint(\"RMSE:\", mean_squared_error(y_test, y_pred)**0.5)\nprint(\"R2:\",   r2_score(y_test, y_pred))')">
+        <span class="qr-emoji">📐</span>
+        <div class="qr-title">회귀 평가</div>
+        <div class="qr-code">MAE/RMSE/R²</div>
+      </div>
+      <div class="qr-card" onclick="quickCopy('early_stop = EarlyStopping(patience=5, restore_best_weights=True)\nmodel.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.2, callbacks=[early_stop])')">
+        <span class="qr-emoji">⏱️</span>
+        <div class="qr-title">EarlyStopping</div>
+        <div class="qr-code">patience=5</div>
+      </div>
+      <div class="qr-card" onclick="quickCopy('y_prob = model.predict(X_test)\ny_pred = (y_prob > 0.5).astype(int)')">
+        <span class="qr-emoji">🎯</span>
+        <div class="qr-title">이진분류 예측</div>
+        <div class="qr-code">&gt; 0.5 → 0/1</div>
+      </div>
+    </div>
+    <p style="font-size:0.76rem;color:var(--text-muted);margin-top:10px;text-align:center">💡 카드를 클릭하면 클립보드에 복사됩니다!</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>🎯 AICE Associate 합격 공식집 | 지환님 합격 응원합니다! 화이팅! 🔥</p>
+  <p style="margin-top:6px;opacity:0.6">모든 공식은 기출문제 패턴 기반으로 정리되었습니다.</p>
+</footer>
+
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ===== JavaScript ===== -->
+<script>
+  // ── 코드 복사 버튼 ──────────────────────────
+  function copyCode(btn) {
+    const pre = btn.nextElementSibling;
+    const text = pre.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ 복사됨';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '복사';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // ── 빠른 복사 ──────────────────────────────
+  function quickCopy(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.createElement('div');
+      toast.textContent = '✓ 클립보드에 복사되었습니다!';
+      toast.style.cssText = `
+        position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+        background:#10b981;color:white;padding:10px 20px;border-radius:8px;
+        font-size:0.85rem;font-weight:700;z-index:9999;
+        box-shadow:0 4px 16px rgba(0,0,0,0.2);
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    });
+  }
+
+  // ── 탭 전환 ─────────────────────────────────
+  function showTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── 체크리스트 토글 ──────────────────────────
+  function toggleCheck(li) {
+    li.classList.toggle('checked');
+    // 진행률 업데이트
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const allItems = document.querySelectorAll('.checklist li');
+    const checked  = document.querySelectorAll('.checklist li.checked');
+    const pct = allItems.length ? Math.round(checked.length / allItems.length * 100) : 0;
+    const fill = document.getElementById('progressFill');
+    const label = document.getElementById('progressLabel');
+    if (fill)  fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '% 완료';
+  }
+
+  // ── 스크롤 탑 버튼 ──────────────────────────
+  const scrollBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('show', window.scrollY > 400);
+  });
+
+  // ── 내비 활성 표시 ──────────────────────────
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
+        

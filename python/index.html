@@ -3,106 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Git/GitHub 완전 정복 — 버전관리 학습 가이드</title>
+<title>DX Academy — 기술 평가 학습 가이드</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ── TOKENS ── */
+/* ══════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════ */
 :root {
-  --bg:        #0d1117;
-  --bg2:       #161b22;
-  --bg3:       #21262d;
-  --border:    #30363d;
-  --border2:   #484f58;
-  --text:      #e6edf3;
-  --text2:     #8b949e;
-  --text3:     #6e7681;
-  --green:     #3fb950;
-  --green-dim: #1a4020;
-  --blue:      #58a6ff;
-  --blue-dim:  #0d2149;
-  --orange:    #f0883e;
-  --orange-dim:#3d2012;
-  --red:       #f85149;
-  --red-dim:   #3d0b09;
-  --purple:    #bc8cff;
-  --yellow:    #e3b341;
-  --radius:    10px;
-  --radius-sm: 6px;
+  --bg:         #0a0e17;
+  --bg2:        #10151f;
+  --bg3:        #171e2d;
+  --bg4:        #1e2738;
+  --border:     #252d3d;
+  --border2:    #35405a;
+  --text:       #dde4f0;
+  --text2:      #7a8aaa;
+  --text3:      #4a5570;
+  --red:        #f87171;
+  --red-dim:    #3b0d0d;
+  --yellow:     #fbbf24;
+  --radius:     12px;
+  --radius-sm:  7px;
+
+  /* Git theme */
+  --git-accent:     #34d399;
+  --git-accent-dim: #0d3326;
+  --git-blue:       #60a5fa;
+  --git-blue-dim:   #0c1e3d;
+
+  /* DL theme */
+  --dl-accent:      #a78bfa;
+  --dl-accent-dim:  #1e1040;
+  --dl-cyan:        #22d3ee;
+  --dl-cyan-dim:    #062535;
+
+  /* Active subject vars (swapped via JS class) */
+  --accent:     #34d399;
+  --accent-dim: #0d3326;
+  --hi:         #60a5fa;
+  --hi-dim:     #0c1e3d;
+}
+body.dl-mode {
+  --accent:     #a78bfa;
+  --accent-dim: #1e1040;
+  --hi:         #22d3ee;
+  --hi-dim:     #062535;
 }
 
-/* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Noto Sans KR', sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
   min-height: 100vh;
 }
-a { color: var(--blue); text-decoration: none; }
 
-/* ── HEADER ── */
-.site-header {
+/* ══════════════════════════════════════
+   SUBJECT SWITCHER (top bar)
+══════════════════════════════════════ */
+.subject-bar {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
   padding: 0 16px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(12px);
-}
-.header-inner {
-  max-width: 900px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 12px;
-  height: 56px;
+  gap: 0;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
 }
-.logo {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--green);
-  white-space: nowrap;
+.subject-btn {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text2);
+  transition: all .2s;
+  white-space: nowrap;
+  font-family: 'Noto Sans KR', sans-serif;
 }
-.logo-icon {
-  width: 28px; height: 28px;
-  background: var(--green);
-  border-radius: 6px;
-  display: grid;
-  place-items: center;
-  font-size: 14px;
-  color: var(--bg);
+.subject-btn .icon {
+  font-size: 16px;
 }
-.score-badge {
+.subject-btn.active.git-btn {
+  background: var(--git-accent-dim);
+  border-color: var(--git-accent);
+  color: var(--git-accent);
+}
+.subject-btn.active.dl-btn {
+  background: var(--dl-accent-dim);
+  border-color: var(--dl-accent);
+  color: var(--dl-accent);
+}
+.subject-btn:not(.active):hover { background: var(--bg3); color: var(--text); }
+.subject-divider { width: 1px; height: 24px; background: var(--border2); margin: 0 8px; }
+.site-title {
   margin-left: auto;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: 11px;
+  color: var(--text3);
+  white-space: nowrap;
+}
+.score-pill {
+  margin-left: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
   background: var(--bg3);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 4px 12px;
+  padding: 3px 10px;
   color: var(--text2);
   white-space: nowrap;
 }
-.score-badge span { color: var(--yellow); font-weight: 700; }
+.score-pill span { color: var(--yellow); font-weight: 700; }
 
-/* ── NAV ── */
+/* ══════════════════════════════════════
+   SUBJECT PANELS (wrap everything)
+══════════════════════════════════════ */
+.subject-panel { display: none; }
+.subject-panel.active { display: block; }
+
+/* ══════════════════════════════════════
+   NAV TABS
+══════════════════════════════════════ */
 .nav-tabs {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
   position: sticky;
-  top: 56px;
-  z-index: 99;
+  top: 52px;
+  z-index: 150;
 }
 .nav-inner {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
   display: flex;
   padding: 0 8px;
@@ -113,81 +155,69 @@ a { color: var(--blue); text-decoration: none; }
 .nav-tab {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
-  padding: 12px 16px;
+  padding: 11px 15px;
   cursor: pointer;
+  border: none;
   border-bottom: 2px solid transparent;
   color: var(--text2);
   white-space: nowrap;
-  transition: all .2s;
+  transition: all .18s;
   background: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: flex; align-items: center; gap: 5px;
 }
 .nav-tab:hover { color: var(--text); }
-.nav-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
-.tab-badge {
+.nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-count {
   font-size: 10px;
   background: var(--bg3);
   border-radius: 10px;
-  padding: 1px 6px;
+  padding: 1px 5px;
 }
-.nav-tab.active .tab-badge { background: var(--blue-dim); color: var(--blue); }
+.nav-tab.active .tab-count { background: var(--accent-dim); color: var(--accent); }
 
-/* ── MAIN ── */
-.main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px 16px 60px;
-}
+/* ══════════════════════════════════════
+   MAIN / SECTIONS
+══════════════════════════════════════ */
+.main { max-width: 960px; margin: 0 auto; padding: 24px 16px 80px; }
 .section { display: none; }
 .section.active { display: block; }
 
-/* ── HERO ── */
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
 .hero {
-  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+  background: linear-gradient(135deg, var(--bg2), var(--bg3));
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 32px;
-  margin-bottom: 24px;
+  padding: 28px;
+  margin-bottom: 20px;
   position: relative;
   overflow: hidden;
 }
-.hero::before {
+.hero::after {
   content: '';
   position: absolute;
-  top: -40px; right: -40px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(63,185,80,.12) 0%, transparent 70%);
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+  opacity: .6;
   pointer-events: none;
 }
 .hero-tag {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--green);
-  background: var(--green-dim);
-  border: 1px solid var(--green);
+  font-size: 10px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
   border-radius: 4px;
   padding: 2px 8px;
   display: inline-block;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
-.hero h1 {
-  font-size: clamp(20px, 4vw, 28px);
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 8px;
-}
-.hero h1 em { color: var(--green); font-style: normal; }
-.hero p { color: var(--text2); font-size: 14px; margin-bottom: 20px; }
-.score-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
+.hero h1 { font-size: clamp(18px, 3.5vw, 26px); font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
+.hero h1 em { color: var(--accent); font-style: normal; }
+.hero p { color: var(--text2); font-size: 13px; margin-bottom: 18px; }
+.score-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .score-card {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -195,1336 +225,1069 @@ a { color: var(--blue); text-decoration: none; }
   padding: 12px;
   text-align: center;
 }
-.score-card .num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--yellow);
-}
-.score-card .label { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.score-card .num { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; color: var(--yellow); }
+.score-card .lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
 
-/* ── SECTION HEADING ── */
-.section-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
-.section-head h2 {
-  font-size: 16px;
-  font-weight: 700;
-}
-.section-head .badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  background: var(--blue-dim);
-  color: var(--blue);
-  border-radius: 4px;
-  padding: 2px 8px;
-}
+/* ══════════════════════════════════════
+   SECTION HEADING
+══════════════════════════════════════ */
+.sec-head { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.sec-head h2 { font-size: 15px; font-weight: 700; }
+.sec-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: var(--hi-dim); color: var(--hi); border-radius: 4px; padding: 2px 7px; }
 
-/* ── QUIZ CARD ── */
-.quiz-card {
+/* ══════════════════════════════════════
+   QUIZ (객관식)
+══════════════════════════════════════ */
+.qprogress {
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  margin-bottom: 16px;
-  overflow: hidden;
-  transition: border-color .2s;
-}
-.quiz-card.correct { border-color: var(--green); }
-.quiz-card.wrong   { border-color: var(--red); }
-
-.quiz-header {
-  padding: 16px 20px 12px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-.q-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--bg);
-  background: var(--blue);
-  border-radius: 4px;
-  padding: 2px 8px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.quiz-card.correct .q-num { background: var(--green); }
-.quiz-card.wrong   .q-num { background: var(--red); }
-.q-text { font-size: 14px; font-weight: 500; line-height: 1.5; }
-
-.options { padding: 0 20px 16px; display: flex; flex-direction: column; gap: 8px; }
-.option {
+  padding: 14px 18px;
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
+  gap: 14px;
+}
+.pbar-wrap { flex: 1; height: 5px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+.pbar-fill { height: 100%; background: linear-gradient(90deg, var(--hi), var(--accent)); border-radius: 3px; transition: width .4s; width: 0%; }
+.pstat { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text2); white-space: nowrap; }
+.pstat span { color: var(--yellow); }
+.btn-rst-all {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  padding: 5px 10px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border2); cursor: pointer;
+  background: transparent; color: var(--text3); white-space: nowrap;
+  transition: all .15s;
+}
+.btn-rst-all:hover { border-color: var(--red); color: var(--red); }
+
+.qcard {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  overflow: hidden;
+  animation: fadeUp .3s ease both;
+}
+.qcard.correct-card { border-color: var(--accent); }
+.qcard.wrong-card   { border-color: var(--red); }
+
+.qhead { padding: 15px 18px 10px; display: flex; gap: 10px; align-items: flex-start; }
+.qnum {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  color: var(--bg); background: var(--hi); border-radius: 4px;
+  padding: 2px 7px; white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+}
+.qcard.correct-card .qnum { background: var(--accent); }
+.qcard.wrong-card   .qnum { background: var(--red); }
+.qtext { font-size: 13.5px; font-weight: 500; line-height: 1.55; }
+
+.opts { padding: 0 18px 13px; display: flex; flex-direction: column; gap: 7px; }
+.opt {
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 9px 13px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all .15s;
-  font-size: 13px;
-  line-height: 1.5;
+  cursor: pointer; transition: all .14s;
+  font-size: 13px; line-height: 1.5;
   background: var(--bg3);
 }
-.option:hover:not(.disabled) { border-color: var(--blue); background: var(--blue-dim); }
-.option.selected { border-color: var(--blue); background: var(--blue-dim); }
-.option.correct-ans { border-color: var(--green) !important; background: var(--green-dim) !important; }
-.option.wrong-sel   { border-color: var(--red)   !important; background: var(--red-dim)   !important; }
-.option.disabled { cursor: default; }
-
-.opt-circle {
-  width: 22px; height: 22px;
-  border: 1.5px solid var(--border2);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text2);
-  flex-shrink: 0;
-  transition: all .15s;
+.opt:hover:not(.dis) { border-color: var(--hi); background: var(--hi-dim); }
+.opt.sel      { border-color: var(--hi); background: var(--hi-dim); }
+.opt.ok-ans   { border-color: var(--accent) !important; background: var(--accent-dim) !important; }
+.opt.bad-sel  { border-color: var(--red) !important; background: var(--red-dim) !important; }
+.opt.dis      { cursor: default; }
+.opt-circ {
+  width: 20px; height: 20px; border: 1.5px solid var(--border2);
+  border-radius: 50%; display: grid; place-items: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+  color: var(--text2); flex-shrink: 0; transition: all .14s; margin-top: 1px;
 }
-.option.selected   .opt-circle { border-color: var(--blue); color: var(--blue); }
-.option.correct-ans .opt-circle { border-color: var(--green); color: var(--green); background: var(--green-dim); }
-.option.wrong-sel   .opt-circle { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+.opt.sel    .opt-circ { border-color: var(--hi);    color: var(--hi); }
+.opt.ok-ans .opt-circ { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.opt.bad-sel .opt-circ { border-color: var(--red); color: var(--red); background: var(--red-dim); }
 
-.quiz-footer { padding: 0 20px 16px; display: flex; gap: 10px; align-items: center; }
+.qfooter { padding: 0 18px 14px; display: flex; gap: 8px; align-items: center; }
 .btn-check {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 8px 18px;
-  border-radius: var(--radius-sm);
-  border: none;
-  cursor: pointer;
-  background: var(--blue);
-  color: #fff;
-  transition: opacity .15s, transform .1s;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+  padding: 7px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer;
+  background: var(--hi); color: var(--bg); transition: opacity .15s, transform .1s;
 }
-.btn-check:hover { opacity: .85; }
-.btn-check:active { transform: scale(.97); }
-.btn-check:disabled { opacity: .4; cursor: default; }
-.btn-reset {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border2);
-  cursor: pointer;
-  background: transparent;
-  color: var(--text2);
-  transition: all .15s;
+.btn-check:hover { opacity: .85; } .btn-check:active { transform: scale(.97); }
+.btn-check:disabled { opacity: .35; cursor: default; }
+.btn-reset-one {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  padding: 7px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border2); cursor: pointer;
+  background: transparent; color: var(--text2); transition: all .14s;
 }
-.btn-reset:hover { border-color: var(--text2); color: var(--text); }
-.result-msg {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  display: none;
-}
-.result-msg.show { display: block; }
-.result-msg.correct-msg { color: var(--green); }
-.result-msg.wrong-msg   { color: var(--red); }
+.btn-reset-one:hover { border-color: var(--text2); color: var(--text); }
+.rmsg { font-family: 'JetBrains Mono', monospace; font-size: 11px; display: none; }
+.rmsg.show { display: block; }
+.rmsg.ok  { color: var(--accent); }
+.rmsg.bad { color: var(--red); }
 
-/* ── EXPLANATION ── */
-.explanation {
-  margin: 0 20px 16px;
-  padding: 12px 14px;
+.explain {
+  margin: 0 18px 14px;
+  padding: 11px 13px;
   background: var(--bg);
-  border-left: 3px solid var(--blue);
+  border-left: 3px solid var(--hi);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-size: 13px;
-  color: var(--text2);
-  display: none;
-  line-height: 1.6;
+  font-size: 12.5px; color: var(--text2); display: none; line-height: 1.65;
 }
-.explanation.show { display: block; }
-.explanation strong { color: var(--text); }
-.explanation .tip-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--blue);
-  margin-bottom: 6px;
-  display: block;
+.explain.show { display: block; }
+.explain .tlabel {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--hi); margin-bottom: 5px; display: block;
 }
-.explanation code {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  background: var(--bg3);
-  padding: 1px 5px;
-  border-radius: 3px;
-  color: var(--orange);
+.explain strong { color: var(--text); }
+.explain code {
+  font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+  background: var(--bg3); padding: 1px 5px; border-radius: 3px; color: var(--yellow);
 }
 
-/* ── QUIZ PROGRESS BAR ── */
-.quiz-progress {
+/* ══════════════════════════════════════
+   ACCORDION (주관식 / 실습형)
+══════════════════════════════════════ */
+.acc-card {
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.progress-bar-wrap {
-  flex: 1;
-  height: 6px;
-  background: var(--bg3);
-  border-radius: 3px;
+  margin-bottom: 12px;
   overflow: hidden;
+  animation: fadeUp .3s ease both;
 }
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--blue), var(--green));
-  border-radius: 3px;
-  transition: width .4s ease;
-  width: 0%;
+.acc-header {
+  padding: 14px 18px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  cursor: pointer; gap: 10px; user-select: none; transition: background .14s;
 }
-.progress-stats {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--text2);
-  white-space: nowrap;
+.acc-header:hover { background: var(--bg3); }
+.acc-q { display: flex; gap: 9px; align-items: flex-start; flex: 1; }
+.acc-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  color: var(--bg); border-radius: 4px; padding: 2px 7px; white-space: nowrap;
+  flex-shrink: 0; margin-top: 2px;
 }
-.progress-stats span { color: var(--yellow); }
-.btn-reset-all {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border2);
-  cursor: pointer;
-  background: transparent;
-  color: var(--text3);
-  white-space: nowrap;
-  transition: all .15s;
-}
-.btn-reset-all:hover { border-color: var(--orange); color: var(--orange); }
+.num-subj { background: var(--dl-accent); }
+body.dl-mode .num-subj { background: var(--dl-accent); }
+.num-prac  { background: var(--yellow); color: #000 !important; }
+/* For git mode, subjective = green */
+.git-panel .num-subj { background: var(--git-accent); }
+.git-panel .num-prac  { background: var(--yellow); }
+.dl-panel  .num-subj { background: var(--dl-accent); }
+.dl-panel  .num-prac  { background: var(--yellow); }
 
-/* ── SUBJECTIVE (주관식) ── */
-.subj-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 14px;
-  overflow: hidden;
-}
-.subj-header {
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  cursor: pointer;
-  gap: 12px;
-  user-select: none;
-  transition: background .15s;
-}
-.subj-header:hover { background: var(--bg3); }
-.subj-q {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  flex: 1;
-}
-.subj-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--bg);
-  background: var(--purple);
-  border-radius: 4px;
-  padding: 2px 8px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.subj-title { font-size: 14px; font-weight: 500; line-height: 1.5; }
-.chevron {
-  width: 20px; height: 20px;
-  border-radius: 4px;
-  display: grid;
-  place-items: center;
-  color: var(--text3);
-  flex-shrink: 0;
-  transition: transform .25s;
-  font-size: 12px;
-}
-.subj-card.open .chevron { transform: rotate(180deg); }
-.subj-body {
-  display: none;
-  padding: 0 20px 20px;
-  border-top: 1px solid var(--border);
-}
-.subj-card.open .subj-body { display: block; }
+.acc-title { font-size: 13.5px; font-weight: 500; line-height: 1.5; }
+.chevron { width: 18px; height: 18px; display: grid; place-items: center; color: var(--text3); flex-shrink: 0; transition: transform .22s; font-size: 11px; }
+.acc-card.open .chevron { transform: rotate(180deg); }
+.acc-body { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); }
+.acc-card.open .acc-body { display: block; }
 
-.answer-box {
-  margin-top: 14px;
-  padding: 14px 16px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+/* ══════════════════════════════════════
+   ANSWER BOX
+══════════════════════════════════════ */
+.ans-box {
+  margin-top: 13px; padding: 13px 15px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
 }
-.answer-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--green);
-  margin-bottom: 8px;
-  display: block;
+.ans-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--accent); margin-bottom: 7px; display: block;
 }
-.answer-content { font-size: 13px; line-height: 1.7; color: var(--text); }
-.answer-content p { margin-bottom: 8px; }
-.answer-content p:last-child { margin-bottom: 0; }
-.answer-content strong { color: var(--yellow); }
-.answer-content em { color: var(--blue); font-style: normal; }
+.ans-content { font-size: 13px; line-height: 1.75; }
+.ans-content p { margin-bottom: 7px; }
+.ans-content p:last-child { margin-bottom: 0; }
+.ans-content strong { color: var(--yellow); }
+.ans-content em     { color: var(--hi); font-style: normal; }
 
-/* ── TABLE ── */
-.md-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 10px 0;
-  font-size: 12px;
+/* ══════════════════════════════════════
+   CODE BLOCK
+══════════════════════════════════════ */
+.cb {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 13px 15px; margin: 9px 0;
+  overflow-x: auto; position: relative;
 }
-.md-table th {
-  background: var(--bg3);
-  color: var(--text2);
-  font-weight: 600;
-  text-align: left;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  font-family: 'JetBrains Mono', monospace;
-}
-.md-table td {
-  padding: 7px 10px;
-  border: 1px solid var(--border);
-  vertical-align: top;
-  line-height: 1.5;
-}
-.md-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
-.md-table code {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  background: var(--bg3);
-  padding: 1px 5px;
-  border-radius: 3px;
-  color: var(--orange);
-}
-
-/* ── CODE BLOCK ── */
-.code-block {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  margin: 10px 0;
-  overflow-x: auto;
-  position: relative;
-}
-.code-block pre {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  line-height: 1.6;
-  color: var(--text);
-  white-space: pre;
-}
-.code-block .comment { color: var(--text3); }
-.code-block .cmd     { color: var(--green); }
-.code-block .flag    { color: var(--blue); }
-.code-block .str     { color: var(--orange); }
+.cb pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--text); white-space: pre; }
+.cb .cm  { color: var(--text3); }
+.cb .kw  { color: var(--hi); }
+.cb .fn  { color: var(--accent); }
+.cb .st  { color: var(--yellow); }
+.cb .nm  { color: var(--red); }
 .copy-btn {
-  position: absolute;
-  top: 8px; right: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--border2);
-  background: var(--bg2);
-  color: var(--text3);
-  cursor: pointer;
-  transition: all .15s;
+  position: absolute; top: 7px; right: 7px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  padding: 3px 7px; border-radius: 4px;
+  border: 1px solid var(--border2); background: var(--bg2); color: var(--text3);
+  cursor: pointer; transition: all .14s;
 }
-.copy-btn:hover { border-color: var(--green); color: var(--green); }
+.copy-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ── PRACTICAL ── */
-.prac-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 14px;
-  overflow: hidden;
-}
-.prac-header {
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  cursor: pointer;
-  gap: 12px;
-  user-select: none;
-  transition: background .15s;
-}
-.prac-header:hover { background: var(--bg3); }
-.prac-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--bg);
-  background: var(--orange);
-  border-radius: 4px;
-  padding: 2px 8px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.prac-title { font-size: 14px; font-weight: 500; line-height: 1.5; }
-.prac-cmd-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--orange);
-  background: var(--orange-dim);
-  border: 1px solid var(--orange);
-  border-radius: 4px;
-  padding: 2px 8px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.prac-body {
-  display: none;
-  padding: 16px 20px 20px;
-  border-top: 1px solid var(--border);
-}
-.prac-card.open .prac-body { display: block; }
+/* ══════════════════════════════════════
+   TABLE
+══════════════════════════════════════ */
+.tbl { width: 100%; border-collapse: collapse; margin: 9px 0; font-size: 12px; }
+.tbl th { background: var(--bg3); color: var(--text2); font-weight: 600; text-align: left; padding: 7px 9px; border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+.tbl td { padding: 6px 9px; border: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+.tbl tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+.tbl code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--bg3); padding: 1px 4px; border-radius: 3px; color: var(--yellow); }
 
-.prac-section-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--text3);
-  margin: 14px 0 6px;
-  text-transform: uppercase;
-  letter-spacing: .06em;
+/* ══════════════════════════════════════
+   PRACTICAL extras
+══════════════════════════════════════ */
+.prac-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--yellow); background: rgba(251,191,36,.12);
+  border: 1px solid var(--yellow); border-radius: 4px;
+  padding: 2px 7px; white-space: nowrap; flex-shrink: 0;
 }
-.prac-section-title:first-child { margin-top: 0; }
+.ptitle { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text3); margin: 12px 0 5px; text-transform: uppercase; letter-spacing: .05em; }
+.ptitle:first-child { margin-top: 0; }
 .tip-box {
-  margin-top: 12px;
-  padding: 10px 14px;
-  background: var(--orange-dim);
-  border-left: 3px solid var(--orange);
+  margin-top: 10px; padding: 9px 13px;
+  background: rgba(251,191,36,.07);
+  border-left: 3px solid var(--yellow);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-size: 12px;
-  color: var(--text2);
-  line-height: 1.6;
+  font-size: 12px; color: var(--text2); line-height: 1.6;
 }
 
-/* ── SUMMARY ── */
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  margin-bottom: 24px;
+/* ══════════════════════════════════════
+   SUMMARY
+══════════════════════════════════════ */
+.sum-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 9px; margin-bottom: 22px; }
+.sum-chip {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 11px 13px; transition: border-color .14s;
 }
-.cmd-chip {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-  transition: border-color .15s;
-}
-.cmd-chip:hover { border-color: var(--border2); }
-.cmd-chip .cmd-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--green);
-  margin-bottom: 4px;
-  word-break: break-all;
-}
-.cmd-chip .cmd-desc { font-size: 12px; color: var(--text2); }
+.sum-chip:hover { border-color: var(--border2); }
+.sum-chip .cn { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--accent); margin-bottom: 3px; word-break: break-all; }
+.sum-chip .cd { font-size: 11.5px; color: var(--text2); }
 
-.flow-box {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 20px;
-  overflow-x: auto;
-}
-.flow-box h3 { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: var(--text2); }
-.flow-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-  font-size: 12px;
-  margin-bottom: 10px;
-}
-.flow-node {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-sm);
-  padding: 6px 12px;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text);
-  white-space: nowrap;
-  font-size: 11px;
-}
-.flow-node.highlight { border-color: var(--green); color: var(--green); }
-.flow-arrow {
-  color: var(--text3);
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.flow-arrow span {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: var(--blue);
-  white-space: nowrap;
-}
+/* ══════════════════════════════════════
+   FLOW DIAGRAM
+══════════════════════════════════════ */
+.flow-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 18px; overflow-x: auto; }
+.flow-box h3 { font-size: 13px; font-weight: 600; margin-bottom: 13px; color: var(--text2); }
+.flow-row { display: flex; align-items: center; gap: 7px; flex-wrap: nowrap; margin-bottom: 9px; }
+.flow-row:last-child { margin-bottom: 0; }
+.fnode { background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 5px 11px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text); white-space: nowrap; }
+.fnode.hi { border-color: var(--accent); color: var(--accent); }
+.farrow { color: var(--text3); font-size: 13px; display: flex; flex-direction: column; align-items: center; }
+.farrow small { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--hi); white-space: nowrap; }
 
-/* ── SCROLL TOP ── */
+/* ══════════════════════════════════════
+   MISC
+══════════════════════════════════════ */
 .scroll-top {
-  position: fixed;
-  bottom: 20px; right: 20px;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  cursor: pointer;
-  display: none;
-  place-items: center;
-  color: var(--text2);
-  font-size: 16px;
-  transition: all .2s;
-  z-index: 200;
+  position: fixed; bottom: 18px; right: 18px;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--bg2); border: 1px solid var(--border2);
+  cursor: pointer; display: none; place-items: center;
+  color: var(--text2); font-size: 15px; transition: all .2s; z-index: 300;
 }
 .scroll-top.show { display: grid; }
-.scroll-top:hover { border-color: var(--blue); color: var(--blue); }
+.scroll-top:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 600px) {
-  .hero { padding: 20px 16px; }
-  .quiz-header, .options, .quiz-footer { padding-left: 14px; padding-right: 14px; }
-  .explanation { margin: 0 14px 14px; }
-  .score-grid { grid-template-columns: repeat(3, 1fr); }
-  .score-card .num { font-size: 18px; }
-  .summary-grid { grid-template-columns: 1fr 1fr; }
-  .flow-row { font-size: 10px; }
-}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(7px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.quiz-card, .subj-card, .prac-card {
-  animation: fadeIn .3s ease both;
-}
+.qcard:nth-child(1){ animation-delay:.02s } .qcard:nth-child(2){ animation-delay:.04s }
+.qcard:nth-child(3){ animation-delay:.06s } .qcard:nth-child(4){ animation-delay:.08s }
+.qcard:nth-child(5){ animation-delay:.10s } .acc-card:nth-child(n){ animation-delay:.04s }
 
-/* stagger */
-.quiz-card:nth-child(1)  { animation-delay: .03s; }
-.quiz-card:nth-child(2)  { animation-delay: .06s; }
-.quiz-card:nth-child(3)  { animation-delay: .09s; }
-.quiz-card:nth-child(4)  { animation-delay: .12s; }
-.quiz-card:nth-child(5)  { animation-delay: .15s; }
+@media(max-width:600px){
+  .subject-btn { padding: 6px 12px; font-size: 12px; }
+  .score-grid { gap: 7px; }
+  .score-card .num { font-size: 17px; }
+  .sum-grid { grid-template-columns: 1fr 1fr; }
+  .hero { padding: 18px 14px; }
+}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo">
-      <div class="logo-icon">⎇</div>
-      Git/GitHub 완전정복
+<!-- ══════════════════════════════════════
+     SUBJECT SWITCHER BAR
+══════════════════════════════════════ -->
+<div class="subject-bar">
+  <button class="subject-btn git-btn active" onclick="switchSubject('git')">
+    <span class="icon">⎇</span> Git / GitHub
+  </button>
+  <div class="subject-divider"></div>
+  <button class="subject-btn dl-btn" onclick="switchSubject('dl')">
+    <span class="icon">🧠</span> 딥러닝 기술
+  </button>
+  <span class="site-title">DX Academy · 기술평가 학습</span>
+  <div class="score-pill" id="scorePill">정답 <span id="scoreNum">0</span> / 10</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     GIT PANEL
+══════════════════════════════════════ -->
+<div class="subject-panel git-panel active" id="panel-git">
+
+  <nav class="nav-tabs">
+    <div class="nav-inner">
+      <button class="nav-tab active" data-subject="git" data-tab="overview">📋 개요</button>
+      <button class="nav-tab" data-subject="git" data-tab="quiz">🎯 객관식 <span class="tab-count">10</span></button>
+      <button class="nav-tab" data-subject="git" data-tab="subj">📝 주관식 <span class="tab-count">10</span></button>
+      <button class="nav-tab" data-subject="git" data-tab="prac">⚙️ 실습형 <span class="tab-count">10</span></button>
+      <button class="nav-tab" data-subject="git" data-tab="sum">📚 요약</button>
     </div>
-    <div class="score-badge" id="headerScore">객관식 <span id="scoreDisplay">0</span> / 10</div>
-  </div>
-</header>
+  </nav>
 
-<!-- NAV -->
-<nav class="nav-tabs">
-  <div class="nav-inner">
-    <button class="nav-tab active" data-tab="overview">📋 개요</button>
-    <button class="nav-tab" data-tab="quiz">🎯 객관식 <span class="tab-badge">10</span></button>
-    <button class="nav-tab" data-tab="subjective">📝 주관식 <span class="tab-badge">10</span></button>
-    <button class="nav-tab" data-tab="practical">⚙️ 실습형 <span class="tab-badge">10</span></button>
-    <button class="nav-tab" data-tab="summary">📚 요약</button>
-  </div>
-</nav>
+  <main class="main">
+    <!-- GIT OVERVIEW -->
+    <section class="section active" id="git-overview">
+      <div class="hero">
+        <span class="hero-tag">✦ 에스트래픽 스마트 모빌리티 DX Academy</span>
+        <h1>버전관리 및 협업도구<br><em>Git / GitHub</em></h1>
+        <p>평가일: 2026.04.08 · 평가시간: 90분 · 총점 200점</p>
+        <div class="score-grid">
+          <div class="score-card"><div class="num">50점</div><div class="lbl">객관식 10문항</div></div>
+          <div class="score-card"><div class="num">50점</div><div class="lbl">주관식 10문항</div></div>
+          <div class="score-card"><div class="num">100점</div><div class="lbl">실습형 10문항</div></div>
+        </div>
+      </div>
+      <div class="flow-box">
+        <h3>🔄 Git 핵심 워크플로우</h3>
+        <div class="flow-row">
+          <div class="fnode">Working Directory</div>
+          <div class="farrow">→<small>git add</small></div>
+          <div class="fnode">Staging Area</div>
+          <div class="farrow">→<small>git commit</small></div>
+          <div class="fnode">Local Repo</div>
+          <div class="farrow">⇄<small>push/pull</small></div>
+          <div class="fnode hi">Remote Repo</div>
+        </div>
+      </div>
+    </section>
+    <!-- GIT QUIZ -->
+    <section class="section" id="git-quiz">
+      <div class="sec-head"><h2>🎯 객관식 문항</h2><span class="sec-badge">각 5점 × 10문항 = 50점</span></div>
+      <div class="qprogress">
+        <div class="pbar-wrap"><div class="pbar-fill" id="git-pbar"></div></div>
+        <div class="pstat"><span id="git-answered">0</span> / 10 완료</div>
+        <button class="btn-rst-all" onclick="resetAll('git')">↺ 초기화</button>
+      </div>
+      <div id="git-quiz-container"></div>
+    </section>
+    <!-- GIT SUBJ -->
+    <section class="section" id="git-subj">
+      <div class="sec-head"><h2>📝 주관식 문항</h2><span class="sec-badge">각 5점 × 10문항 = 50점</span></div>
+      <div id="git-subj-container"></div>
+    </section>
+    <!-- GIT PRAC -->
+    <section class="section" id="git-prac">
+      <div class="sec-head"><h2>⚙️ 실습형 문항</h2><span class="sec-badge">각 10점 × 10문항 = 100점</span></div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:18px;">터미널에서 직접 실행 후 캡처를 첨부하세요. 정답 명령어와 예상 출력을 확인하세요.</p>
+      <div id="git-prac-container"></div>
+    </section>
+    <!-- GIT SUMMARY -->
+    <section class="section" id="git-sum">
+      <div class="sec-head"><h2>📚 핵심 명령어 요약</h2><span class="sec-badge">빠른 참조</span></div>
+      <div id="git-sum-container"></div>
+    </section>
+  </main>
+</div>
 
-<main class="main">
+<!-- ══════════════════════════════════════
+     DEEP LEARNING PANEL
+══════════════════════════════════════ -->
+<div class="subject-panel dl-panel" id="panel-dl">
 
-<!-- ════════════════════════════════════════════ -->
-<!-- OVERVIEW -->
-<!-- ════════════════════════════════════════════ -->
-<section class="section active" id="sec-overview">
-  <div class="hero">
-    <span class="hero-tag">✦ 에스트래픽 스마트 모빌리티 DX Academy</span>
-    <h1>버전관리 및 협업도구<br><em>Git / GitHub</em> 완전 정복</h1>
-    <p>평가일: 2026.04.08 · 평가시간: 90분 · 총점 200점</p>
-    <div class="score-grid">
-      <div class="score-card">
-        <div class="num">50점</div>
-        <div class="label">객관식 10문항</div>
-      </div>
-      <div class="score-card">
-        <div class="num">50점</div>
-        <div class="label">주관식 10문항</div>
-      </div>
-      <div class="score-card">
-        <div class="num">100점</div>
-        <div class="label">실습형 10문항</div>
-      </div>
+  <nav class="nav-tabs">
+    <div class="nav-inner">
+      <button class="nav-tab active" data-subject="dl" data-tab="overview">📋 개요</button>
+      <button class="nav-tab" data-subject="dl" data-tab="quiz">🎯 객관식 <span class="tab-count">10</span></button>
+      <button class="nav-tab" data-subject="dl" data-tab="subj">📝 주관식 <span class="tab-count">10</span></button>
+      <button class="nav-tab" data-subject="dl" data-tab="prac">⚙️ 실습형 <span class="tab-count">10</span></button>
+      <button class="nav-tab" data-subject="dl" data-tab="sum">📚 요약</button>
     </div>
-  </div>
+  </nav>
 
-  <div class="flow-box">
-    <h3>🔄 Git 핵심 워크플로우</h3>
-    <div class="flow-row">
-      <div class="flow-node">Working Directory</div>
-      <div class="flow-arrow">→<span>git add</span></div>
-      <div class="flow-node">Staging Area</div>
-      <div class="flow-arrow">→<span>git commit</span></div>
-      <div class="flow-node">Local Repo</div>
-      <div class="flow-arrow">⇄<span>push/pull</span></div>
-      <div class="flow-node highlight">Remote Repo</div>
-    </div>
-    <div class="flow-row" style="margin-bottom:0">
-      <div class="flow-node" style="opacity:.5">Stash</div>
-      <div class="flow-arrow">←<span>git stash</span></div>
-      <div class="flow-node" style="opacity:.7">Working Directory</div>
-      <div class="flow-arrow">→<span>git fetch</span></div>
-      <div class="flow-node" style="opacity:.7">Remote Tracking</div>
-      <div class="flow-arrow">→<span>git merge</span></div>
-      <div class="flow-node highlight">Local Repo</div>
-    </div>
-  </div>
-
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-    <h3 style="font-size:14px;margin-bottom:14px;color:var(--text2);">📌 탭 안내</h3>
-    <div style="display:grid;gap:10px;font-size:13px;">
-      <div style="display:flex;gap:10px;align-items:center;">
-        <span style="font-size:18px;">🎯</span>
-        <div><strong>객관식</strong> — 실제로 선택지를 골라 채점하고, 해설을 확인하세요</div>
+  <main class="main">
+    <!-- DL OVERVIEW -->
+    <section class="section active" id="dl-overview">
+      <div class="hero">
+        <span class="hero-tag">✦ 에스트래픽 스마트 모빌리티 DX Academy</span>
+        <h1>딥러닝 기술<br><em>Python / TensorFlow / DNN / CNN</em></h1>
+        <p>평가일: 2026.04.08 · 평가시간: 90분 · 총점 200점</p>
+        <div class="score-grid">
+          <div class="score-card"><div class="num">50점</div><div class="lbl">객관식 10문항</div></div>
+          <div class="score-card"><div class="num">50점</div><div class="lbl">주관식 10문항</div></div>
+          <div class="score-card"><div class="num">100점</div><div class="lbl">실습형 10문항</div></div>
+        </div>
       </div>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <span style="font-size:18px;">📝</span>
-        <div><strong>주관식</strong> — 문제를 먼저 생각해보고 펼쳐서 정답 확인</div>
+      <div class="flow-box">
+        <h3>🧠 딥러닝 학습 파이프라인</h3>
+        <div class="flow-row">
+          <div class="fnode">Raw Data</div>
+          <div class="farrow">→<small>전처리</small></div>
+          <div class="fnode">NumPy/Pandas</div>
+          <div class="farrow">→<small>모델 정의</small></div>
+          <div class="fnode">Keras Model</div>
+          <div class="farrow">→<small>compile</small></div>
+          <div class="fnode hi">학습 (fit)</div>
+        </div>
+        <div class="flow-row">
+          <div class="fnode hi">학습 (fit)</div>
+          <div class="farrow">→<small>evaluate</small></div>
+          <div class="fnode">정확도 확인</div>
+          <div class="farrow">→<small>predict</small></div>
+          <div class="fnode">추론 결과</div>
+        </div>
       </div>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <span style="font-size:18px;">⚙️</span>
-        <div><strong>실습형</strong> — 명령어와 예상 출력을 확인 후 직접 터미널에서 실행</div>
+      <div class="flow-box">
+        <h3>🏗️ CNN 구조</h3>
+        <div class="flow-row">
+          <div class="fnode">Input Image</div>
+          <div class="farrow">→</div>
+          <div class="fnode">Conv2D + ReLU</div>
+          <div class="farrow">→</div>
+          <div class="fnode">MaxPooling</div>
+          <div class="farrow">→</div>
+          <div class="fnode">Flatten</div>
+          <div class="farrow">→</div>
+          <div class="fnode">Dense</div>
+          <div class="farrow">→</div>
+          <div class="fnode hi">Softmax Output</div>
+        </div>
       </div>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <span style="font-size:18px;">📚</span>
-        <div><strong>요약</strong> — 핵심 명령어 카드와 비교표 빠른 참조</div>
+    </section>
+    <!-- DL QUIZ -->
+    <section class="section" id="dl-quiz">
+      <div class="sec-head"><h2>🎯 객관식 문항</h2><span class="sec-badge">각 5점 × 10문항 = 50점</span></div>
+      <div class="qprogress">
+        <div class="pbar-wrap"><div class="pbar-fill" id="dl-pbar"></div></div>
+        <div class="pstat"><span id="dl-answered">0</span> / 10 완료</div>
+        <button class="btn-rst-all" onclick="resetAll('dl')">↺ 초기화</button>
       </div>
-    </div>
-  </div>
-</section>
+      <div id="dl-quiz-container"></div>
+    </section>
+    <!-- DL SUBJ -->
+    <section class="section" id="dl-subj">
+      <div class="sec-head"><h2>📝 주관식 문항</h2><span class="sec-badge">각 5점 × 10문항 = 50점</span></div>
+      <div id="dl-subj-container"></div>
+    </section>
+    <!-- DL PRAC -->
+    <section class="section" id="dl-prac">
+      <div class="sec-head"><h2>⚙️ 실습형 문항</h2><span class="sec-badge">각 10점 × 10문항 = 100점</span></div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:18px;">Python 환경(Jupyter / Colab)에서 직접 실행 후 결과를 캡처하세요.</p>
+      <div id="dl-prac-container"></div>
+    </section>
+    <!-- DL SUMMARY -->
+    <section class="section" id="dl-sum">
+      <div class="sec-head"><h2>📚 핵심 개념 요약</h2><span class="sec-badge">빠른 참조</span></div>
+      <div id="dl-sum-container"></div>
+    </section>
+  </main>
+</div>
 
-<!-- ════════════════════════════════════════════ -->
-<!-- QUIZ (객관식) -->
-<!-- ════════════════════════════════════════════ -->
-<section class="section" id="sec-quiz">
-  <div class="section-head">
-    <h2>🎯 객관식 문항</h2>
-    <span class="badge">각 5점 × 10문항 = 50점</span>
-  </div>
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-  <!-- Progress -->
-  <div class="quiz-progress">
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progressFill"></div>
-    </div>
-    <div class="progress-stats"><span id="answeredCount">0</span> / 10 완료</div>
-    <button class="btn-reset-all" onclick="resetAllQuiz()">↺ 초기화</button>
-  </div>
-
-  <div id="quizContainer"></div>
-</section>
-
-<!-- ════════════════════════════════════════════ -->
-<!-- SUBJECTIVE (주관식) -->
-<!-- ════════════════════════════════════════════ -->
-<section class="section" id="sec-subjective">
-  <div class="section-head">
-    <h2>📝 주관식 문항</h2>
-    <span class="badge">각 5점 × 10문항 = 50점</span>
-  </div>
-  <div id="subjContainer"></div>
-</section>
-
-<!-- ════════════════════════════════════════════ -->
-<!-- PRACTICAL (실습형) -->
-<!-- ════════════════════════════════════════════ -->
-<section class="section" id="sec-practical">
-  <div class="section-head">
-    <h2>⚙️ 실습형 문항</h2>
-    <span class="badge">각 10점 × 10문항 = 100점</span>
-  </div>
-  <p style="font-size:13px;color:var(--text2);margin-bottom:20px;">
-    실제 터미널에서 명령어를 직접 실행하고 캡처 이미지를 첨부하세요. 아래는 정답 명령어와 예상 출력 예시입니다.
-  </p>
-  <div id="pracContainer"></div>
-</section>
-
-<!-- ════════════════════════════════════════════ -->
-<!-- SUMMARY -->
-<!-- ════════════════════════════════════════════ -->
-<section class="section" id="sec-summary">
-  <div class="section-head">
-    <h2>📚 핵심 명령어 요약</h2>
-    <span class="badge">빠른 참조</span>
-  </div>
-
-  <div class="summary-grid" id="summaryGrid"></div>
-
-  <!-- Comparison tables -->
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-    <h3 style="font-size:14px;margin-bottom:14px;">reset vs revert vs restore</h3>
-    <table class="md-table">
-      <thead><tr><th>명령어</th><th>히스토리</th><th>안전성</th><th>사용 시점</th></tr></thead>
-      <tbody>
-        <tr><td><code>git reset</code></td><td>커밋 삭제 (재작성)</td><td style="color:var(--red)">⚠ 위험</td><td>로컬 개인 작업</td></tr>
-        <tr><td><code>git revert</code></td><td>새 커밋 추가 (보존)</td><td style="color:var(--green)">✓ 안전</td><td>공유/원격 브랜치</td></tr>
-        <tr><td><code>git restore</code></td><td>영향 없음</td><td style="color:var(--green)">✓ 안전</td><td>파일 복원/unstage</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-    <h3 style="font-size:14px;margin-bottom:14px;">fetch vs pull</h3>
-    <table class="md-table">
-      <thead><tr><th>명령어</th><th>동작</th><th>로컬 브랜치 영향</th></tr></thead>
-      <tbody>
-        <tr><td><code>git fetch</code></td><td>원격 다운로드만</td><td>변경 없음</td></tr>
-        <tr><td><code>git pull</code></td><td>fetch + merge 자동</td><td>자동 병합</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-    <h3 style="font-size:14px;margin-bottom:14px;">reset 옵션 비교</h3>
-    <table class="md-table">
-      <thead><tr><th>옵션</th><th>커밋 취소</th><th>스테이징 유지</th><th>파일 내용 유지</th></tr></thead>
-      <tbody>
-        <tr><td><code>--soft</code></td><td style="color:var(--green)">✓</td><td style="color:var(--green)">✓</td><td style="color:var(--green)">✓</td></tr>
-        <tr><td><code>--mixed</code> (기본)</td><td style="color:var(--green)">✓</td><td style="color:var(--red)">✗</td><td style="color:var(--green)">✓</td></tr>
-        <tr><td><code>--hard</code></td><td style="color:var(--green)">✓</td><td style="color:var(--red)">✗</td><td style="color:var(--red)">✗</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-    <h3 style="font-size:14px;margin-bottom:14px;">checkout vs switch vs restore</h3>
-    <table class="md-table">
-      <thead><tr><th>목적</th><th>구버전</th><th>신버전 (2.23+)</th></tr></thead>
-      <tbody>
-        <tr><td>브랜치 전환</td><td><code>git checkout &lt;branch&gt;</code></td><td><code>git switch &lt;branch&gt;</code></td></tr>
-        <tr><td>브랜치 생성+전환</td><td><code>git checkout -b &lt;branch&gt;</code></td><td><code>git switch -c &lt;branch&gt;</code></td></tr>
-        <tr><td>파일 복원</td><td><code>git checkout -- &lt;file&gt;</code></td><td><code>git restore &lt;file&gt;</code></td></tr>
-        <tr><td>unstage</td><td><code>git reset HEAD &lt;file&gt;</code></td><td><code>git restore --staged &lt;file&gt;</code></td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-</main>
-
-<!-- Scroll top -->
-<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
+<!-- ══════════════════════════════════════
+     JAVASCRIPT DATA & LOGIC
+══════════════════════════════════════ -->
 <script>
-/* ═══════════════════ DATA ═══════════════════ */
-
-const QUIZ_DATA = [
-  {
-    q: "Git에서 새로운 로컬 저장소를 초기화하는 명령어는?",
-    options: ["git clone", "git init", "git start", "git create"],
-    answer: 1,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-<strong>git init</strong> 을 실행하면 현재 디렉토리에 <code>.git</code> 숨김 폴더가 생성되어 Git 저장소가 됩니다.<br>
-• <code>git clone</code> — 원격 저장소를 로컬로 복제<br>
-• <code>git start / git create</code> — 존재하지 않는 명령어`
-  },
-  {
-    q: "원격 저장소의 내용을 로컬로 가져오되, 자동 병합(merge)을 하지 않는 명령어는?",
-    options: ["git pull", "git clone", "git fetch", "git download"],
-    answer: 2,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-<strong>git fetch</strong> 는 원격 변경사항을 다운로드하지만 로컬 브랜치를 변경하지 않습니다.<br>
-<code>git pull</code> = <code>git fetch</code> + <code>git merge</code> 의 단축 명령어입니다.`
-  },
-  {
-    q: "현재 작업 디렉토리의 변경 사항을 스테이징 영역에 추가하는 명령어로 올바른 것은?",
-    options: ["git commit -m 'msg'", "git push origin main", "git add .", "git status"],
-    answer: 2,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-Git 3단계 흐름: <strong>Working Dir → (git add) → Staging Area → (git commit) → Repository</strong><br>
-• <code>git add .</code> — 현재 디렉토리 전체 변경사항 스테이징<br>
-• <code>git add 파일명</code> — 특정 파일만 스테이징`
-  },
-  {
-    q: "Git에서 커밋 히스토리를 확인하는 명령어는?",
-    options: ["git history", "git log", "git show", "git diff"],
-    answer: 1,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-<strong>git log</strong> 는 커밋 ID, 작성자, 날짜, 메시지를 보여줍니다.<br>
-유용한 옵션: <code>--oneline</code> (한 줄 요약) · <code>--graph</code> (브랜치 그래프) · <code>--all</code> (전체 브랜치)`
-  },
-  {
-    q: "원격 저장소를 로컬에 복사할 때 사용하는 명령어는?",
-    options: ["git init", "git pull", "git fetch", "git clone"],
-    answer: 3,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-<strong>git clone [URL]</strong> 을 실행하면 URL 기준으로 디렉토리가 자동 생성되고 <code>origin</code> 원격이 등록됩니다.<br>
-<code>git init</code> 은 빈 저장소를 새로 만들 때, <code>git pull</code> 은 이미 연결된 원격에서 갱신할 때 사용합니다.`
-  },
-  {
-    q: "새로운 브랜치를 생성하고 해당 브랜치로 동시에 전환하는 명령어는?",
-    options: ["git branch new-branch", "git checkout -b new-branch", "git switch new-branch", "git create new-branch"],
-    answer: 1,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-<strong>git checkout -b new-branch</strong> 는 브랜치 생성 + 즉시 전환을 동시에 합니다.<br>
-신버전 방식: <code>git switch -c new-branch</code> (<code>-c</code> = create)<br>
-• <code>git branch new-branch</code> — 생성만 (전환 안 됨)<br>
-• <code>git switch new-branch</code> — 기존 브랜치로 전환만`
-  },
-  {
-    q: "특정 커밋을 취소하는 새로운 커밋을 생성하는 명령어는?",
-    options: ["git reset --hard HEAD~1", "git revert HEAD", "git checkout HEAD", "git clean -f"],
-    answer: 1,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-<strong>git revert HEAD</strong> 는 이전 커밋의 반대 작업을 하는 새 커밋을 생성합니다. 히스토리를 보존하므로 안전합니다.<br>
-• <code>git reset --hard HEAD~1</code> — 커밋 자체를 삭제 (히스토리 재작성, 위험)`
-  },
-  {
-    q: "현재 작업 상태(추적되지 않는 파일, 스테이징 여부 등)를 확인하는 명령어는?",
-    options: ["git log", "git diff", "git status", "git show"],
-    answer: 2,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-<strong>git status</strong> 는 현재 브랜치, 스테이징된 파일, 추적되지 않는 파일 등 전체 작업 상태를 보여줍니다.<br>
-• <code>git diff</code> — 파일 내용의 변경 사항(diff) 비교<br>
-• <code>git log</code> — 커밋 히스토리 조회`
-  },
-  {
-    q: "로컬 브랜치에서 원격 저장소로 변경 사항을 업로드하는 명령어는?",
-    options: ["git pull origin main", "git fetch origin", "git push origin main", "git upload origin main"],
-    answer: 2,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-방향을 기억하세요: <strong>push</strong> = 로컬 → 원격, <strong>pull</strong> = 원격 → 로컬<br>
-<code>git push origin main</code> 은 로컬의 <code>main</code> 브랜치를 원격 <code>origin</code> 에 업로드합니다.`
-  },
-  {
-    q: "Git 사용자 이름과 이메일을 전역(global)으로 설정하는 올바른 명령어는?",
-    options: [
-      "git config --global user.name '이름'  /  git config --global user.email '이메일'",
-      "git setup --name '이름'  /  git setup --email '이메일'",
-      "git init --user '이름'  /  git init --email '이메일'",
-      "git account --name '이름'  /  git account --email '이메일'"
-    ],
-    answer: 0,
-    explain: `<span class="tip-label">▶ 핵심 포인트</span>
-<strong>git config --global</strong> 은 홈 디렉토리의 <code>~/.gitconfig</code> 파일에 저장되어 모든 저장소에 적용됩니다.<br>
-• <code>--global</code> — 전체 사용자 (모든 저장소)<br>
-• <code>--local</code> — 현재 저장소만<br>
-나머지 보기의 <code>git setup</code>, <code>git account</code> 는 존재하지 않습니다.`
-  }
+/* ─── GIT DATA ─── */
+const GIT_QUIZ = [
+  { q:"Git에서 새로운 로컬 저장소를 초기화하는 명령어는?",
+    opts:["git clone","git init","git start","git create"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>git init</strong> 실행 시 현재 디렉토리에 <code>.git</code> 폴더가 생성됩니다.<br>• <code>git clone</code> — 원격 저장소 복제 · <code>git start/create</code> — 존재하지 않음` },
+  { q:"원격 저장소의 내용을 로컬로 가져오되, 자동 병합(merge)을 하지 않는 명령어는?",
+    opts:["git pull","git clone","git fetch","git download"], ans:2,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>git fetch</strong> 는 원격 변경사항만 다운로드, merge 없음.<br><code>git pull</code> = <code>git fetch</code> + <code>git merge</code>` },
+  { q:"현재 작업 디렉토리의 변경 사항을 스테이징 영역에 추가하는 명령어로 올바른 것은?",
+    opts:["git commit -m 'msg'","git push origin main","git add .","git status"], ans:2,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span>워크플로우: <strong>Working Dir → (git add) → Staging → (git commit) → Repo</strong>` },
+  { q:"Git에서 커밋 히스토리를 확인하는 명령어는?",
+    opts:["git history","git log","git show","git diff"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>git log</strong> 는 커밋 ID·작성자·날짜·메시지를 보여줍니다.<br>유용한 옵션: <code>--oneline</code> · <code>--graph</code> · <code>--all</code>` },
+  { q:"원격 저장소를 로컬에 복사할 때 사용하는 명령어는?",
+    opts:["git init","git pull","git fetch","git clone"], ans:3,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>git clone [URL]</strong> 실행 시 디렉토리 자동 생성 + <code>origin</code> 원격 등록` },
+  { q:"새로운 브랜치를 생성하고 해당 브랜치로 동시에 전환하는 명령어는?",
+    opts:["git branch new-branch","git checkout -b new-branch","git switch new-branch","git create new-branch"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>git checkout -b</strong> = 생성 + 전환 동시에.<br>신버전: <code>git switch -c new-branch</code>` },
+  { q:"특정 커밋을 취소하는 새로운 커밋을 생성하는 명령어는?",
+    opts:["git reset --hard HEAD~1","git revert HEAD","git checkout HEAD","git clean -f"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>git revert</strong> 는 히스토리를 보존하므로 공유 브랜치에서 안전합니다.` },
+  { q:"현재 작업 상태(추적되지 않는 파일, 스테이징 여부 등)를 확인하는 명령어는?",
+    opts:["git log","git diff","git status","git show"], ans:2,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>git status</strong> 는 현재 브랜치·스테이징 여부·미추적 파일 등을 종합 표시` },
+  { q:"로컬 브랜치에서 원격 저장소로 변경 사항을 업로드하는 명령어는?",
+    opts:["git pull origin main","git fetch origin","git push origin main","git upload origin main"], ans:2,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>push</strong> = 로컬→원격, <strong>pull</strong> = 원격→로컬. 방향을 기억하세요!` },
+  { q:"Git 사용자 이름과 이메일을 전역(global)으로 설정하는 올바른 명령어는?",
+    opts:["git config --global user.name '이름'  /  git config --global user.email '이메일'","git setup --name '이름'  /  git setup --email '이메일'","git init --user '이름'  /  git init --email '이메일'","git account --name '이름'  /  git account --email '이메일'"], ans:0,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>git config --global</strong> 은 <code>~/.gitconfig</code> 에 저장. <code>--local</code> 은 현재 저장소만 적용` },
 ];
 
-const SUBJ_DATA = [
-  {
-    q: "git add와 git commit의 차이점을 서술하시오.",
-    answer: `<p><strong>git add</strong>: 변경된 파일을 <em>스테이징 영역(Staging Area)</em>에 추가합니다. "어떤 파일을 저장할지 선택"하는 단계입니다.</p>
-<p><strong>git commit</strong>: 스테이징 영역의 파일을 <em>로컬 저장소에 영구 기록</em>합니다. "선택한 변경사항을 스냅샷으로 확정"하는 단계입니다.</p>
-<div class="code-block"><pre><span class="comment">Working Dir  →[git add]→  Staging Area  →[git commit]→  Local Repo</span></pre></div>`
-  },
-  {
-    q: "git pull과 git fetch의 차이점을 설명하시오.",
-    answer: `<table class="md-table"><thead><tr><th>명령어</th><th>동작</th><th>로컬 브랜치 영향</th></tr></thead><tbody>
-<tr><td><code>git fetch</code></td><td>원격 변경사항을 로컬에 다운로드</td><td>변경 없음</td></tr>
-<tr><td><code>git pull</code></td><td>fetch + merge 자동 실행</td><td>자동 병합으로 변경됨</td></tr>
-</tbody></table>
-<div class="code-block"><pre><span class="comment"># git pull과 동일한 동작</span>
-<span class="cmd">git fetch</span> origin
-<span class="cmd">git merge</span> origin/main</pre></div>`
-  },
-  {
-    q: "git reset과 git revert의 차이점을 설명하시오.",
-    answer: `<table class="md-table"><thead><tr><th>명령어</th><th>히스토리</th><th>안전성</th><th>사용 시점</th></tr></thead><tbody>
-<tr><td><code>git reset</code></td><td>커밋 삭제 (재작성)</td><td>공유 브랜치 위험</td><td>로컬 개인 작업</td></tr>
-<tr><td><code>git revert</code></td><td>새 커밋 추가 (보존)</td><td>안전</td><td>공유/원격 브랜치</td></tr>
-</tbody></table>
-<div class="code-block"><pre><span class="cmd">git reset</span> <span class="flag">--hard</span> HEAD~1  <span class="comment"># 커밋 삭제</span>
-<span class="cmd">git revert</span> HEAD          <span class="comment"># 반대 작업 커밋 생성</span></pre></div>`
-  },
-  {
-    q: "GitHub에서 Fork란 무엇이며, 언제 사용하는지 설명하시오.",
-    answer: `<p><strong>Fork</strong>란 다른 사람의 GitHub 저장소를 <em>내 계정으로 복사</em>하는 기능입니다.</p>
-<p><strong>사용하는 경우:</strong></p>
-<p>• 오픈소스 프로젝트에 기여하고 싶을 때 (원본에 직접 Push 권한 없음)<br>
-• 남의 프로젝트를 기반으로 독립 개발하고 싶을 때<br>
-• 수정 후 <em>Pull Request</em>로 변경사항을 원본에 제안할 때</p>
-<div class="code-block"><pre>원본 저장소 → <span class="str">[Fork]</span> → 내 저장소
-내 저장소 작업 → <span class="str">[Pull Request]</span> → 원본에 반영 요청</pre></div>`
-  },
-  {
-    q: "git remote add origin [URL] 명령어의 의미를 설명하시오.",
-    answer: `<p>로컬 Git 저장소에 <em>원격 저장소를 등록</em>하는 명령어입니다.</p>
-<table class="md-table"><thead><tr><th>구성 요소</th><th>의미</th></tr></thead><tbody>
-<tr><td><code>git remote add</code></td><td>원격 저장소 주소 추가</td></tr>
-<tr><td><code>origin</code></td><td>원격 저장소의 별칭(alias) — 관례적 이름</td></tr>
-<tr><td><code>[URL]</code></td><td>실제 원격 저장소 주소</td></tr>
-</tbody></table>
-<div class="code-block"><pre><span class="cmd">git remote add</span> origin https://github.com/user/repo.git
-<span class="cmd">git remote -v</span>
-<span class="comment"># origin  https://github.com/user/repo.git (fetch)
-# origin  https://github.com/user/repo.git (push)</span></pre></div>`
-  },
-  {
-    q: "git checkout과 git switch의 공통점과 차이점을 설명하시오.",
-    answer: `<p><strong>공통점:</strong> 두 명령어 모두 <em>브랜치를 전환</em>하는 데 사용됩니다.</p>
-<table class="md-table"><thead><tr><th>항목</th><th>git checkout</th><th>git switch</th></tr></thead><tbody>
-<tr><td>도입</td><td>구버전부터</td><td>Git 2.23+ (2019)</td></tr>
-<tr><td>브랜치 전환</td><td><code>checkout &lt;branch&gt;</code></td><td><code>switch &lt;branch&gt;</code></td></tr>
-<tr><td>생성+전환</td><td><code>checkout -b &lt;branch&gt;</code></td><td><code>switch -c &lt;branch&gt;</code></td></tr>
-<tr><td>파일 복원</td><td>가능 (<code>-- file</code>)</td><td>불가 (git restore 사용)</td></tr>
-</tbody></table>`
-  },
-  {
-    q: "git clean -fd 명령어가 하는 역할을 설명하시오.",
-    answer: `<p>Git이 <em>추적하지 않는(Untracked) 파일과 디렉토리를 삭제</em>합니다.</p>
-<table class="md-table"><thead><tr><th>옵션</th><th>의미</th></tr></thead><tbody>
-<tr><td><code>-f</code></td><td>force — 강제 삭제 (기본 보호 해제)</td></tr>
-<tr><td><code>-d</code></td><td>directory — 빈 디렉토리도 함께 삭제</td></tr>
-</tbody></table>
-<div class="code-block"><pre><span class="cmd">git clean</span> <span class="flag">-fdn</span>  <span class="comment"># dry-run: 삭제될 목록 미리 확인</span>
-<span class="cmd">git clean</span> <span class="flag">-fd</span>   <span class="comment"># 실제 삭제 실행 (복구 불가!)</span></pre></div>`
-  },
-  {
-    q: "git restore 명령어의 용도와 사용 예시를 작성하시오.",
-    answer: `<p>작업 디렉토리나 스테이징 영역의 파일을 <em>이전 상태로 복원</em>하는 명령어입니다. (Git 2.23+ 도입)</p>
-<div class="code-block"><pre><span class="comment"># 워킹 디렉토리 변경사항 되돌리기</span>
-<span class="cmd">git restore</span> index.html
-
-<span class="comment"># 스테이징 영역에서 파일 제거 (unstage)</span>
-<span class="cmd">git restore</span> <span class="flag">--staged</span> index.html
-
-<span class="comment"># 특정 커밋 기준으로 복원</span>
-<span class="cmd">git restore</span> <span class="flag">--source=HEAD~2</span> index.html</pre></div>`
-  },
-  {
-    q: "git branch -d [브랜치명]과 git branch -D [브랜치명]의 차이를 설명하시오.",
-    answer: `<table class="md-table"><thead><tr><th>명령어</th><th>설명</th><th>조건</th></tr></thead><tbody>
-<tr><td><code>git branch -d</code></td><td>안전 삭제</td><td>merge 완료된 브랜치만 삭제</td></tr>
-<tr><td><code>git branch -D</code></td><td>강제 삭제</td><td>merge 여부 무관하게 삭제</td></tr>
-</tbody></table>
-<div class="code-block"><pre><span class="cmd">git branch</span> <span class="flag">-d</span> feature/login
-<span class="comment"># error: not fully merged → merge 안 됐으면 거부</span>
-
-<span class="cmd">git branch</span> <span class="flag">-D</span> feature/login
-<span class="comment"># 강제 삭제 — 작업 내용 손실 주의!</span></pre></div>`
-  },
-  {
-    q: "git log --oneline --graph --all 명령어 각 옵션의 의미를 설명하시오.",
-    answer: `<table class="md-table"><thead><tr><th>옵션</th><th>의미</th></tr></thead><tbody>
-<tr><td><code>--oneline</code></td><td>각 커밋을 한 줄로 축약 (단축 해시 + 메시지)</td></tr>
-<tr><td><code>--graph</code></td><td>브랜치와 병합 내역을 ASCII 그래프로 시각화</td></tr>
-<tr><td><code>--all</code></td><td>모든 브랜치의 커밋 히스토리 표시</td></tr>
-</tbody></table>
-<div class="code-block"><pre><span class="cmd">git log</span> <span class="flag">--oneline --graph --all</span>
-
-* a1b2c3d <span class="str">(HEAD -> main)</span> Add login feature
-| * d4e5f6g <span class="str">(feature/signup)</span> Add signup page
-|/
-* 7h8i9j0 Initial commit</pre></div>`
-  }
+const GIT_SUBJ = [
+  { q:"git add와 git commit의 차이점을 서술하시오.",
+    a:`<p><strong>git add</strong>: 변경된 파일을 <em>스테이징 영역(Staging Area)</em>에 추가합니다.</p>
+<p><strong>git commit</strong>: 스테이징 영역의 파일을 <em>로컬 저장소에 영구 기록</em>합니다.</p>
+<div class="cb"><pre>Working Dir  <span class="kw">→[git add]→</span>  Staging  <span class="kw">→[git commit]→</span>  Local Repo</pre></div>` },
+  { q:"git pull과 git fetch의 차이점을 설명하시오.",
+    a:`<table class="tbl"><thead><tr><th>명령어</th><th>동작</th><th>로컬 브랜치 영향</th></tr></thead><tbody>
+<tr><td><code>git fetch</code></td><td>원격 다운로드만</td><td>변경 없음</td></tr>
+<tr><td><code>git pull</code></td><td>fetch + merge 자동</td><td>자동 병합</td></tr></tbody></table>
+<div class="cb"><pre><span class="cm"># git pull = fetch + merge</span>
+<span class="kw">git fetch</span> origin
+<span class="kw">git merge</span> origin/main</pre></div>` },
+  { q:"git reset과 git revert의 차이점을 설명하시오.",
+    a:`<table class="tbl"><thead><tr><th>명령어</th><th>히스토리</th><th>안전성</th><th>사용 시점</th></tr></thead><tbody>
+<tr><td><code>git reset</code></td><td>커밋 삭제</td><td>위험</td><td>로컬 작업</td></tr>
+<tr><td><code>git revert</code></td><td>새 커밋 추가</td><td>안전</td><td>공유 브랜치</td></tr></tbody></table>` },
+  { q:"GitHub에서 Fork란 무엇이며, 언제 사용하는지 설명하시오.",
+    a:`<p><strong>Fork</strong>: 다른 사람의 GitHub 저장소를 <em>내 계정으로 복사</em>하는 기능.</p>
+<p>오픈소스 기여, Pull Request 제안 시 사용합니다.</p>` },
+  { q:"git remote add origin [URL] 명령어의 의미를 설명하시오.",
+    a:`<p>로컬 저장소에 원격 저장소를 <em>등록</em>하는 명령어입니다.</p>
+<div class="cb"><pre><span class="kw">git remote add</span> origin https://github.com/user/repo.git
+<span class="kw">git remote -v</span>  <span class="cm"># 등록 확인</span></pre></div>` },
+  { q:"git checkout과 git switch의 공통점과 차이점을 설명하시오.",
+    a:`<p><strong>공통점</strong>: 둘 다 브랜치를 전환합니다.</p>
+<table class="tbl"><thead><tr><th>항목</th><th>checkout</th><th>switch (2.23+)</th></tr></thead><tbody>
+<tr><td>브랜치 전환</td><td><code>checkout branch</code></td><td><code>switch branch</code></td></tr>
+<tr><td>생성+전환</td><td><code>checkout -b</code></td><td><code>switch -c</code></td></tr>
+<tr><td>파일 복원</td><td>가능</td><td>불가 (git restore)</td></tr></tbody></table>` },
+  { q:"git clean -fd 명령어가 하는 역할을 설명하시오.",
+    a:`<p>Git이 추적하지 않는 파일/디렉토리를 <em>강제 삭제</em>합니다.</p>
+<div class="cb"><pre><span class="kw">git clean</span> -fdn  <span class="cm"># dry-run (삭제 목록 미리 확인)</span>
+<span class="kw">git clean</span> -fd   <span class="cm"># 실제 삭제 (복구 불가!)</span></pre></div>` },
+  { q:"git restore 명령어의 용도와 사용 예시를 작성하시오.",
+    a:`<p>파일을 <em>이전 상태로 복원</em>하는 명령어 (Git 2.23+)</p>
+<div class="cb"><pre><span class="kw">git restore</span> index.html           <span class="cm"># 변경사항 되돌리기</span>
+<span class="kw">git restore</span> --staged index.html  <span class="cm"># unstage</span></pre></div>` },
+  { q:"git branch -d [브랜치명]과 git branch -D [브랜치명]의 차이를 설명하시오.",
+    a:`<table class="tbl"><thead><tr><th>명령어</th><th>설명</th><th>조건</th></tr></thead><tbody>
+<tr><td><code>-d</code></td><td>안전 삭제</td><td>merge 완료 시만 삭제</td></tr>
+<tr><td><code>-D</code></td><td>강제 삭제</td><td>merge 여부 무관</td></tr></tbody></table>` },
+  { q:"git log --oneline --graph --all 명령어 각 옵션의 의미를 설명하시오.",
+    a:`<table class="tbl"><thead><tr><th>옵션</th><th>의미</th></tr></thead><tbody>
+<tr><td><code>--oneline</code></td><td>커밋 한 줄 요약 (단축 해시+메시지)</td></tr>
+<tr><td><code>--graph</code></td><td>브랜치/병합 ASCII 그래프 표시</td></tr>
+<tr><td><code>--all</code></td><td>모든 브랜치 히스토리 표시</td></tr></tbody></table>` },
 ];
 
-const PRAC_DATA = [
-  {
-    num: "21번", cmd: "git config", title: "사용자 이름과 이메일 전역 설정 후 확인",
-    commands: `git config --global user.name "홍길동"
-git config --global user.email "hong@example.com"
-git config --list`,
-    output: `user.name=홍길동
-user.email=hong@example.com
-core.repositoryformatversion=0
-core.filemode=true
-...`,
-    tip: "설정 파일 위치: ~/.gitconfig (홈 디렉토리). --local 옵션은 현재 저장소에만 적용됩니다."
-  },
-  {
-    num: "22번", cmd: "git init", title: "새 디렉토리 생성 후 저장소 초기화 및 .git 폴더 확인",
-    commands: `mkdir my-project
-cd my-project
-git init
-ls -la`,
-    output: `Initialized empty Git repository in /home/user/my-project/.git/
-drwxr-xr-x  .git/`,
-    tip: ".git 폴더 안에 Git의 모든 메타데이터(commits, branches, config 등)가 저장됩니다."
-  },
-  {
-    num: "23번", cmd: "git remote", title: "원격 저장소 추가 후 git remote -v로 확인",
-    commands: `git remote add origin https://github.com/username/repo.git
-git remote -v`,
-    output: `origin  https://github.com/username/repo.git (fetch)
-origin  https://github.com/username/repo.git (push)`,
-    tip: "origin은 원격 저장소의 별칭입니다. 여러 원격을 등록할 때는 다른 이름(upstream 등)을 사용합니다."
-  },
-  {
-    num: "24번", cmd: "git branch", title: "새로운 브랜치 생성 후 git branch -a로 전체 목록 확인",
-    commands: `git branch feature/login
-git branch -a`,
-    output: `  feature/login
-* main
-remotes/origin/main`,
-    tip: "* 표시는 현재 체크아웃된 브랜치입니다. -a는 원격 브랜치 포함 전체 목록을 보여줍니다."
-  },
-  {
-    num: "25번", cmd: "git add", title: "새 파일 생성 후 스테이징 영역 추가 및 git status 확인",
-    commands: `echo "Hello Git" > hello.txt
-git add hello.txt
-git status`,
-    output: `On branch main
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        new file:   hello.txt`,
-    tip: "'Changes to be committed' 섹션에 파일이 보이면 스테이징 성공입니다."
-  },
-  {
-    num: "26번", cmd: "git commit", title: "스테이징된 파일을 커밋 후 git log로 히스토리 확인",
-    commands: `git commit -m "Add hello.txt"
-git log`,
-    output: `[main (root-commit) a1b2c3d] Add hello.txt
- 1 file changed, 1 insertion(+)
-
-commit a1b2c3d4e5f6...
-Author: 홍길동 <hong@example.com>
-Date:   Tue Apr 8 10:00:00 2026 +0900
-
-    Add hello.txt`,
-    tip: "git log --oneline으로 한 줄 요약 확인도 가능합니다."
-  },
-  {
-    num: "27번", cmd: "git push", title: "로컬 커밋을 원격으로 업로드 후 GitHub에서 확인",
-    commands: `git push origin main`,
-    output: `Enumerating objects: 3, done.
-Counting objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 220 bytes | 220.00 KiB/s, done.
-To https://github.com/username/repo.git
- * [new branch]      main -> main`,
-    tip: "GitHub 저장소 페이지를 브라우저로 열어 hello.txt 파일이 보이는지 확인하세요."
-  },
-  {
-    num: "28번", cmd: "git pull", title: "원격 저장소의 최신 내용을 가져오고 로컬 파일 변화 확인",
-    commands: `git pull origin main`,
-    output: `From https://github.com/username/repo
- * branch            main     -> FETCH_HEAD
-Already up to date.
-
-# 새 파일이 있는 경우:
-Updating a1b2c3d..e4f5g6h
-Fast-forward
- README.md | 1 +
- 1 file changed, 1 insertion(+)`,
-    tip: "원격에 새 커밋이 있으면 Fast-forward merge로 자동 병합됩니다. 충돌 시 수동으로 해결해야 합니다."
-  },
-  {
-    num: "29번", cmd: "git clone", title: "GitHub 공개 저장소를 복제 후 생성된 폴더 구조 확인",
-    commands: `git clone https://github.com/username/repo.git
-cd repo
-ls -la`,
-    output: `Cloning into 'repo'...
-remote: Enumerating objects: 10, done.
-remote: Counting objects: 100% (10/10), done.
-Receiving objects: 100% (10/10), done.
-
-.git/
-README.md
-hello.txt`,
-    tip: "clone 시 원격 저장소 URL 기준으로 디렉토리가 자동 생성되고 origin이 자동 등록됩니다."
-  },
-  {
-    num: "30번", cmd: "git reset", title: "최근 커밋을 soft/hard로 되돌리고 git log로 변화 확인",
-    commands: `# soft 방식 — 커밋만 취소, 파일 보존 (staged 상태)
-git reset --soft HEAD~1
-git log --oneline
-git status
-
-# hard 방식 — 커밋 + 파일 변경 모두 취소
-git reset --hard HEAD~1
-git log --oneline`,
-    output: `# --soft 실행 후:
-# 커밋이 사라지고 파일은 staged 상태로 남음
-Changes to be committed:
-  modified: hello.txt
-
-# --hard 실행 후:
-# 커밋이 사라지고 파일도 이전 커밋 상태로 복원됨`,
-    tip: "--hard는 작업 내용이 모두 사라지므로 주의! 공유 브랜치에서는 git revert를 사용하세요."
-  }
+const GIT_PRAC = [
+  { n:"21번", tag:"git config", title:"사용자 이름·이메일 전역 설정 후 확인",
+    code:`git config --global user.name "홍길동"\ngit config --global user.email "hong@example.com"\ngit config --list`,
+    out:`user.name=홍길동\nuser.email=hong@example.com\ncore.repositoryformatversion=0\n...`,
+    tip:"설정 파일 위치: ~/.gitconfig. --local 옵션은 현재 저장소에만 적용됩니다." },
+  { n:"22번", tag:"git init", title:"새 디렉토리 생성 후 저장소 초기화 및 .git 폴더 확인",
+    code:`mkdir my-project && cd my-project\ngit init\nls -la`,
+    out:`Initialized empty Git repository in .../my-project/.git/\ndrwxr-xr-x  .git/`,
+    tip:".git 폴더 안에 Git 메타데이터 전체(commits, branches, config)가 저장됩니다." },
+  { n:"23번", tag:"git remote", title:"원격 저장소 추가 후 git remote -v 확인",
+    code:`git remote add origin https://github.com/username/repo.git\ngit remote -v`,
+    out:`origin  https://github.com/username/repo.git (fetch)\norigin  https://github.com/username/repo.git (push)`,
+    tip:"origin은 원격 저장소의 별칭(alias)입니다." },
+  { n:"24번", tag:"git branch", title:"새 브랜치 생성 후 git branch -a 전체 목록 확인",
+    code:`git branch feature/login\ngit branch -a`,
+    out:`  feature/login\n* main\nremotes/origin/main`,
+    tip:"* 표시는 현재 체크아웃된 브랜치. -a는 원격 포함 전체 목록." },
+  { n:"25번", tag:"git add", title:"새 파일 생성 후 스테이징 및 git status 확인",
+    code:`echo "Hello Git" > hello.txt\ngit add hello.txt\ngit status`,
+    out:`On branch main\nChanges to be committed:\n        new file:   hello.txt`,
+    tip:"'Changes to be committed'에 파일이 보이면 스테이징 성공입니다." },
+  { n:"26번", tag:"git commit", title:"커밋 후 git log 히스토리 확인",
+    code:`git commit -m "Add hello.txt"\ngit log --oneline`,
+    out:`a1b2c3d (HEAD -> main) Add hello.txt`,
+    tip:"커밋 메시지는 변경 이유를 명확히 적는 것이 좋습니다." },
+  { n:"27번", tag:"git push", title:"로컬 커밋을 원격으로 업로드 후 GitHub 확인",
+    code:`git push origin main`,
+    out:`Writing objects: 100% (3/3), done.\nTo https://github.com/username/repo.git\n * [new branch]      main -> main`,
+    tip:"GitHub 저장소 페이지에서 파일이 보이는지 브라우저로 확인하세요." },
+  { n:"28번", tag:"git pull", title:"원격 저장소 최신 내용 가져오기 및 변화 확인",
+    code:`git pull origin main`,
+    out:`Already up to date.\n# 새 커밋이 있으면:\nFast-forward\n README.md | 1 +`,
+    tip:"충돌 발생 시 파일을 직접 편집 후 git add → git commit 으로 해결합니다." },
+  { n:"29번", tag:"git clone", title:"공개 저장소 복제 후 폴더 구조 확인",
+    code:`git clone https://github.com/username/repo.git\ncd repo && ls -la`,
+    out:`Cloning into 'repo'...\n.git/\nREADME.md\nhello.txt`,
+    tip:"clone 시 origin이 자동 등록됩니다." },
+  { n:"30번", tag:"git reset", title:"최근 커밋을 soft/hard로 되돌리고 git log 변화 확인",
+    code:`# soft: 커밋만 취소, 파일 staged 유지\ngit reset --soft HEAD~1\ngit log --oneline\n\n# hard: 커밋 + 파일 모두 취소\ngit reset --hard HEAD~1`,
+    out:`# soft 후: 파일은 staged 상태\n# hard 후: 파일도 이전 상태로 복원됨`,
+    tip:"--hard는 작업 내용 전체 소실 주의! 공유 브랜치에서는 git revert를 사용하세요." },
 ];
 
-const SUMMARY_CMDS = [
-  { cmd: "git init", desc: "저장소 초기화" },
-  { cmd: "git clone [URL]", desc: "원격 저장소 복제" },
-  { cmd: "git status", desc: "현재 작업 상태 확인" },
-  { cmd: "git add .", desc: "전체 변경사항 스테이징" },
-  { cmd: 'git commit -m "msg"', desc: "커밋 생성" },
-  { cmd: "git push origin main", desc: "원격으로 업로드" },
-  { cmd: "git pull origin main", desc: "원격에서 다운로드+병합" },
-  { cmd: "git fetch", desc: "원격 다운로드만 (merge 없음)" },
-  { cmd: "git checkout -b feature", desc: "브랜치 생성+전환 (구버전)" },
-  { cmd: "git switch -c feature", desc: "브랜치 생성+전환 (신버전)" },
-  { cmd: "git merge feature", desc: "브랜치 병합" },
-  { cmd: "git log --oneline --graph --all", desc: "전체 히스토리 시각화" },
-  { cmd: "git revert HEAD", desc: "안전하게 커밋 취소" },
-  { cmd: "git reset --soft HEAD~1", desc: "커밋만 취소 (파일 보존)" },
-  { cmd: "git reset --hard HEAD~1", desc: "커밋+파일 모두 취소" },
-  { cmd: "git stash", desc: "변경사항 임시 저장" },
-  { cmd: "git stash pop", desc: "임시 저장 복원" },
-  { cmd: "git remote add origin URL", desc: "원격 저장소 등록" },
-  { cmd: "git remote -v", desc: "원격 저장소 목록 확인" },
-  { cmd: "git branch -a", desc: "전체 브랜치 목록" },
-  { cmd: "git branch -d branch", desc: "브랜치 안전 삭제" },
-  { cmd: "git branch -D branch", desc: "브랜치 강제 삭제" },
-  { cmd: "git restore file", desc: "파일 변경사항 복원" },
-  { cmd: "git restore --staged file", desc: "unstage (스테이징 취소)" },
-  { cmd: "git clean -fd", desc: "미추적 파일/폴더 삭제" },
-  { cmd: "git config --global", desc: "전역 Git 설정" },
+const GIT_SUM = [
+  {c:"git init", d:"저장소 초기화"},{c:"git clone [URL]", d:"원격 저장소 복제"},
+  {c:"git status", d:"현재 상태 확인"},{c:"git add .", d:"전체 변경사항 스테이징"},
+  {c:'git commit -m "msg"', d:"커밋 생성"},{c:"git push origin main", d:"원격 업로드"},
+  {c:"git pull origin main", d:"원격 다운로드+병합"},{c:"git fetch", d:"원격 다운로드만"},
+  {c:"git checkout -b feat", d:"브랜치 생성+전환"},{c:"git switch -c feat", d:"브랜치 생성+전환 (신)"},
+  {c:"git merge feature", d:"브랜치 병합"},{c:"git log --oneline --graph --all", d:"전체 히스토리 시각화"},
+  {c:"git revert HEAD", d:"안전한 커밋 취소"},{c:"git reset --soft HEAD~1", d:"커밋만 취소"},
+  {c:"git reset --hard HEAD~1", d:"커밋+파일 취소"},{c:"git stash", d:"변경사항 임시 저장"},
+  {c:"git remote add origin URL", d:"원격 저장소 등록"},{c:"git remote -v", d:"원격 목록 확인"},
+  {c:"git branch -a", d:"전체 브랜치 목록"},{c:"git branch -D branch", d:"브랜치 강제 삭제"},
+  {c:"git restore file", d:"파일 복원"},{c:"git restore --staged file", d:"unstage"},
+  {c:"git clean -fd", d:"미추적 파일 삭제"},{c:"git config --global", d:"전역 Git 설정"},
 ];
 
-/* ═══════════════════ STATE ═══════════════════ */
-let quizState = Array(10).fill(null).map(() => ({ selected: null, checked: false }));
+const GIT_SUM_TABLES = `
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;">
+<h3 style="font-size:13px;margin-bottom:12px;">reset vs revert vs restore</h3>
+<table class="tbl"><thead><tr><th>명령어</th><th>히스토리</th><th>안전성</th><th>사용 시점</th></tr></thead><tbody>
+<tr><td><code>git reset</code></td><td>커밋 삭제</td><td style="color:var(--red)">⚠ 위험</td><td>로컬 개인 작업</td></tr>
+<tr><td><code>git revert</code></td><td>새 커밋 추가</td><td style="color:var(--git-accent)">✓ 안전</td><td>공유/원격 브랜치</td></tr>
+<tr><td><code>git restore</code></td><td>영향 없음</td><td style="color:var(--git-accent)">✓ 안전</td><td>파일 복원/unstage</td></tr>
+</tbody></table></div>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;">
+<h3 style="font-size:13px;margin-bottom:12px;">reset 옵션 비교</h3>
+<table class="tbl"><thead><tr><th>옵션</th><th>커밋 취소</th><th>스테이징 유지</th><th>파일 유지</th></tr></thead><tbody>
+<tr><td><code>--soft</code></td><td style="color:var(--git-accent)">✓</td><td style="color:var(--git-accent)">✓</td><td style="color:var(--git-accent)">✓</td></tr>
+<tr><td><code>--mixed</code></td><td style="color:var(--git-accent)">✓</td><td style="color:var(--red)">✗</td><td style="color:var(--git-accent)">✓</td></tr>
+<tr><td><code>--hard</code></td><td style="color:var(--git-accent)">✓</td><td style="color:var(--red)">✗</td><td style="color:var(--red)">✗</td></tr>
+</tbody></table></div>`;
 
-/* ═══════════════════ RENDER ═══════════════════ */
+/* ─── DEEP LEARNING DATA ─── */
+const DL_QUIZ = [
+  { q:"Python에서 리스트의 슬라이싱 결과로 올바른 것은? (lst = [10, 20, 30, 40, 50])",
+    opts:["lst[1:3]  →  [10, 20]","lst[1:3]  →  [20, 30]","lst[1:3]  →  [20, 30, 40]","lst[1:3]  →  [30, 40]"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span>슬라이싱 <code>[start:end]</code> 는 <strong>start 포함, end 미포함</strong>입니다.<br>인덱스 1 = 20, 인덱스 2 = 30 → <strong>[20, 30]</strong>` },
+  { q:"NumPy에서 2차원 배열의 형태(shape)를 확인하는 올바른 방법은?",
+    opts:["arr.size()","arr.shape","arr.dim","arr.len()"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>arr.shape</code> 는 메서드가 아닌 <strong>속성(attribute)</strong>이라 괄호 없이 사용합니다.<br>• <code>arr.size</code> — 전체 원소 수 · <code>arr.ndim</code> — 차원 수` },
+  { q:"Pandas DataFrame에서 특정 열의 결측값(NaN)을 0으로 채우는 메서드는?",
+    opts:["df.dropna()","df.fillna(0)","df.replace(NaN, 0)","df.isnull(0)"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>df.fillna(0)</code> 은 NaN을 지정 값으로 채웁니다.<br>• <code>dropna()</code> — NaN 행/열 제거 · <code>isnull()</code> — NaN 여부 확인 (True/False)` },
+  { q:"Matplotlib에서 그래프를 화면에 출력하는 명령어는?",
+    opts:["plt.draw()","plt.render()","plt.show()","plt.plot()"], ans:2,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>plt.show()</code> 로 현재까지 설정된 그래프를 화면에 렌더링합니다.<br>• <code>plt.plot()</code> — 데이터를 선 그래프로 등록 (표시는 하지 않음)` },
+  { q:"퍼셉트론에서 입력값과 가중치의 곱의 합에 적용되는 함수로, 출력 여부를 결정하는 함수는?",
+    opts:["손실 함수(Loss Function)","활성화 함수(Activation Function)","목적 함수(Objective Function)","정규화 함수(Normalization Function)"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>활성화 함수</strong>는 뉴런의 출력을 결정합니다. 대표적으로 Sigmoid, ReLU, Softmax가 있습니다.` },
+  { q:"다층 퍼셉트론(MLP)에서 역전파(Backpropagation) 알고리즘의 주요 목적은?",
+    opts:["데이터 전처리","가중치 초기화","오차를 출력층에서 입력층 방향으로 전달하여 가중치를 업데이트","배치 정규화 수행"], ans:2,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>역전파</strong>는 출력층의 오차를 체인 룰(Chain Rule)로 입력층까지 역으로 전달하며 <strong>가중치(W)를 업데이트</strong>합니다.` },
+  { q:"CNN(합성곱 신경망)에서 Pooling Layer의 주요 역할은?",
+    opts:["가중치를 학습시킨다","특징 맵(Feature Map)의 크기를 줄여 연산량을 감소시킨다","활성화 함수를 적용한다","데이터를 정규화한다"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>Pooling</strong> 은 Feature Map의 공간 해상도를 줄여 파라미터 수와 연산량을 줄이고 위치 불변성을 제공합니다.` },
+  { q:"TensorFlow/Keras에서 모델 컴파일 시 분류 문제에 일반적으로 사용되는 손실 함수는?",
+    opts:["mean_squared_error","binary_crossentropy 또는 categorical_crossentropy","mean_absolute_error","huber_loss"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span>이진 분류: <code>binary_crossentropy</code> · 다중 분류: <code>categorical_crossentropy</code> (원-핫) 또는 <code>sparse_categorical_crossentropy</code> (정수 레이블)` },
+  { q:"OpenCV에서 컬러 이미지를 그레이스케일로 변환할 때 사용하는 코드는?",
+    opts:["cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)","cv2.gray(img)","cv2.convert(img, 'gray')","cv2.imread(img, 0)"], ans:0,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</code> — OpenCV는 기본적으로 BGR 순서입니다 (RGB 아님).` },
+  { q:"YOLO(You Only Look Once) 객체 탐지 알고리즘의 특징으로 올바른 것은?",
+    opts:["이미지를 여러 번 스캔하여 정확도를 높인다","이미지 전체를 한 번에 처리하여 실시간 객체 탐지가 가능하다","객체 분류만 수행하며 위치는 탐지하지 않는다","CNN을 사용하지 않는 독립적인 알고리즘이다"], ans:1,
+    exp:`<span class="tlabel">▶ 핵심 포인트</span>YOLO는 이미지를 <strong>단 한 번의 신경망 추론</strong>으로 분류와 위치(Bounding Box)를 동시에 예측합니다. 이 덕분에 실시간 처리가 가능합니다.` },
+];
 
-function renderQuiz() {
-  const container = document.getElementById('quizContainer');
-  container.innerHTML = QUIZ_DATA.map((q, i) => `
-    <div class="quiz-card" id="qcard-${i}">
-      <div class="quiz-header">
-        <span class="q-num" id="qnum-${i}">${i+1}번</span>
-        <span class="q-text">${q.q}</span>
-      </div>
-      <div class="options" id="opts-${i}">
-        ${q.options.map((opt, j) => `
-          <div class="option" id="opt-${i}-${j}" onclick="selectOption(${i},${j})">
-            <div class="opt-circle">${['①','②','③','④'][j]}</div>
-            <span>${opt}</span>
-          </div>
-        `).join('')}
-      </div>
-      <div class="explanation" id="exp-${i}">${q.explain}</div>
-      <div class="quiz-footer">
-        <button class="btn-check" id="btn-${i}" onclick="checkAnswer(${i})" disabled>채점하기</button>
-        <button class="btn-reset" onclick="resetQuiz(${i})">↺</button>
-        <span class="result-msg" id="rmsg-${i}"></span>
-      </div>
-    </div>
-  `).join('');
+const DL_SUBJ = [
+  { q:"리스트 컴프리헨션이란 무엇인지 설명하고, 0~9까지의 짝수만 담는 리스트를 작성하시오.",
+    a:`<p><strong>리스트 컴프리헨션</strong>은 for 루프와 조건식을 한 줄로 표현하여 리스트를 생성하는 파이썬 문법입니다.</p>
+<div class="cb"><pre><span class="cm"># 일반 방식</span>
+evens = []
+<span class="kw">for</span> i <span class="kw">in</span> range(10):
+    <span class="kw">if</span> i % 2 == 0:
+        evens.append(i)
+
+<span class="cm"># 리스트 컴프리헨션</span>
+evens = [i <span class="kw">for</span> i <span class="kw">in</span> range(10) <span class="kw">if</span> i % 2 == 0]
+<span class="fn">print</span>(evens)  <span class="cm"># [0, 2, 4, 6, 8]</span></pre></div>` },
+  { q:"NumPy 배열과 Python 기본 리스트의 차이점을 2가지 이상 서술하시오.",
+    a:`<table class="tbl"><thead><tr><th>항목</th><th>Python 리스트</th><th>NumPy 배열</th></tr></thead><tbody>
+<tr><td>데이터 타입</td><td>혼합 가능</td><td>동일 타입만</td></tr>
+<tr><td>연산 속도</td><td>느림 (반복 루프)</td><td>빠름 (벡터화 연산)</td></tr>
+<tr><td>수학 연산</td><td>원소별 루프 필요</td><td>브로드캐스팅 지원</td></tr>
+<tr><td>메모리</td><td>상대적으로 큰 오버헤드</td><td>연속 메모리, 효율적</td></tr>
+</tbody></table>` },
+  { q:"Pandas에서 DataFrame을 생성하는 방법을 딕셔너리(dict)를 이용한 예시 코드와 함께 설명하시오.",
+    a:`<p><strong>DataFrame</strong>은 2차원 표 형태의 데이터 구조로, 딕셔너리의 key가 컬럼명이 됩니다.</p>
+<div class="cb"><pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+data = {
+    <span class="st">'이름'</span>: [<span class="st">'Alice'</span>, <span class="st">'Bob'</span>, <span class="st">'Charlie'</span>],
+    <span class="st">'나이'</span>: [25, 30, 35],
+    <span class="st">'점수'</span>: [90.5, 85.0, 92.3]
 }
+df = pd.<span class="fn">DataFrame</span>(data)
+<span class="fn">print</span>(df)</pre></div>` },
+  { q:"Seaborn과 Matplotlib의 차이점 및 각각의 장점을 설명하시오.",
+    a:`<table class="tbl"><thead><tr><th>항목</th><th>Matplotlib</th><th>Seaborn</th></tr></thead><tbody>
+<tr><td>특징</td><td>저수준 기본 라이브러리</td><td>Matplotlib 기반 고수준</td></tr>
+<tr><td>장점</td><td>자유도 높음, 세밀한 제어</td><td>통계 시각화 간편, 미려한 기본 스타일</td></tr>
+<tr><td>코드량</td><td>상대적으로 많음</td><td>적은 코드로 복잡한 그래프</td></tr>
+<tr><td>주요 용도</td><td>모든 종류의 커스텀 그래프</td><td>히트맵, 분포도, 상관관계 시각화</td></tr>
+</tbody></table>` },
+  { q:"퍼셉트론(Perceptron)의 한계점과 이를 극복하기 위해 등장한 모델을 설명하시오.",
+    a:`<p><strong>한계</strong>: 단층 퍼셉트론은 XOR 같은 <em>선형 분리 불가능</em> 문제를 해결할 수 없습니다.</p>
+<p><strong>극복</strong>: 은닉층(Hidden Layer)을 추가한 <em>다층 퍼셉트론(MLP)</em>이 등장하였고, 역전파(Backpropagation) 알고리즘으로 학습이 가능해졌습니다.</p>` },
+  { q:"딥러닝에서 과적합(Overfitting)이란 무엇이며, 이를 방지하기 위한 방법을 2가지 이상 서술하시오.",
+    a:`<p><strong>과적합</strong>: 모델이 훈련 데이터에 지나치게 최적화되어 새로운 데이터에서 성능이 떨어지는 현상입니다.</p>
+<p><strong>방지 방법</strong>:<br>
+① <em>드롭아웃(Dropout)</em> — 학습 중 일부 뉴런을 무작위로 비활성화<br>
+② <em>L1/L2 정규화</em> — 가중치에 패널티를 부여<br>
+③ <em>데이터 증강(Augmentation)</em> — 훈련 데이터 인위적으로 늘리기<br>
+④ <em>조기 종료(Early Stopping)</em> — 검증 손실이 증가하면 학습 중단</p>` },
+  { q:"CNN에서 합성곱(Convolution) 연산의 목적과 필터(Filter/Kernel)의 역할을 설명하시오.",
+    a:`<p><strong>합성곱 연산의 목적</strong>: 입력 이미지에서 엣지, 텍스처, 형태 등 <em>지역적 특징(Local Feature)</em>을 추출합니다.</p>
+<p><strong>필터(Kernel)의 역할</strong>: 입력 데이터를 슬라이딩하며 내적을 계산, 특징 맵(Feature Map)을 생성합니다. 각 필터는 특정 패턴(가로선, 세로선 등)에 반응합니다.</p>
+<div class="cb"><pre><span class="cm"># 3×3 필터가 입력을 슬라이딩하며 특징 추출</span>
+<span class="kw">Conv2D</span>(32, kernel_size=(3,3), activation=<span class="st">'relu'</span>)</pre></div>` },
+  { q:"TensorFlow/Keras에서 fit() 메서드의 주요 파라미터(epochs, batch_size, validation_data)를 설명하시오.",
+    a:`<table class="tbl"><thead><tr><th>파라미터</th><th>의미</th><th>예시</th></tr></thead><tbody>
+<tr><td><code>epochs</code></td><td>전체 데이터셋을 몇 번 반복 학습할지</td><td><code>epochs=10</code></td></tr>
+<tr><td><code>batch_size</code></td><td>한 번에 처리할 샘플 수</td><td><code>batch_size=32</code></td></tr>
+<tr><td><code>validation_data</code></td><td>각 epoch 후 검증에 사용할 데이터</td><td><code>validation_data=(X_val, y_val)</code></td></tr>
+</tbody></table>
+<div class="cb"><pre>model.<span class="fn">fit</span>(X_train, y_train,
+         epochs=<span class="nm">10</span>,
+         batch_size=<span class="nm">32</span>,
+         validation_data=(X_val, y_val))</pre></div>` },
+  { q:"OpenCV에서 이미지를 읽고(imread), 화면에 표시하고(imshow), 저장하는(imwrite) 코드를 순서대로 작성하시오.",
+    a:`<div class="cb"><pre><span class="kw">import</span> cv2
 
-function selectOption(qi, oi) {
-  const state = quizState[qi];
-  if (state.checked) return;
-  state.selected = oi;
-  // update UI
-  for (let j = 0; j < 4; j++) {
-    const el = document.getElementById(`opt-${qi}-${j}`);
-    el.classList.toggle('selected', j === oi);
-  }
-  document.getElementById(`btn-${qi}`).disabled = false;
-}
+<span class="cm"># 1. 이미지 읽기</span>
+img = cv2.<span class="fn">imread</span>(<span class="st">'input.jpg'</span>)
 
-function checkAnswer(qi) {
-  const state = quizState[qi];
-  if (state.checked || state.selected === null) return;
-  state.checked = true;
+<span class="cm"># 2. 화면에 표시</span>
+cv2.<span class="fn">imshow</span>(<span class="st">'Original'</span>, img)
+cv2.<span class="fn">waitKey</span>(<span class="nm">0</span>)   <span class="cm"># 키 입력 대기</span>
+cv2.<span class="fn">destroyAllWindows</span>()
 
-  const q = QUIZ_DATA[qi];
-  const correct = q.answer;
-  const sel = state.selected;
-  const isCorrect = sel === correct;
+<span class="cm"># 3. 저장</span>
+cv2.<span class="fn">imwrite</span>(<span class="st">'output.jpg'</span>, img)</pre></div>` },
+  { q:"DNN(심층 신경망)과 CNN(합성곱 신경망)의 구조적 차이점과 CNN이 이미지 처리에 유리한 이유를 설명하시오.",
+    a:`<table class="tbl"><thead><tr><th>항목</th><th>DNN</th><th>CNN</th></tr></thead><tbody>
+<tr><td>주요 레이어</td><td>Dense(Fully Connected)</td><td>Conv2D + Pooling + Dense</td></tr>
+<tr><td>입력 형태</td><td>1D 벡터</td><td>2D/3D 이미지 그대로</td></tr>
+<tr><td>파라미터 수</td><td>매우 많음</td><td>가중치 공유로 적음</td></tr>
+<tr><td>공간 정보</td><td>위치 정보 손실</td><td>공간 구조 보존</td></tr>
+</tbody></table>
+<p><strong>CNN이 유리한 이유</strong>: 필터가 이미지 전체를 슬라이딩하며 <em>가중치를 공유</em>하므로 파라미터가 적고, 위치에 무관한 특징 추출이 가능합니다.</p>` },
+];
 
-  const card = document.getElementById(`qcard-${qi}`);
-  card.classList.add(isCorrect ? 'correct' : 'wrong');
+const DL_PRAC = [
+  { n:"21번", tag:"NumPy", title:"shape (3,4) 영행렬과 ones 배열 생성 및 출력",
+    code:`import numpy as np\n\n# 영행렬 (zeros)\nzeros = np.zeros((3, 4))\nprint("zeros:\\n", zeros)\n\n# ones 배열\nones = np.ones((3, 4))\nprint("ones:\\n", ones)\n\n# shape 확인\nprint("shape:", zeros.shape)`,
+    out:`zeros:\n [[0. 0. 0. 0.]\n  [0. 0. 0. 0.]\n  [0. 0. 0. 0.]]\nones:\n [[1. 1. 1. 1.]\n  [1. 1. 1. 1.]\n  [1. 1. 1. 1.]]\nshape: (3, 4)`,
+    tip:"np.zeros, np.ones 외에 np.eye(n)으로 단위행렬, np.random.rand()로 난수 배열을 만들 수 있습니다." },
+  { n:"22번", tag:"Pandas", title:"DataFrame 생성 후 head(), info(), describe() 실행",
+    code:`import pandas as pd\n\ndata = {\n    '이름': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],\n    '나이': [25, 30, 35, 28, 22],\n    '점수': [90.5, 85.0, 92.3, 78.5, 95.0]\n}\ndf = pd.DataFrame(data)\n\nprint(df.head())      # 상위 5행\nprint(df.info())      # 데이터 타입·결측값\nprint(df.describe())  # 기술 통계량`,
+    out:`   이름  나이    점수\n0  Alice  25  90.5\n...\n<class 'pandas.core.frame.DataFrame'>\nRangeIndex: 5 entries\n       나이       점수\ncount  5.0    5.000\nmean  28.0   88.26\nstd    4.74   6.43...`,
+    tip:"info()는 null 수와 dtype 확인, describe()는 평균·표준편차·사분위수를 한번에 보여줍니다." },
+  { n:"23번", tag:"Matplotlib/Seaborn", title:"sin 함수 꺾은선 그래프 + 히트맵 시각화",
+    code:`import numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# sin 그래프\nx = np.linspace(0, 2 * np.pi, 100)\ny = np.sin(x)\nplt.figure(figsize=(8, 3))\nplt.plot(x, y, color='steelblue', linewidth=2)\nplt.title('Sin Function')\nplt.xlabel('x'); plt.ylabel('sin(x)')\nplt.grid(True, alpha=0.3)\nplt.tight_layout(); plt.show()\n\n# 히트맵\ndata = np.random.rand(8, 8)\nplt.figure(figsize=(6, 5))\nsns.heatmap(data, annot=True, fmt='.2f', cmap='viridis')\nplt.title('Random Heatmap')\nplt.show()`,
+    out:`[sin 함수 꺾은선 그래프 창 출력]\n[8x8 히트맵 창 출력]`,
+    tip:"plt.tight_layout()은 레이블이 잘리지 않도록 여백을 자동 조정합니다." },
+  { n:"24번", tag:"OpenCV", title:"이미지 그레이스케일 변환 후 원본과 나란히 출력",
+    code:`import cv2\nimport matplotlib.pyplot as plt\n\n# 이미지 읽기\nimg = cv2.imread('sample.jpg')\nimg_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # BGR→RGB\nimg_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\n\n# 나란히 출력\nfig, axes = plt.subplots(1, 2, figsize=(10, 4))\naxes[0].imshow(img_rgb)\naxes[0].set_title('Original (RGB)')\naxes[1].imshow(img_gray, cmap='gray')\naxes[1].set_title('Grayscale')\nplt.tight_layout(); plt.show()\n\n# 저장\ncv2.imwrite('gray_output.jpg', img_gray)`,
+    out:`[원본 컬러 이미지와 그레이스케일 이미지 나란히 출력]\ngray_output.jpg 저장 완료`,
+    tip:"OpenCV는 BGR 순서로 읽으므로 Matplotlib 출력 전 cv2.COLOR_BGR2RGB 변환이 필요합니다." },
+  { n:"25번", tag:"퍼셉트론", title:"NumPy로 AND 게이트 구현 및 4가지 입력 검증",
+    code:`import numpy as np\n\ndef perceptron_and(x1, x2):\n    # 가중치와 임계값\n    w1, w2, theta = 0.5, 0.5, 0.7\n    total = w1 * x1 + w2 * x2\n    return 1 if total >= theta else 0\n\n# 4가지 입력 테스트\nfor x1, x2 in [(0,0), (0,1), (1,0), (1,1)]:\n    result = perceptron_and(x1, x2)\n    print(f"AND({x1}, {x2}) = {result}")`,
+    out:`AND(0, 0) = 0\nAND(0, 1) = 0\nAND(1, 0) = 0\nAND(1, 1) = 1`,
+    tip:"AND 게이트: 두 입력이 모두 1일 때만 1을 출력. 가중치와 임계값(theta) 조정으로 OR, NAND도 구현 가능합니다." },
+  { n:"26번", tag:"MLP/Keras", title:"Sequential MLP 모델 정의 후 summary() 출력",
+    code:`import tensorflow as tf\nfrom tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Dense\n\nmodel = Sequential([\n    Dense(64, activation='relu', input_shape=(784,)),  # 입력+은닉층\n    Dense(32, activation='relu'),                       # 은닉층\n    Dense(1,  activation='sigmoid')                     # 출력층\n])\n\nmodel.summary()`,
+    out:`Model: "sequential"\n_________________________________________________________________\nLayer (type)          Output Shape         Param #\n=================================================================\ndense (Dense)         (None, 64)           50240\ndense_1 (Dense)       (None, 32)           2080\ndense_2 (Dense)       (None, 1)            33\n=================================================================\nTotal params: 52,353`,
+    tip:"input_shape는 첫 번째 레이어에만 지정합니다. Dense(units, activation)로 층을 쌓습니다." },
+  { n:"27번", tag:"DNN 학습", title:"MNIST 데이터로 DNN 컴파일 및 5 epochs 학습",
+    code:`import tensorflow as tf\n\n# 데이터 로드 및 전처리\n(X_train, y_train), (X_test, y_test) = tf.keras.datasets.mnist.load_data()\nX_train = X_train.reshape(-1, 784) / 255.0\nX_test  = X_test.reshape(-1, 784)  / 255.0\n\n# 모델 정의\nmodel = tf.keras.Sequential([\n    tf.keras.layers.Dense(128, activation='relu', input_shape=(784,)),\n    tf.keras.layers.Dense(64,  activation='relu'),\n    tf.keras.layers.Dense(10,  activation='softmax')\n])\n\n# 컴파일\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\n\n# 학습\nmodel.fit(X_train, y_train, epochs=5, batch_size=32, validation_split=0.1)`,
+    out:`Epoch 1/5\n1688/1688 - loss: 0.2541 - accuracy: 0.9253\nEpoch 5/5\n1688/1688 - loss: 0.0612 - accuracy: 0.9813`,
+    tip:"MNIST는 28×28 손글씨 숫자 이미지. reshape(-1, 784)로 1D로 펼치고 /255.0 으로 정규화합니다." },
+  { n:"28번", tag:"CNN 정의", title:"Conv2D→MaxPooling→Flatten→Dense CNN 모델 정의 및 summary()",
+    code:`import tensorflow as tf\nfrom tensorflow.keras import layers, models\n\nmodel = models.Sequential([\n    layers.Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),\n    layers.MaxPooling2D((2,2)),\n    layers.Conv2D(64, (3,3), activation='relu'),\n    layers.MaxPooling2D((2,2)),\n    layers.Flatten(),\n    layers.Dense(64, activation='relu'),\n    layers.Dense(10, activation='softmax')\n])\n\nmodel.summary()`,
+    out:`Model: "sequential"\n_________________________________________________________________\nLayer (type)          Output Shape         Param #\n=================================================================\nconv2d (Conv2D)       (None, 26, 26, 32)   320\nmax_pooling2d         (None, 13, 13, 32)   0\nconv2d_1 (Conv2D)     (None, 11, 11, 64)   18496\nmax_pooling2d_1       (None, 5, 5, 64)     0\nflatten (Flatten)     (None, 1600)          0\ndense (Dense)         (None, 64)           102464\ndense_1 (Dense)       (None, 10)           650\n=================================================================\nTotal params: 121,930`,
+    tip:"Flatten() 은 2D Feature Map을 1D 벡터로 펼쳐 Dense 층에 연결합니다." },
+  { n:"29번", tag:"CNN 학습", title:"MNIST CNN 학습 및 테스트 정확도 출력",
+    code:`import tensorflow as tf\n\n# 데이터 로드 및 전처리\n(X_train, y_train), (X_test, y_test) = tf.keras.datasets.mnist.load_data()\nX_train = X_train.reshape(-1,28,28,1).astype('float32') / 255.0\nX_test  = X_test.reshape(-1,28,28,1).astype('float32')  / 255.0\n\n# 모델 (위 28번 모델 재사용)\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\nmodel.fit(X_train, y_train, epochs=5, batch_size=64, validation_split=0.1)\n\n# 평가\ntest_loss, test_acc = model.evaluate(X_test, y_test, verbose=0)\nprint(f"\\n테스트 정확도: {test_acc:.4f}")`,
+    out:`Epoch 5/5 - accuracy: 0.9921\n\n테스트 정확도: 0.9912`,
+    tip:"CNN은 DNN보다 파라미터가 적으면서 이미지 분류 성능이 높습니다. MNIST에서 99%+ 달성 가능." },
+  { n:"30번", tag:"YOLO", title:"YOLOv8로 샘플 이미지 객체 탐지 및 바운딩 박스 출력",
+    code:`# 설치: pip install ultralytics\nfrom ultralytics import YOLO\nimport cv2, matplotlib.pyplot as plt\n\n# YOLOv8 nano 모델 로드 (자동 다운로드)\nmodel = YOLO('yolov8n.pt')\n\n# 추론 (샘플 이미지)\nresults = model('https://ultralytics.com/images/bus.jpg')\n\n# 결과 시각화\nfor result in results:\n    img_with_boxes = result.plot()  # 바운딩 박스 그리기\n    img_rgb = cv2.cvtColor(img_with_boxes, cv2.COLOR_BGR2RGB)\n    plt.figure(figsize=(10, 8))\n    plt.imshow(img_rgb)\n    plt.axis('off')\n    plt.title('YOLOv8 Detection Result')\n    plt.show()\n    print("탐지된 객체 수:", len(result.boxes))`,
+    out:`[버스 이미지에 바운딩 박스 및 레이블 표시된 결과 출력]\n탐지된 객체 수: 4\n  - person (신뢰도 0.87)\n  - bus (신뢰도 0.95)\n  - ...`,
+    tip:"환경 미지원 시: YOLO 코드 작성만으로도 부분 점수 인정. Google Colab 환경 추천합니다." },
+];
 
-  // Mark options
-  for (let j = 0; j < 4; j++) {
-    const el = document.getElementById(`opt-${qi}-${j}`);
-    el.classList.add('disabled');
-    if (j === correct) el.classList.add('correct-ans');
-    if (j === sel && !isCorrect) el.classList.add('wrong-sel');
-  }
+const DL_SUM = [
+  {c:"np.zeros((m,n))", d:"영행렬 생성"},
+  {c:"np.ones((m,n))", d:"1로 채운 배열"},
+  {c:"arr.shape", d:"배열 형태 확인"},
+  {c:"df.fillna(0)", d:"결측값 0으로 채우기"},
+  {c:"df.dropna()", d:"결측값 행 제거"},
+  {c:"df.describe()", d:"기술 통계량"},
+  {c:"plt.show()", d:"그래프 화면 출력"},
+  {c:"sns.heatmap(data)", d:"히트맵 시각화"},
+  {c:"cv2.imread('file')", d:"이미지 읽기"},
+  {c:"cv2.cvtColor(img, ...)", d:"색공간 변환"},
+  {c:"cv2.imwrite('file', img)", d:"이미지 저장"},
+  {c:"model.compile(...)", d:"모델 컴파일"},
+  {c:"model.fit(X, y, ...)", d:"모델 학습"},
+  {c:"model.evaluate(...)", d:"모델 평가"},
+  {c:"model.predict(X)", d:"추론/예측"},
+  {c:"Dense(n, activation)", d:"완전 연결층"},
+  {c:"Conv2D(n, kernel)", d:"합성곱층"},
+  {c:"MaxPooling2D((2,2))", d:"최대 풀링"},
+  {c:"Flatten()", d:"2D→1D 변환"},
+  {c:"Dropout(rate)", d:"드롭아웃 (과적합 방지)"},
+  {c:"activation='relu'", d:"은닉층 활성화"},
+  {c:"activation='softmax'", d:"다중 분류 출력"},
+  {c:"sparse_categorical_crossentropy", d:"다중 분류 손실"},
+  {c:"binary_crossentropy", d:"이진 분류 손실"},
+  {c:"model.summary()", d:"모델 구조 요약"},
+  {c:"YOLO('yolov8n.pt')", d:"YOLO 모델 로드"},
+];
 
-  // Result message
-  const rmsg = document.getElementById(`rmsg-${qi}`);
-  rmsg.textContent = isCorrect ? '✓ 정답!' : `✗ 오답 — 정답: ${['①','②','③','④'][correct]}`;
-  rmsg.className = 'result-msg show ' + (isCorrect ? 'correct-msg' : 'wrong-msg');
+const DL_SUM_TABLES = `
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;">
+<h3 style="font-size:13px;margin-bottom:12px;">활성화 함수 비교</h3>
+<table class="tbl"><thead><tr><th>함수</th><th>범위</th><th>주요 사용</th><th>특징</th></tr></thead><tbody>
+<tr><td><code>Sigmoid</code></td><td>(0, 1)</td><td>이진 분류 출력</td><td>기울기 소실 문제</td></tr>
+<tr><td><code>ReLU</code></td><td>[0, ∞)</td><td>은닉층</td><td>빠른 학습, 가장 일반적</td></tr>
+<tr><td><code>Softmax</code></td><td>(0,1) 합=1</td><td>다중 분류 출력</td><td>확률 분포로 변환</td></tr>
+<tr><td><code>tanh</code></td><td>(-1, 1)</td><td>RNN 계열</td><td>중심이 0</td></tr>
+</tbody></table></div>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;">
+<h3 style="font-size:13px;margin-bottom:12px;">손실 함수 선택 기준</h3>
+<table class="tbl"><thead><tr><th>문제 유형</th><th>손실 함수</th><th>출력 활성화</th></tr></thead><tbody>
+<tr><td>이진 분류</td><td><code>binary_crossentropy</code></td><td>sigmoid</td></tr>
+<tr><td>다중 분류 (정수 레이블)</td><td><code>sparse_categorical_crossentropy</code></td><td>softmax</td></tr>
+<tr><td>다중 분류 (원-핫)</td><td><code>categorical_crossentropy</code></td><td>softmax</td></tr>
+<tr><td>회귀</td><td><code>mean_squared_error</code></td><td>linear (없음)</td></tr>
+</tbody></table></div>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;">
+<h3 style="font-size:13px;margin-bottom:12px;">DNN vs CNN 비교</h3>
+<table class="tbl"><thead><tr><th>항목</th><th>DNN</th><th>CNN</th></tr></thead><tbody>
+<tr><td>주요 레이어</td><td>Dense</td><td>Conv2D + Pooling + Dense</td></tr>
+<tr><td>입력 형태</td><td>1D 벡터</td><td>2D/3D 이미지</td></tr>
+<tr><td>파라미터</td><td>많음</td><td>가중치 공유로 적음</td></tr>
+<tr><td>이미지 처리</td><td>공간 정보 손실</td><td>공간 구조 보존</td></tr>
+</tbody></table></div>`;
 
-  // Show explanation
-  document.getElementById(`exp-${qi}`).classList.add('show');
-  document.getElementById(`btn-${qi}`).disabled = true;
-
-  updateProgress();
-}
-
-function resetQuiz(qi) {
-  quizState[qi] = { selected: null, checked: false };
-  const card = document.getElementById(`qcard-${qi}`);
-  card.classList.remove('correct', 'wrong');
-  for (let j = 0; j < 4; j++) {
-    const el = document.getElementById(`opt-${qi}-${j}`);
-    el.className = 'option';
-  }
-  document.getElementById(`exp-${qi}`).classList.remove('show');
-  document.getElementById(`rmsg-${qi}`).className = 'result-msg';
-  const btn = document.getElementById(`btn-${qi}`);
-  btn.disabled = true;
-  updateProgress();
-}
-
-function resetAllQuiz() {
-  for (let i = 0; i < 10; i++) resetQuiz(i);
-}
-
-function updateProgress() {
-  const answered = quizState.filter(s => s.checked).length;
-  const correct = quizState.filter((s, i) => s.checked && s.selected === QUIZ_DATA[i].answer).length;
-  document.getElementById('progressFill').style.width = (answered / 10 * 100) + '%';
-  document.getElementById('answeredCount').textContent = answered;
-  document.getElementById('scoreDisplay').textContent = correct;
-}
-
-function renderSubjective() {
-  const container = document.getElementById('subjContainer');
-  container.innerHTML = SUBJ_DATA.map((item, i) => `
-    <div class="subj-card" id="subj-${i}">
-      <div class="subj-header" onclick="toggleSubj(${i})">
-        <div class="subj-q">
-          <span class="subj-num">${i+11}번</span>
-          <span class="subj-title">${item.q}</span>
-        </div>
-        <div class="chevron">▼</div>
-      </div>
-      <div class="subj-body">
-        <div class="answer-box">
-          <span class="answer-label">▶ 정답 및 해설</span>
-          <div class="answer-content">${item.answer}</div>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function toggleSubj(i) {
-  document.getElementById(`subj-${i}`).classList.toggle('open');
-}
-
-function renderPractical() {
-  const container = document.getElementById('pracContainer');
-  container.innerHTML = PRAC_DATA.map((item, i) => `
-    <div class="prac-card" id="prac-${i}">
-      <div class="prac-header" onclick="togglePrac(${i})">
-        <div style="display:flex;gap:10px;align-items:flex-start;flex:1;">
-          <span class="prac-num">${item.num}</span>
-          <div>
-            <div style="margin-bottom:4px;"><span class="prac-cmd-tag">${item.cmd}</span></div>
-            <div class="prac-title">${item.title}</div>
-          </div>
-        </div>
-        <div class="chevron">▼</div>
-      </div>
-      <div class="prac-body">
-        <div class="prac-section-title">📌 사용 명령어</div>
-        <div class="code-block">
-          <button class="copy-btn" onclick="copyCode(this, ${i})">복사</button>
-          <pre>${highlightCode(item.commands)}</pre>
-        </div>
-        <div class="prac-section-title">💻 예상 출력</div>
-        <div class="code-block">
-          <pre><span class="comment">${escapeHtml(item.output)}</span></pre>
-        </div>
-        <div class="tip-box">💡 ${item.tip}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function togglePrac(i) {
-  document.getElementById(`prac-${i}`).classList.toggle('open');
-}
-
-function highlightCode(code) {
-  return escapeHtml(code)
-    .replace(/^(git\s+\S+)/gm, '<span class="cmd">$1</span>')
-    .replace(/(--[\w-]+|-[a-zA-Z])/g, '<span class="flag">$1</span>')
-    .replace(/(#.*)$/gm, '<span class="comment">$1</span>')
-    .replace(/"([^"]*)"/g, '"<span class="str">$1</span>"');
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function copyCode(btn, i) {
-  navigator.clipboard.writeText(PRAC_DATA[i].commands).then(() => {
-    btn.textContent = '✓ 복사됨';
-    setTimeout(() => btn.textContent = '복사', 1500);
-  });
-}
-
-function renderSummary() {
-  const grid = document.getElementById('summaryGrid');
-  grid.innerHTML = SUMMARY_CMDS.map(c => `
-    <div class="cmd-chip">
-      <div class="cmd-name">${escapeHtml(c.cmd)}</div>
-      <div class="cmd-desc">${c.desc}</div>
-    </div>
-  `).join('');
-}
-
-/* ═══════════════════ TABS ═══════════════════ */
-const TAB_MAP = {
-  overview:   'sec-overview',
-  quiz:       'sec-quiz',
-  subjective: 'sec-subjective',
-  practical:  'sec-practical',
-  summary:    'sec-summary',
+/* ─── STATE ─── */
+let currentSubject = 'git';
+const quizState = {
+  git: Array(10).fill(null).map(()=>({sel:null, checked:false})),
+  dl:  Array(10).fill(null).map(()=>({sel:null, checked:false})),
 };
 
-document.querySelectorAll('.nav-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+/* ─── SUBJECT SWITCH ─── */
+function switchSubject(subj) {
+  currentSubject = subj;
+  document.querySelectorAll('.subject-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.subject-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+subj).classList.add('active');
+  document.querySelector('.'+subj+'-btn').classList.add('active');
+  document.body.className = subj==='dl' ? 'dl-mode' : '';
+  updateScorePill(subj);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateScorePill(subj) {
+  const s = quizState[subj];
+  const data = subj==='git' ? GIT_QUIZ : DL_QUIZ;
+  const correct = s.filter((x,i)=>x.checked && x.sel===data[i].ans).length;
+  document.getElementById('scoreNum').textContent = correct;
+}
+
+/* ─── TAB SWITCHING ─── */
+document.querySelectorAll('.nav-tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const subj = btn.dataset.subject;
+    const tab  = btn.dataset.tab;
+    document.querySelectorAll(`[data-subject="${subj}"].nav-tab`).forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll(`#panel-${subj} .section`).forEach(s=>s.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById(TAB_MAP[btn.dataset.tab]).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById(`${subj}-${tab}`).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
   });
 });
 
-/* ═══════════════════ SCROLL TOP ═══════════════════ */
-const scrollBtn = document.getElementById('scrollTopBtn');
-window.addEventListener('scroll', () => {
-  scrollBtn.classList.toggle('show', window.scrollY > 300);
-});
+/* ─── RENDER QUIZ ─── */
+function renderQuiz(subj, data) {
+  const container = document.getElementById(`${subj}-quiz-container`);
+  container.innerHTML = data.map((q,i)=>`
+    <div class="qcard" id="${subj}-qc-${i}">
+      <div class="qhead">
+        <span class="qnum" id="${subj}-qnum-${i}">${i+1}번</span>
+        <span class="qtext">${q.q}</span>
+      </div>
+      <div class="opts" id="${subj}-opts-${i}">
+        ${q.opts.map((o,j)=>`
+          <div class="opt" id="${subj}-opt-${i}-${j}" onclick="selectOpt('${subj}',${i},${j})">
+            <div class="opt-circ">${['①','②','③','④'][j]}</div>
+            <span>${o}</span>
+          </div>`).join('')}
+      </div>
+      <div class="explain" id="${subj}-exp-${i}">${q.exp}</div>
+      <div class="qfooter">
+        <button class="btn-check" id="${subj}-btn-${i}" onclick="checkAns('${subj}',${i})" disabled>채점하기</button>
+        <button class="btn-reset-one" onclick="resetOne('${subj}',${i})">↺</button>
+        <span class="rmsg" id="${subj}-rmsg-${i}"></span>
+      </div>
+    </div>`).join('');
+}
 
-/* ═══════════════════ INIT ═══════════════════ */
-renderQuiz();
-renderSubjective();
-renderPractical();
-renderSummary();
+function selectOpt(subj, qi, oi) {
+  if (quizState[subj][qi].checked) return;
+  quizState[subj][qi].sel = oi;
+  const data = subj==='git' ? GIT_QUIZ : DL_QUIZ;
+  for (let j=0; j<data[qi].opts.length; j++) {
+    document.getElementById(`${subj}-opt-${qi}-${j}`).classList.toggle('sel', j===oi);
+  }
+  document.getElementById(`${subj}-btn-${qi}`).disabled = false;
+}
+
+function checkAns(subj, qi) {
+  const st = quizState[subj][qi];
+  if (st.checked || st.sel===null) return;
+  st.checked = true;
+  const data = subj==='git' ? GIT_QUIZ : DL_QUIZ;
+  const correct = data[qi].ans;
+  const isOk = st.sel === correct;
+  const card = document.getElementById(`${subj}-qc-${qi}`);
+  card.classList.add(isOk ? 'correct-card' : 'wrong-card');
+  for (let j=0; j<data[qi].opts.length; j++) {
+    const el = document.getElementById(`${subj}-opt-${qi}-${j}`);
+    el.classList.add('dis');
+    if (j===correct) el.classList.add('ok-ans');
+    if (j===st.sel && !isOk) el.classList.add('bad-sel');
+  }
+  const rmsg = document.getElementById(`${subj}-rmsg-${qi}`);
+  rmsg.textContent = isOk ? '✓ 정답!' : `✗ 오답 — 정답: ${['①','②','③','④'][correct]}`;
+  rmsg.className = 'rmsg show ' + (isOk ? 'ok' : 'bad');
+  document.getElementById(`${subj}-exp-${qi}`).classList.add('show');
+  document.getElementById(`${subj}-btn-${qi}`).disabled = true;
+  updateProgress(subj);
+  updateScorePill(subj);
+}
+
+function resetOne(subj, qi) {
+  quizState[subj][qi] = {sel:null, checked:false};
+  const data = subj==='git' ? GIT_QUIZ : DL_QUIZ;
+  document.getElementById(`${subj}-qc-${qi}`).classList.remove('correct-card','wrong-card');
+  for (let j=0; j<data[qi].opts.length; j++) {
+    document.getElementById(`${subj}-opt-${qi}-${j}`).className='opt';
+  }
+  document.getElementById(`${subj}-exp-${qi}`).classList.remove('show');
+  document.getElementById(`${subj}-rmsg-${qi}`).className='rmsg';
+  document.getElementById(`${subj}-btn-${qi}`).disabled=true;
+  updateProgress(subj); updateScorePill(subj);
+}
+
+function resetAll(subj) {
+  const data = subj==='git' ? GIT_QUIZ : DL_QUIZ;
+  for (let i=0; i<data.length; i++) resetOne(subj, i);
+}
+
+function updateProgress(subj) {
+  const answered = quizState[subj].filter(s=>s.checked).length;
+  document.getElementById(`${subj}-pbar`).style.width = (answered/10*100)+'%';
+  document.getElementById(`${subj}-answered`).textContent = answered;
+}
+
+/* ─── RENDER SUBJECTIVE ─── */
+function renderSubj(subj, data) {
+  const container = document.getElementById(`${subj}-subj-container`);
+  container.innerHTML = data.map((item,i)=>`
+    <div class="acc-card" id="${subj}-sc-${i}">
+      <div class="acc-header" onclick="toggleAcc('${subj}-sc-${i}')">
+        <div class="acc-q">
+          <span class="acc-num num-subj">${i+11}번</span>
+          <span class="acc-title">${item.q}</span>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="acc-body">
+        <div class="ans-box">
+          <span class="ans-label">▶ 정답 및 해설</span>
+          <div class="ans-content">${item.a}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ─── RENDER PRACTICAL ─── */
+function renderPrac(subj, data) {
+  const container = document.getElementById(`${subj}-prac-container`);
+  container.innerHTML = data.map((item,i)=>`
+    <div class="acc-card" id="${subj}-pc-${i}">
+      <div class="acc-header" onclick="toggleAcc('${subj}-pc-${i}')">
+        <div class="acc-q" style="flex:1;gap:8px">
+          <span class="acc-num num-prac">${item.n}</span>
+          <div>
+            <div style="margin-bottom:4px;"><span class="prac-tag">${item.tag}</span></div>
+            <span class="acc-title">${item.title}</span>
+          </div>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="acc-body">
+        <div class="ptitle">📌 정답 코드</div>
+        <div class="cb" style="margin-bottom:0">
+          <button class="copy-btn" onclick="copyCode(this,'${esc(item.code)}')">복사</button>
+          <pre>${hlCode(item.code)}</pre>
+        </div>
+        <div class="ptitle">💻 예상 출력</div>
+        <div class="cb"><pre>${esc2(item.out)}</pre></div>
+        <div class="tip-box">💡 ${item.tip}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ─── RENDER SUMMARY ─── */
+function renderSum(subj, chips, tables) {
+  const container = document.getElementById(`${subj}-sum-container`);
+  container.innerHTML = `
+    <div class="sum-grid">${chips.map(c=>`
+      <div class="sum-chip">
+        <div class="cn">${esc2(c.c)}</div>
+        <div class="cd">${c.d}</div>
+      </div>`).join('')}</div>
+    ${tables}`;
+}
+
+/* ─── HELPERS ─── */
+function toggleAcc(id) { document.getElementById(id).classList.toggle('open'); }
+
+function esc(str) {
+  return str.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
+}
+function esc2(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function hlCode(code) {
+  return esc2(code)
+    .replace(/^(import|from|for|if|in|return|def|class|with|as)\b/gm,'<span class="kw">$1</span>')
+    .replace(/\b(import|from|for|if|in|return|def|class|with|as)\b/g,'<span class="kw">$1</span>')
+    .replace(/\b(np|pd|plt|sns|cv2|tf|model|layers|models|YOLO)\b/g,'<span class="fn">$1</span>')
+    .replace(/(#[^\n]*)/g,'<span class="cm">$1</span>')
+    .replace(/'([^']*)'/g,"'<span class=\"st\">$1</span>'")
+    .replace(/"([^"]*)"/g,'"<span class="st">$1</span>"')
+    .replace(/\b(\d+\.?\d*)\b/g,'<span class="nm">$1</span>');
+}
+function copyCode(btn, code) {
+  const decoded = code.replace(/\\n/g,'\n').replace(/\\'/g,"'").replace(/\\\\/g,'\\');
+  navigator.clipboard.writeText(decoded).then(()=>{
+    btn.textContent='✓ 복사됨';
+    setTimeout(()=>btn.textContent='복사',1500);
+  });
+}
+
+/* ─── SCROLL TOP ─── */
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>scrollBtn.classList.toggle('show', scrollY>300));
+
+/* ─── INIT ─── */
+renderQuiz('git', GIT_QUIZ);
+renderQuiz('dl',  DL_QUIZ);
+renderSubj('git', GIT_SUBJ);
+renderSubj('dl',  DL_SUBJ);
+renderPrac('git', GIT_PRAC);
+renderPrac('dl',  DL_PRAC);
+renderSum('git',  GIT_SUM,  GIT_SUM_TABLES);
+renderSum('dl',   DL_SUM,   DL_SUM_TABLES);
 </script>
 </body>
 </html>

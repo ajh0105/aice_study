@@ -1226,8 +1226,8 @@ function renderPrac(subj, data) {
       <div class="acc-body">
         <div class="ptitle">📌 정답 코드</div>
         <div class="cb" style="margin-bottom:0">
-          <button class="copy-btn" onclick="copyCode(this,'${esc(item.code)}')">복사</button>
-          <pre>${hlCode(item.code)}</pre>
+          <button class="copy-btn" onclick="copyCode(this,${JSON.stringify(item.code)})">복사</button>
+          <pre>${esc2(item.code)}</pre>
         </div>
         <div class="ptitle">💻 예상 출력</div>
         <div class="cb"><pre>${esc2(item.out)}</pre></div>
@@ -1251,25 +1251,11 @@ function renderSum(subj, chips, tables) {
 /* ─── HELPERS ─── */
 function toggleAcc(id) { document.getElementById(id).classList.toggle('open'); }
 
-function esc(str) {
-  return str.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
-}
 function esc2(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-function hlCode(code) {
-  return esc2(code)
-    .replace(/^(import|from|for|if|in|return|def|class|with|as)\b/gm,'<span class="kw">$1</span>')
-    .replace(/\b(import|from|for|if|in|return|def|class|with|as)\b/g,'<span class="kw">$1</span>')
-    .replace(/\b(np|pd|plt|sns|cv2|tf|model|layers|models|YOLO)\b/g,'<span class="fn">$1</span>')
-    .replace(/(#[^\n]*)/g,'<span class="cm">$1</span>')
-    .replace(/'([^']*)'/g,"'<span class=\"st\">$1</span>'")
-    .replace(/"([^"]*)"/g,'"<span class="st">$1</span>"')
-    .replace(/\b(\d+\.?\d*)\b/g,'<span class="nm">$1</span>');
-}
 function copyCode(btn, code) {
-  const decoded = code.replace(/\\n/g,'\n').replace(/\\'/g,"'").replace(/\\\\/g,'\\');
-  navigator.clipboard.writeText(decoded).then(()=>{
+  navigator.clipboard.writeText(code).then(()=>{
     btn.textContent='✓ 복사됨';
     setTimeout(()=>btn.textContent='복사',1500);
   });

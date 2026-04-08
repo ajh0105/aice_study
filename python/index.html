@@ -1466,6 +1466,7 @@ const DL_PRAC = [
     code:`import pandas as pd\n\ndata = {\n    '이름': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],\n    '나이': [25, 30, 35, 28, 22],\n    '점수': [90.5, 85.0, 92.3, 78.5, 95.0]\n}\ndf = pd.DataFrame(data)\n\nprint(df.head())      # 상위 5행\nprint(df.info())      # 데이터 타입·결측값\nprint(df.describe())  # 기술 통계량`,
     out:`   이름  나이    점수\n0  Alice  25  90.5\n...\n<class 'pandas.core.frame.DataFrame'>\nRangeIndex: 5 entries\n       나이       점수\ncount  5.0    5.000\nmean  28.0   88.26\nstd    4.74   6.43...`,
     tip:"info()는 null 수와 dtype 확인, describe()는 평균·표준편차·사분위수를 한번에 보여줍니다.\n📋 출제자 기대 결과: head: 상위 5행 / info: 열 타입 / describe: 통계 요약 출력 확인",
+    official:`<strong>주제:</strong> Pandas DataFrame<br><strong>예시 코드:</strong> <code>import pandas as pd</code>, <code>df = pd.read_csv('data.csv')</code> 또는 dict로 생성, <code>print(df.head()); df.info(); df.describe()</code><br><strong>기대 출력 / 확인 사항:</strong> head: 상위 5행 / info: 열 타입 / describe: 통계 요약 출력 확인`,
     model:`사용한 코드 칸:
   import pandas as pd
   df = pd.read_csv('data.csv')  # 또는 dict로 생성
@@ -1480,6 +1481,7 @@ const DL_PRAC = [
     code:`import numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# sin 그래프\nx = np.linspace(0, 2 * np.pi, 100)\ny = np.sin(x)\nplt.figure(figsize=(8, 3))\nplt.plot(x, y, color='steelblue', linewidth=2)\nplt.title('Sin Function')\nplt.xlabel('x'); plt.ylabel('sin(x)')\nplt.grid(True, alpha=0.3)\nplt.tight_layout(); plt.show()\n\n# 히트맵\ndata = np.random.rand(5, 5)\nplt.figure(figsize=(5, 4))\nsns.heatmap(data, annot=True, fmt='.2f', cmap='viridis')\nplt.title('Random Heatmap')\nplt.show()`,
     out:`[sin 함수 꺾은선 그래프 창 출력]\n[5x5 히트맵 창 출력]`,
     tip:"plt.tight_layout()은 레이블이 잘리지 않도록 여백을 자동 조정합니다.\n📋 출제자 기대 결과: sin 곡선 그래프 + 5×5 heatmap 출력 캡처",
+    official:`<strong>주제:</strong> Matplotlib / Seaborn<br><strong>예시 코드:</strong> <code>import matplotlib.pyplot as plt</code>, <code>import seaborn as sns</code>, <code>import numpy as np</code>, <code>x=np.linspace(0,2*np.pi,100)</code>, <code>plt.plot(x,np.sin(x)); plt.show()</code>, <code>sns.heatmap(np.random.rand(5,5), annot=True); plt.show()</code><br><strong>기대 출력 / 확인 사항:</strong> sin 곡선 그래프 + 5×5 heatmap 출력 캡처`,
     model:`사용한 코드 칸:
   import matplotlib.pyplot as plt
   import seaborn as sns; import numpy as np
@@ -1495,6 +1497,7 @@ const DL_PRAC = [
     code:`import cv2\nimport matplotlib.pyplot as plt\n\n# 이미지 읽기\nimg = cv2.imread('sample.jpg')\nimg_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)\nimg_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\n\n# 나란히 출력\nfig, axes = plt.subplots(1, 2, figsize=(10, 4))\naxes[0].imshow(img_rgb)\naxes[0].set_title('Original (RGB)')\naxes[1].imshow(img_gray, cmap='gray')\naxes[1].set_title('Grayscale')\nplt.tight_layout(); plt.show()\n\ncv2.imwrite('gray_output.jpg', img_gray)`,
     out:`[원본 컬러 이미지와 그레이스케일 이미지 나란히 출력]\ngray_output.jpg 저장 완료`,
     tip:"OpenCV는 BGR 순서로 읽으므로 Matplotlib 출력 전 cv2.COLOR_BGR2RGB 변환이 필요합니다.\n📋 출제자 기대 결과: 컬러/그레이 이미지 나란히 출력 캡처",
+    official:`<strong>주제:</strong> OpenCV 그레이스케일<br><strong>예시 코드:</strong> <code>import cv2</code>, <code>img = cv2.imread('img.jpg')</code>, <code>gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</code>, <code>cv2.imshow('Color',img); cv2.imshow('Gray',gray)</code>, <code>cv2.waitKey(0); cv2.destroyAllWindows()</code><br><strong>기대 출력 / 확인 사항:</strong> 컬러/그레이 이미지 나란히 출력 캡처`,
     model:`사용한 코드 칸:
   import cv2
   img = cv2.imread('img.jpg')
@@ -1510,6 +1513,7 @@ const DL_PRAC = [
     code:`import numpy as np\n\ndef AND(x1, x2):\n    w1, w2, b = 0.5, 0.5, -0.7\n    return int(w1*x1 + w2*x2 + b > 0)\n\nfor i, j in [(0,0),(0,1),(1,0),(1,1)]:\n    print(f"AND({i},{j}) = {AND(i,j)}")`,
     out:`AND(0,0) = 0\nAND(0,1) = 0\nAND(1,0) = 0\nAND(1,1) = 1`,
     tip:"AND 게이트: 두 입력이 모두 1일 때만 1을 출력합니다.\n📋 출제자 기대 결과: 출력: 0,0,0,1 (AND 게이트 진리표와 일치)",
+    official:`<strong>주제:</strong> 단층 퍼셉트론 AND<br><strong>예시 코드:</strong> <code>import numpy as np</code>, <code>def AND(x1,x2): w1,w2,b=0.5,0.5,-0.7; return int(w1*x1+w2*x2+b&gt;0)</code>, <code>for i,j in [(0,0),(0,1),(1,0),(1,1)]: print(AND(i,j))</code><br><strong>기대 출력 / 확인 사항:</strong> 출력: 0,0,0,1 (AND 게이트 진리표와 일치)`,
     model:`사용한 코드 칸:
   import numpy as np
   def AND(x1, x2):
@@ -1525,6 +1529,7 @@ const DL_PRAC = [
     code:`from tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Dense\n\nmodel = Sequential([\n    Dense(64, activation='relu', input_shape=(10,)),\n    Dense(1,  activation='sigmoid')\n])\n\nmodel.summary()`,
     out:`Model: "sequential"\n_________________________________________________________________\nLayer (type)          Output Shape         Param #\n=================================================================\ndense (Dense)         (None, 64)           704\ndense_1 (Dense)       (None, 1)            65\n=================================================================\nTotal params: 769`,
     tip:"input_shape는 첫 번째 레이어에만 지정합니다.\n📋 출제자 기대 결과: model.summary() 출력 캡처 (레이어 구조, 파라미터 수 확인)",
+    official:`<strong>주제:</strong> Keras MLP 정의<br><strong>예시 코드:</strong> <code>from tensorflow.keras.models import Sequential</code>, <code>from tensorflow.keras.layers import Dense</code>, <code>model = Sequential([Dense(64, activation='relu', input_shape=(10,)), Dense(1, activation='sigmoid')])</code>, <code>model.summary()</code><br><strong>기대 출력 / 확인 사항:</strong> model.summary() 출력 캡처 (레이어 구조, 파라미터 수 확인)`,
     model:`사용한 코드 칸:
   from tensorflow.keras.models import Sequential
   from tensorflow.keras.layers import Dense
@@ -1542,6 +1547,7 @@ const DL_PRAC = [
     code:`from tensorflow.keras.datasets import mnist\nfrom tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Dense\n\n(x_tr, y_tr), (x_te, y_te) = mnist.load_data()\nx_tr = x_tr.reshape(-1, 784) / 255.0\n\nmodel = Sequential([\n    Dense(128, activation='relu', input_shape=(784,)),\n    Dense(64,  activation='relu'),\n    Dense(10,  activation='softmax')\n])\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\nmodel.fit(x_tr, y_tr, epochs=5, batch_size=32)`,
     out:`Epoch 1/5 - loss: 0.2541 - accuracy: 0.9253\nEpoch 5/5 - loss: 0.0612 - accuracy: 0.9813`,
     tip:"MNIST는 28×28 손글씨 숫자 이미지. reshape(-1, 784)로 1D로 펼치고 /255.0으로 정규화합니다.\n📋 출제자 기대 결과: 5 epoch 학습 로그(loss, accuracy) 출력 캡처",
+    official:`<strong>주제:</strong> DNN MNIST 학습<br><strong>예시 코드:</strong> <code>from tensorflow.keras.datasets import mnist</code>, <code>(x_tr,y_tr),(x_te,y_te)=mnist.load_data()</code>, <code>x_tr=x_tr.reshape(-1,784)/255.0</code>, <code>model.compile('adam','sparse_categorical_crossentropy',['accuracy'])</code>, <code>model.fit(x_tr,y_tr,epochs=5,batch_size=32)</code><br><strong>기대 출력 / 확인 사항:</strong> 5 epoch 학습 로그(loss, accuracy) 출력 캡처`,
     model:`사용한 코드 칸:
   (x_tr, y_tr), (x_te, y_te) = mnist.load_data()
   x_tr = x_tr.reshape(-1, 784) / 255.0
@@ -1556,6 +1562,7 @@ const DL_PRAC = [
     code:`from tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense\n\nmodel = Sequential([\n    Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),\n    MaxPooling2D(2,2),\n    Flatten(),\n    Dense(64, activation='relu'),\n    Dense(10, activation='softmax')\n])\nmodel.summary()`,
     out:`Model: "sequential"\nconv2d (Conv2D)    (None, 26, 26, 32)   320\nmax_pooling2d      (None, 13, 13, 32)   0\nflatten            (None, 5408)          0\ndense (Dense)      (None, 64)            346176\ndense_1 (Dense)    (None, 10)            650\nTotal params: 347,146`,
     tip:"Flatten()은 2D Feature Map을 1D 벡터로 펼쳐 Dense 층에 연결합니다.\n📋 출제자 기대 결과: Conv2D→MaxPool→Flatten→Dense 구조 summary 캡처",
+    official:`<strong>주제:</strong> CNN 모델 정의<br><strong>예시 코드:</strong> <code>from tensorflow.keras.layers import Conv2D,MaxPooling2D,Flatten</code>, <code>model = Sequential([Conv2D(32,(3,3),activation='relu',input_shape=(28,28,1)), MaxPooling2D(2,2), Flatten(), Dense(64,activation='relu'), Dense(10,activation='softmax')])</code>, <code>model.summary()</code><br><strong>기대 출력 / 확인 사항:</strong> Conv2D→MaxPool→Flatten→Dense 구조 summary 캡처`,
     model:`사용한 코드 칸:
   from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
   model = Sequential([
@@ -1573,6 +1580,7 @@ const DL_PRAC = [
     code:`import tensorflow as tf\n\n(X_train, y_train), (X_test, y_test) = tf.keras.datasets.mnist.load_data()\nX_train = X_train.reshape(-1,28,28,1).astype('float32') / 255.0\nX_test  = X_test.reshape(-1,28,28,1).astype('float32')  / 255.0\n\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\nmodel.fit(X_train, y_train, epochs=5, batch_size=64)\n\nloss, acc = model.evaluate(X_test.reshape(-1,28,28,1)/255, y_test)\nprint(f'Test acc: {acc:.4f}')`,
     out:`Epoch 5/5 - accuracy: 0.9921\n\nTest acc: 0.9912`,
     tip:"CNN은 DNN보다 파라미터가 적으면서 이미지 분류 성능이 높습니다. MNIST에서 99%+ 달성 가능.\n📋 출제자 기대 결과: Test accuracy 출력 (MNIST 기준 99% 이상 가능) 캡처",
+    official:`<strong>주제:</strong> CNN 학습 및 평가<br><strong>예시 코드:</strong> <code>x_tr=x_tr.reshape(-1,28,28,1)/255.0</code>, <code>model.compile('adam','sparse_categorical_crossentropy',['accuracy'])</code>, <code>model.fit(x_tr,y_tr,epochs=5)</code>, <code>loss,acc=model.evaluate(x_te.reshape(-1,28,28,1)/255,y_te)</code>, <code>print(f'Test acc: {acc:.4f}')</code><br><strong>기대 출력 / 확인 사항:</strong> Test accuracy 출력 (MNIST 기준 99% 이상 가능) 캡처`,
     model:`사용한 코드 칸:
   x_tr = x_tr.reshape(-1,28,28,1) / 255.0
   model.compile('adam','sparse_categorical_crossentropy',['accuracy'])
@@ -1588,6 +1596,7 @@ const DL_PRAC = [
     code:`# 설치: pip install ultralytics\nfrom ultralytics import YOLO\n\n# YOLOv8 nano 모델 로드\nmodel = YOLO('yolov8n.pt')\n\n# 추론\nresults = model('https://ultralytics.com/images/bus.jpg')\nresults[0].show()  # 탐지 결과 시각화\n\n# 탐지 결과 출력\nfor box in results[0].boxes:\n    print(f"클래스: {results[0].names[int(box.cls)]} / 신뢰도: {box.conf.item():.2f}")`,
     out:`[버스 이미지에 바운딩 박스 및 레이블 표시된 결과 출력]\n클래스: bus / 신뢰도: 0.95\n클래스: person / 신뢰도: 0.87\n...`,
     tip:"환경 미지원 시 모델 로드 및 추론 코드 작성만으로 부분 점수 인정. Google Colab 환경 추천합니다.\n📋 출제자 기대 결과: 바운딩 박스 + 클래스명 표시된 탐지 결과 이미지 캡처",
+    official:`<strong>주제:</strong> YOLO 객체 탐지<br><strong>예시 코드:</strong> <code>from ultralytics import YOLO</code>, <code>model = YOLO('yolov8n.pt')</code>, <code>results = model('sample.jpg')</code>, <code>results[0].show()</code><br><strong>기대 출력 / 확인 사항:</strong> 바운딩 박스 + 클래스명 표시된 탐지 결과 이미지 캡처`,
     model:`사용한 코드 칸:
   from ultralytics import YOLO
   model = YOLO('yolov8n.pt')
@@ -1821,6 +1830,7 @@ function renderPrac(subj, data) {
         </div>
         <div class="ptitle">💻 예상 출력</div>
         <div class="cb"><pre>${esc2(item.out)}</pre></div>
+        ${item.official ? `<div class="official-ans"><span class="off-label">📋 제출자 정답 및 해설</span><div>${item.official}</div></div>` : ''}
         <div class="tip-box">💡 ${item.tip}</div>
         ${item.model ? `<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 방법</span><div class="mdl-text">${esc2(item.model.replace(/^✏️ 답안 작성 방법\n/,''))}</div></div>` : ''}
       </div>

@@ -1137,111 +1137,292 @@ const GIT_SUM_TABLES = `
 const DL_QUIZ = [
   { q:"Python에서 리스트의 슬라이싱 결과로 올바른 것은? (lst = [10, 20, 30, 40, 50])",
     opts:["lst[1:3]  →  [10, 20]","lst[1:3]  →  [20, 30]","lst[1:3]  →  [20, 30, 40]","lst[1:3]  →  [30, 40]"], ans:1,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span>슬라이싱 <code>[start:end]</code> 는 <strong>start 포함, end 미포함</strong>입니다.<br>인덱스 1 = 20, 인덱스 2 = 30 → <strong>[20, 30]</strong>` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span>슬라이싱 <code>[start:end]</code> 는 <strong>start 포함, end 미포함</strong>입니다.<br>인덱스 1 = 20, 인덱스 2 = 30 → <strong>[20, 30]</strong>
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>Python 슬라이싱은 시작 인덱스 포함, 끝 인덱스 미포함. 인덱스 1=20, 2=30.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ② lst[1:3] → [20, 30]
+
+Python 슬라이싱 [start:end]는 start 인덱스는 포함하고, end 인덱스는 포함하지 않는다.
+lst = [10, 20, 30, 40, 50]에서 인덱스 1은 20, 인덱스 2는 30이므로
+lst[1:3]의 결과는 [20, 30]이다.
+①번은 인덱스 0~1 범위(lst[0:2])의 결과이며, ③④번은 잘못된 범위이다.</div></div>` },
   { q:"NumPy에서 2차원 배열의 형태(shape)를 확인하는 올바른 방법은?",
     opts:["arr.size()","arr.shape","arr.dim","arr.len()"], ans:1,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>arr.shape</code> 는 메서드가 아닌 <strong>속성(attribute)</strong>이라 괄호 없이 사용합니다.<br>• <code>arr.size</code> — 전체 원소 수 · <code>arr.ndim</code> — 차원 수` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>arr.shape</code> 는 메서드가 아닌 <strong>속성(attribute)</strong>이라 괄호 없이 사용합니다.<br>• <code>arr.size</code> — 전체 원소 수 · <code>arr.ndim</code> — 차원 수
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>NumPy 배열의 shape 속성은 메서드가 아닌 속성(property)이므로 괄호 없이 사용.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ② arr.shape
+
+arr.shape는 NumPy 배열의 형태(행, 열 수)를 튜플로 반환하는 속성(attribute)이다.
+메서드(함수)가 아니므로 괄호 없이 arr.shape와 같이 사용한다.
+①번 arr.size()는 괄호 사용이 잘못되었고(size는 속성), ③번 arr.dim은 존재하지 않으며(arr.ndim이 올바름), ④번 arr.len()도 존재하지 않는다.</div></div>` },
   { q:"Pandas DataFrame에서 특정 열의 결측값(NaN)을 0으로 채우는 메서드는?",
     opts:["df.dropna()","df.fillna(0)","df.replace(NaN, 0)","df.isnull(0)"], ans:1,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>df.fillna(0)</code> 은 NaN을 지정 값으로 채웁니다.<br>• <code>dropna()</code> — NaN 행/열 제거 · <code>isnull()</code> — NaN 여부 확인 (True/False)` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>df.fillna(0)</code> 은 NaN을 지정 값으로 채웁니다.<br>• <code>dropna()</code> — NaN 행/열 제거 · <code>isnull()</code> — NaN 여부 확인 (True/False)
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>fillna()는 결측값을 지정한 값으로 채운다. dropna()는 결측행 삭제.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ② df.fillna(0)
+
+df.fillna(0)은 DataFrame의 결측값(NaN)을 지정한 값(여기서는 0)으로 채우는 메서드이다.
+①번 dropna()는 NaN이 포함된 행/열을 아예 삭제하는 메서드이고,
+③번 replace(NaN, 0)는 문법이 올바르지 않으며(np.nan을 명시해야 함),
+④번 isnull(0)은 NaN 여부를 True/False로 반환하는 메서드로 채우는 기능이 없다.</div></div>` },
   { q:"Matplotlib에서 그래프를 화면에 출력하는 명령어는?",
     opts:["plt.draw()","plt.render()","plt.show()","plt.plot()"], ans:2,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>plt.show()</code> 로 현재까지 설정된 그래프를 화면에 렌더링합니다.<br>• <code>plt.plot()</code> — 데이터를 선 그래프로 등록 (표시는 하지 않음)` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>plt.show()</code> 로 현재까지 설정된 그래프를 화면에 렌더링합니다.<br>• <code>plt.plot()</code> — 데이터를 선 그래프로 등록 (표시는 하지 않음)
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>plt.show()는 현재 figure를 화면에 렌더링. plt.plot()은 선 그래프를 그리는 명령.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ③ plt.show()
+
+plt.show()는 Matplotlib에서 현재까지 설정된 그래프(figure)를 화면에 렌더링하여 출력하는 명령어이다.
+plt.plot()은 데이터를 꺾은선 그래프로 등록하는 명령어이지만, 단독으로는 화면에 표시되지 않는다.
+plt.draw()는 figure를 갱신하는 함수이며, plt.render()는 존재하지 않는 함수이다.</div></div>` },
   { q:"퍼셉트론에서 입력값과 가중치의 곱의 합에 적용되는 함수로, 출력 여부를 결정하는 함수는?",
     opts:["손실 함수(Loss Function)","활성화 함수(Activation Function)","목적 함수(Objective Function)","정규화 함수(Normalization Function)"], ans:1,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>활성화 함수</strong>는 뉴런의 출력을 결정합니다. 대표적으로 Sigmoid, ReLU, Softmax가 있습니다.` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>활성화 함수</strong>는 뉴런의 출력을 결정합니다. 대표적으로 Sigmoid, ReLU, Softmax가 있습니다.
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>활성화 함수는 입력의 가중합을 특정 출력으로 변환. 계단함수, sigmoid, ReLU 등이 있다.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ② 활성화 함수(Activation Function)
+
+활성화 함수는 퍼셉트론에서 입력값과 가중치의 곱의 합(가중합)을 받아 뉴런의 출력 여부와 출력값을 결정하는 함수이다.
+대표적인 활성화 함수로는 계단 함수(Step), 시그모이드(Sigmoid), ReLU, Softmax가 있다.
+손실 함수는 모델의 예측 오차를 측정하는 함수이고, 정규화 함수는 데이터 스케일 조정 용도이므로 오답이다.</div></div>` },
   { q:"다층 퍼셉트론(MLP)에서 역전파(Backpropagation) 알고리즘의 주요 목적은?",
     opts:["데이터 전처리","가중치 초기화","오차를 출력층에서 입력층 방향으로 전달하여 가중치를 업데이트","배치 정규화 수행"], ans:2,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>역전파</strong>는 출력층의 오차를 체인 룰(Chain Rule)로 입력층까지 역으로 전달하며 <strong>가중치(W)를 업데이트</strong>합니다.` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>역전파</strong>는 출력층의 오차를 체인 룰(Chain Rule)로 입력층까지 역으로 전달하며 <strong>가중치(W)를 업데이트</strong>합니다.
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>역전파는 편미분(chain rule)을 이용해 각 레이어의 가중치에 대한 손실 기울기를 계산하고 최적화.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ③ 오차를 출력층에서 입력층 방향으로 전달하여 가중치를 업데이트
+
+역전파(Backpropagation) 알고리즘은 신경망의 출력층에서 계산된 손실(오차)을 연쇄 법칙(Chain Rule)을 이용해 입력층 방향으로 역으로 전달하며, 각 층의 가중치에 대한 기울기(gradient)를 계산하여 가중치를 업데이트한다.
+데이터 전처리나 가중치 초기화는 학습 전 처리 단계에 해당하며, 배치 정규화는 별도의 기법이므로 오답이다.</div></div>` },
   { q:"CNN(합성곱 신경망)에서 Pooling Layer의 주요 역할은?",
     opts:["가중치를 학습시킨다","특징 맵(Feature Map)의 크기를 줄여 연산량을 감소시킨다","활성화 함수를 적용한다","데이터를 정규화한다"], ans:1,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>Pooling</strong> 은 Feature Map의 공간 해상도를 줄여 파라미터 수와 연산량을 줄이고 위치 불변성을 제공합니다.` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><strong>Pooling</strong> 은 Feature Map의 공간 해상도를 줄여 파라미터 수와 연산량을 줄이고 위치 불변성을 제공합니다.
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>Max Pooling / Average Pooling으로 공간 크기를 줄이고 주요 특징만 유지. 과적합 방지에도 기여.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ② 특징 맵(Feature Map)의 크기를 줄여 연산량을 감소시킨다
+
+Pooling Layer는 합성곱 연산으로 생성된 특징 맵(Feature Map)의 공간적 크기(가로×세로)를 줄여 파라미터 수와 연산량을 감소시키는 역할을 한다.
+대표적으로 Max Pooling(최댓값 선택)과 Average Pooling(평균값)이 있으며, 과적합 방지와 위치 불변성 확보에도 기여한다.
+Pooling 레이어 자체에는 학습 파라미터(가중치)가 없으므로 ①번은 오답이다.</div></div>` },
   { q:"TensorFlow/Keras에서 모델 컴파일 시 분류 문제에 일반적으로 사용되는 손실 함수는?",
     opts:["mean_squared_error","binary_crossentropy 또는 categorical_crossentropy","mean_absolute_error","huber_loss"], ans:1,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span>이진 분류: <code>binary_crossentropy</code> · 다중 분류: <code>categorical_crossentropy</code> (원-핫) 또는 <code>sparse_categorical_crossentropy</code> (정수 레이블)` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span>이진 분류: <code>binary_crossentropy</code> · 다중 분류: <code>categorical_crossentropy</code> (원-핫) 또는 <code>sparse_categorical_crossentropy</code> (정수 레이블)
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>이진 분류→binary_crossentropy, 다중 분류→categorical_crossentropy (또는 sparse_categorical_crossentropy).</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ② binary_crossentropy 또는 categorical_crossentropy
+
+분류 문제에서는 크로스 엔트로피(Cross-Entropy) 계열 손실 함수를 사용한다.
+· 이진 분류(0 또는 1): binary_crossentropy
+· 다중 분류(원-핫 인코딩 레이블): categorical_crossentropy
+· 다중 분류(정수 레이블): sparse_categorical_crossentropy
+mean_squared_error와 mean_absolute_error, huber_loss는 회귀(regression) 문제에 사용하는 손실 함수이다.</div></div>` },
   { q:"OpenCV에서 컬러 이미지를 그레이스케일로 변환할 때 사용하는 코드는?",
     opts:["cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)","cv2.gray(img)","cv2.convert(img, 'gray')","cv2.imread(img, 0)"], ans:0,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</code> — OpenCV는 기본적으로 BGR 순서입니다 (RGB 아님).` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span><code>cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</code> — OpenCV는 기본적으로 BGR 순서입니다 (RGB 아님).
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>OpenCV는 기본 BGR 포맷. cvtColor로 색공간 변환. cv2.imread(img, 0)은 직접 grayscale로 읽는 방법이나 선택지에서 img는 문자열이어야 하므로 ①이 정확.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ① cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+OpenCV는 이미지를 BGR(Blue-Green-Red) 순서로 읽으므로, 그레이스케일 변환 시 cv2.COLOR_BGR2GRAY 플래그를 사용해야 한다.
+cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)는 이미 읽어들인 이미지 배열을 그레이스케일로 변환하는 올바른 코드이다.
+②번 cv2.gray()와 ③번 cv2.convert()는 존재하지 않는 함수이며,
+④번 cv2.imread(img, 0)은 파일 경로 문자열을 받아야 하므로 이미 읽힌 배열(img)을 인자로 쓸 수 없다.</div></div>` },
   { q:"YOLO(You Only Look Once) 객체 탐지 알고리즘의 특징으로 올바른 것은?",
     opts:["이미지를 여러 번 스캔하여 정확도를 높인다","이미지 전체를 한 번에 처리하여 실시간 객체 탐지가 가능하다","객체 분류만 수행하며 위치는 탐지하지 않는다","CNN을 사용하지 않는 독립적인 알고리즘이다"], ans:1,
-    exp:`<span class="tlabel">▶ 핵심 포인트</span>YOLO는 이미지를 <strong>단 한 번의 신경망 추론</strong>으로 분류와 위치(Bounding Box)를 동시에 예측합니다. 이 덕분에 실시간 처리가 가능합니다.` },
+    exp:`<span class="tlabel">▶ 핵심 포인트</span>YOLO는 이미지를 <strong>단 한 번의 신경망 추론</strong>으로 분류와 위치(Bounding Box)를 동시에 예측합니다. 이 덕분에 실시간 처리가 가능합니다.
+<div class="official-ans"><span class="off-label">📋 출제자 해설</span><br>YOLO는 이미지를 그리드로 나눠 한 번의 순전파로 클래스+바운딩박스를 동시 예측. R-CNN 계열보다 빠르다.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">정답: ② 이미지 전체를 한 번에 처리하여 실시간 객체 탐지가 가능하다
+
+YOLO(You Only Look Once)는 이미지를 그리드로 분할한 뒤, 단 한 번의 신경망 순전파(forward pass)로 각 그리드 셀의 객체 클래스와 바운딩 박스 위치를 동시에 예측한다.
+이 덕분에 R-CNN 계열의 2단계 방식보다 훨씬 빠르며 실시간 처리가 가능하다.
+③번처럼 분류만 하는 것이 아니라 위치(Bounding Box)도 함께 탐지하며, CNN을 기반으로 동작하므로 ④번도 오답이다.</div></div>` },
 ];
 
 const DL_SUBJ = [
   { q:"리스트 컴프리헨션이란 무엇인지 설명하고, 0~9까지의 짝수만 담는 리스트를 작성하시오.",
     a:`<p><strong>리스트 컴프리헨션</strong>은 for 루프와 조건식을 한 줄로 표현하여 리스트를 생성하는 파이썬 문법입니다.</p>
-<div class="cb"><pre><span class="cm"># 일반 방식</span>
+<div class="cb"><pre># 일반 방식
 evens = []
-<span class="kw">for</span> i <span class="kw">in</span> range(10):
-    <span class="kw">if</span> i % 2 == 0:
+for i in range(10):
+    if i % 2 == 0:
         evens.append(i)
 
-<span class="cm"># 리스트 컴프리헨션</span>
-evens = [i <span class="kw">for</span> i <span class="kw">in</span> range(10) <span class="kw">if</span> i % 2 == 0]
-<span class="fn">print</span>(evens)  <span class="cm"># [0, 2, 4, 6, 8]</span></pre></div>` },
+# 리스트 컴프리헨션
+evens = [i for i in range(10) if i % 2 == 0]
+print(evens)  # [0, 2, 4, 6, 8]</pre></div>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+리스트 컴프리헨션: 리스트를 한 줄의 간결한 문법으로 생성하는 Python의 표현식.<br>
+형식: [표현식 for 변수 in 이터러블 if 조건]<br>
+<code>even = [x for x in range(10) if x % 2 == 0]</code><br>
+결과: [0, 2, 4, 6, 8]</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">리스트 컴프리헨션(List Comprehension)이란 for 루프와 조건식을 하나의 표현식으로 압축하여 리스트를 생성하는 Python 문법이다.
+기본 형식: [표현식 for 변수 in 이터러블 if 조건]
+
+0~9까지의 짝수만 담는 리스트:
+even = [x for x in range(10) if x % 2 == 0]
+# 결과: [0, 2, 4, 6, 8]
+
+일반 for 루프에 비해 코드가 간결하고 가독성이 높다는 장점이 있다.</div></div>` },
   { q:"NumPy 배열과 Python 기본 리스트의 차이점을 2가지 이상 서술하시오.",
     a:`<table class="tbl"><thead><tr><th>항목</th><th>Python 리스트</th><th>NumPy 배열</th></tr></thead><tbody>
 <tr><td>데이터 타입</td><td>혼합 가능</td><td>동일 타입만</td></tr>
 <tr><td>연산 속도</td><td>느림 (반복 루프)</td><td>빠름 (벡터화 연산)</td></tr>
 <tr><td>수학 연산</td><td>원소별 루프 필요</td><td>브로드캐스팅 지원</td></tr>
 <tr><td>메모리</td><td>상대적으로 큰 오버헤드</td><td>연속 메모리, 효율적</td></tr>
-</tbody></table>` },
+</tbody></table>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+① <strong>속도</strong>: NumPy는 C로 구현된 연속 메모리 배열로 벡터 연산이 매우 빠름. 리스트는 객체 참조 방식이라 느림.<br>
+② <strong>데이터 타입</strong>: NumPy는 단일 dtype(균일 타입), 리스트는 혼합 타입 허용.<br>
+③ <strong>연산</strong>: NumPy는 브로드캐스팅, 행렬 연산, 슬라이싱 등 수학적 연산 지원.<br>
+④ <strong>메모리</strong>: NumPy가 동일 데이터 대비 메모리 효율적.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">NumPy 배열과 Python 기본 리스트의 차이점은 다음과 같다.
+
+① 연산 속도: NumPy 배열은 C언어로 구현된 연속 메모리 구조를 사용하여 벡터화(vectorized) 연산이 가능하므로 Python 리스트보다 수치 연산 속도가 훨씬 빠르다.
+
+② 데이터 타입: NumPy 배열은 모든 원소가 동일한 dtype(예: float64, int32)이어야 하지만, Python 리스트는 정수, 문자열, 객체 등 혼합 타입을 허용한다.
+
+③ 수학 연산: NumPy 배열은 브로드캐스팅, 행렬 곱셈, 슬라이싱 등 수학적 연산을 배열 전체에 한 번에 적용할 수 있어 딥러닝·데이터 분석에 적합하다.
+
+④ 메모리 효율: NumPy는 동일한 데이터를 저장할 때 Python 리스트보다 메모리를 효율적으로 사용한다.</div></div>` },
   { q:"Pandas에서 DataFrame을 생성하는 방법을 딕셔너리(dict)를 이용한 예시 코드와 함께 설명하시오.",
     a:`<p><strong>DataFrame</strong>은 2차원 표 형태의 데이터 구조로, 딕셔너리의 key가 컬럼명이 됩니다.</p>
-<div class="cb"><pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<div class="cb"><pre>import pandas as pd
 
 data = {
-    <span class="st">'이름'</span>: [<span class="st">'Alice'</span>, <span class="st">'Bob'</span>, <span class="st">'Charlie'</span>],
-    <span class="st">'나이'</span>: [25, 30, 35],
-    <span class="st">'점수'</span>: [90.5, 85.0, 92.3]
+    '이름': ['Alice', 'Bob', 'Charlie'],
+    '나이': [25, 30, 35],
+    '점수': [90.5, 85.0, 92.3]
 }
-df = pd.<span class="fn">DataFrame</span>(data)
-<span class="fn">print</span>(df)</pre></div>` },
+df = pd.DataFrame(data)
+print(df)</pre></div>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+딕셔너리의 키가 열 이름, 값(리스트)이 각 열의 데이터가 된다.<br>
+<code>import pandas as pd</code><br>
+<code>data = {'이름': ['홍길동', '이순신'], '나이': [25, 30], '점수': [88, 95]}</code><br>
+<code>df = pd.DataFrame(data)</code></div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">Pandas DataFrame은 2차원 표(행렬) 형태의 데이터 구조로, 딕셔너리를 이용해 생성할 수 있다.
+딕셔너리의 key가 열(column) 이름이 되고, value(리스트)가 각 열의 데이터가 된다.
+
+import pandas as pd
+data = {'이름': ['홍길동', '이순신', '강감찬'],
+        '나이': [25, 30, 35],
+        '점수': [88, 95, 72]}
+df = pd.DataFrame(data)
+print(df)
+
+출력 결과:
+   이름  나이  점수
+0  홍길동  25   88
+1  이순신  30   95
+2  강감찬  35   72</div></div>` },
   { q:"Seaborn과 Matplotlib의 차이점 및 각각의 장점을 설명하시오.",
     a:`<table class="tbl"><thead><tr><th>항목</th><th>Matplotlib</th><th>Seaborn</th></tr></thead><tbody>
 <tr><td>특징</td><td>저수준 기본 라이브러리</td><td>Matplotlib 기반 고수준</td></tr>
 <tr><td>장점</td><td>자유도 높음, 세밀한 제어</td><td>통계 시각화 간편, 미려한 기본 스타일</td></tr>
 <tr><td>코드량</td><td>상대적으로 많음</td><td>적은 코드로 복잡한 그래프</td></tr>
 <tr><td>주요 용도</td><td>모든 종류의 커스텀 그래프</td><td>히트맵, 분포도, 상관관계 시각화</td></tr>
-</tbody></table>` },
+</tbody></table>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+<strong>Matplotlib</strong>: 저수준(low-level) 시각화 라이브러리. 세부 제어 자유롭지만 코드가 많아짐.<br>
+<strong>Seaborn</strong>: Matplotlib 기반의 고수준 라이브러리. 통계 그래프(heatmap, boxplot, pairplot 등)를 적은 코드로 생성 가능.<br>
+장점 비교: Matplotlib→유연성/커스터마이징, Seaborn→통계 시각화 편의성/미려한 기본 스타일.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">Matplotlib은 Python의 기본 데이터 시각화 라이브러리로, 저수준(low-level) API를 제공하여 그래프의 모든 세부 요소를 직접 제어할 수 있다. 유연성과 커스터마이징 자유도가 높지만, 복잡한 그래프를 작성할 때 코드량이 많아진다.
+
+Seaborn은 Matplotlib을 기반으로 만든 고수준(high-level) 시각화 라이브러리로, 통계적 데이터 시각화에 특화되어 있다. heatmap, boxplot, pairplot 등 복잡한 그래프를 간결한 코드로 생성 가능하며, 기본 스타일이 미려하다.
+
+요약: Matplotlib은 자유도·커스터마이징, Seaborn은 통계 시각화·편의성이 장점이다.</div></div>` },
   { q:"퍼셉트론(Perceptron)의 한계점과 이를 극복하기 위해 등장한 모델을 설명하시오.",
     a:`<p><strong>한계</strong>: 단층 퍼셉트론은 XOR 같은 <em>선형 분리 불가능</em> 문제를 해결할 수 없습니다.</p>
-<p><strong>극복</strong>: 은닉층(Hidden Layer)을 추가한 <em>다층 퍼셉트론(MLP)</em>이 등장하였고, 역전파(Backpropagation) 알고리즘으로 학습이 가능해졌습니다.</p>` },
+<p><strong>극복</strong>: 은닉층(Hidden Layer)을 추가한 <em>다층 퍼셉트론(MLP)</em>이 등장하였고, 역전파(Backpropagation) 알고리즘으로 학습이 가능해졌습니다.</p>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+<strong>한계점</strong>: 단층 퍼셉트론은 선형 분류만 가능. XOR 문제와 같이 선형으로 분리되지 않는 데이터 학습 불가.<br>
+<strong>극복 모델</strong>: 다층 퍼셉트론(MLP, Multi-Layer Perceptron). 은닉층(hidden layer) 추가 + 비선형 활성화 함수 사용으로 비선형 분류 가능.<br>
+이후 역전파(Backpropagation) 알고리즘이 개발되어 MLP의 실용적 학습이 가능해짐.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">단층 퍼셉트론의 한계점: 단층 퍼셉트론은 선형 결정 경계만 표현할 수 있어, XOR 문제처럼 선형으로 분리되지 않는(non-linearly separable) 데이터를 학습하지 못한다.
+
+극복 모델: 이를 극복하기 위해 다층 퍼셉트론(MLP, Multi-Layer Perceptron)이 등장하였다. MLP는 입력층과 출력층 사이에 하나 이상의 은닉층(Hidden Layer)을 추가하고, 비선형 활성화 함수(ReLU, Sigmoid 등)를 사용하여 비선형 분류 문제를 해결할 수 있다. 이후 역전파(Backpropagation) 알고리즘의 개발로 MLP의 실용적인 학습이 가능해졌다.</div></div>` },
   { q:"딥러닝에서 과적합(Overfitting)이란 무엇이며, 이를 방지하기 위한 방법을 2가지 이상 서술하시오.",
     a:`<p><strong>과적합</strong>: 모델이 훈련 데이터에 지나치게 최적화되어 새로운 데이터에서 성능이 떨어지는 현상입니다.</p>
 <p><strong>방지 방법</strong>:<br>
 ① <em>드롭아웃(Dropout)</em> — 학습 중 일부 뉴런을 무작위로 비활성화<br>
 ② <em>L1/L2 정규화</em> — 가중치에 패널티를 부여<br>
 ③ <em>데이터 증강(Augmentation)</em> — 훈련 데이터 인위적으로 늘리기<br>
-④ <em>조기 종료(Early Stopping)</em> — 검증 손실이 증가하면 학습 중단</p>` },
+④ <em>조기 종료(Early Stopping)</em> — 검증 손실이 증가하면 학습 중단</p>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+<strong>과적합(Overfitting)</strong>: 모델이 훈련 데이터에 지나치게 적합되어 검증/테스트 데이터에서는 성능이 떨어지는 현상.<br>
+방지 방법 ①: 드롭아웃(Dropout) - 학습 시 무작위로 뉴런을 비활성화하여 특정 경로에 의존 방지.<br>
+방지 방법 ②: 정규화(Regularization) - L1/L2 규제로 가중치 크기에 패널티 부여.<br>
+방지 방법 ③: 데이터 증강(Data Augmentation) - 훈련 데이터를 인위적으로 늘림.<br>
+방지 방법 ④: 조기 종료(Early Stopping) - 검증 손실이 증가하기 시작하면 학습 중단.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">과적합(Overfitting)이란 모델이 훈련 데이터의 노이즈나 세부 패턴까지 과도하게 학습하여, 훈련 데이터에서는 높은 성능을 보이지만 새로운 검증/테스트 데이터에서는 성능이 급격히 떨어지는 현상이다.
+
+방지 방법:
+① 드롭아웃(Dropout): 학습 시 각 스텝마다 일부 뉴런을 무작위로 비활성화하여 특정 뉴런에 대한 과도한 의존을 방지한다.
+② L2 정규화(Weight Decay): 손실 함수에 가중치의 제곱합 패널티를 추가하여 가중치가 지나치게 커지는 것을 억제한다.
+③ 데이터 증강(Data Augmentation): 이미지 회전, 뒤집기, 크기 조정 등으로 훈련 데이터를 인위적으로 늘려 다양성을 높인다.
+④ 조기 종료(Early Stopping): 검증 손실이 더 이상 줄어들지 않고 증가하기 시작하면 학습을 조기에 중단한다.</div></div>` },
   { q:"CNN에서 합성곱(Convolution) 연산의 목적과 필터(Filter/Kernel)의 역할을 설명하시오.",
     a:`<p><strong>합성곱 연산의 목적</strong>: 입력 이미지에서 엣지, 텍스처, 형태 등 <em>지역적 특징(Local Feature)</em>을 추출합니다.</p>
 <p><strong>필터(Kernel)의 역할</strong>: 입력 데이터를 슬라이딩하며 내적을 계산, 특징 맵(Feature Map)을 생성합니다. 각 필터는 특정 패턴(가로선, 세로선 등)에 반응합니다.</p>
-<div class="cb"><pre><span class="cm"># 3×3 필터가 입력을 슬라이딩하며 특징 추출</span>
-<span class="kw">Conv2D</span>(32, kernel_size=(3,3), activation=<span class="st">'relu'</span>)</pre></div>` },
+<div class="cb"><pre># 3×3 필터가 입력을 슬라이딩하며 특징 추출
+Conv2D(32, kernel_size=(3,3), activation='relu')</pre></div>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+<strong>합성곱 연산 목적</strong>: 입력 이미지에서 에지, 텍스처, 패턴 등의 지역적 특징(local feature)을 추출.<br>
+<strong>필터(커널)</strong>: 학습 가능한 가중치 행렬. 입력 위를 슬라이딩하며 내적 연산을 수행하여 특징 맵(Feature Map) 생성.<br>
+같은 필터가 이미지 전체에 공유(weight sharing)되어 위치 불변성(translation invariance) 확보.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">합성곱(Convolution) 연산의 목적: 입력 이미지의 각 지역적 영역에서 엣지, 텍스처, 곡선 등 의미 있는 지역적 특징(Local Feature)을 추출하는 것이다.
+
+필터(커널)의 역할: 필터는 학습 가능한 작은 가중치 행렬(예: 3×3)로, 입력 이미지 위를 일정 간격(stride)으로 슬라이딩하며 내적 연산을 수행한다. 이를 통해 특징 맵(Feature Map)을 생성한다. 하나의 필터는 특정 패턴(가로선, 세로선, 모서리 등)에 반응하며, 여러 개의 필터를 사용하면 다양한 특징을 동시에 추출할 수 있다.
+
+핵심 특징: 동일한 필터가 이미지 전체 위치에서 공유(weight sharing)되므로 파라미터 수가 줄어들고, 위치 불변성(translation invariance)을 확보할 수 있다.</div></div>` },
   { q:"TensorFlow/Keras에서 fit() 메서드의 주요 파라미터(epochs, batch_size, validation_data)를 설명하시오.",
     a:`<table class="tbl"><thead><tr><th>파라미터</th><th>의미</th><th>예시</th></tr></thead><tbody>
 <tr><td><code>epochs</code></td><td>전체 데이터셋을 몇 번 반복 학습할지</td><td><code>epochs=10</code></td></tr>
 <tr><td><code>batch_size</code></td><td>한 번에 처리할 샘플 수</td><td><code>batch_size=32</code></td></tr>
 <tr><td><code>validation_data</code></td><td>각 epoch 후 검증에 사용할 데이터</td><td><code>validation_data=(X_val, y_val)</code></td></tr>
 </tbody></table>
-<div class="cb"><pre>model.<span class="fn">fit</span>(X_train, y_train,
-         epochs=<span class="nm">10</span>,
-         batch_size=<span class="nm">32</span>,
-         validation_data=(X_val, y_val))</pre></div>` },
+<div class="cb"><pre>model.fit(X_train, y_train,
+         epochs=10,
+         batch_size=32,
+         validation_data=(X_val, y_val))</pre></div>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+<strong>epochs</strong>: 전체 훈련 데이터를 몇 번 반복 학습할지 지정.<br>
+<strong>batch_size</strong>: 한 번의 가중치 업데이트에 사용되는 샘플 수. 클수록 안정적이나 메모리 소비 증가.<br>
+<strong>validation_data</strong>: 각 epoch 후 성능을 평가할 검증 데이터 (X_val, y_val) 튜플. 과적합 모니터링에 활용.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">fit() 메서드의 주요 파라미터는 다음과 같다.
+
+· epochs: 전체 훈련 데이터셋을 반복하여 학습하는 횟수이다. epochs=10이면 전체 데이터를 10번 반복 학습한다.
+
+· batch_size: 한 번의 가중치 업데이트(역전파)에 사용하는 샘플의 수이다. batch_size=32이면 32개 샘플씩 나누어 처리한다. 값이 클수록 학습이 안정적이지만 메모리 사용량이 증가한다.
+
+· validation_data: 각 epoch 종료 후 모델 성능을 평가할 검증 데이터를 (X_val, y_val) 튜플 형태로 전달한다. 훈련 손실과 검증 손실을 비교하여 과적합 여부를 모니터링하는 데 활용된다.
+
+model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_val, y_val))</div></div>` },
   { q:"OpenCV에서 이미지를 읽고(imread), 화면에 표시하고(imshow), 저장하는(imwrite) 코드를 순서대로 작성하시오.",
-    a:`<div class="cb"><pre><span class="kw">import</span> cv2
+    a:`<div class="cb"><pre>import cv2
 
-<span class="cm"># 1. 이미지 읽기</span>
-img = cv2.<span class="fn">imread</span>(<span class="st">'input.jpg'</span>)
+# 1. 이미지 읽기
+img = cv2.imread('input.jpg')
 
-<span class="cm"># 2. 화면에 표시</span>
-cv2.<span class="fn">imshow</span>(<span class="st">'Original'</span>, img)
-cv2.<span class="fn">waitKey</span>(<span class="nm">0</span>)   <span class="cm"># 키 입력 대기</span>
-cv2.<span class="fn">destroyAllWindows</span>()
+# 2. 화면에 표시
+cv2.imshow('Original', img)
+cv2.waitKey(0)   # 키 입력 대기
+cv2.destroyAllWindows()
 
-<span class="cm"># 3. 저장</span>
-cv2.<span class="fn">imwrite</span>(<span class="st">'output.jpg'</span>, img)</pre></div>` },
+# 3. 저장
+cv2.imwrite('output.jpg', img)</pre></div>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+<code>cv2.imread()</code>: 이미지 파일을 NumPy 배열로 읽기.<br>
+<code>cv2.imshow()</code>: 윈도우 창에 이미지 표시 (cv2.waitKey(0) 필요).<br>
+<code>cv2.imwrite()</code>: 이미지를 파일로 저장.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">import cv2
+
+# 1. 이미지 읽기 - 파일 경로를 받아 NumPy 배열로 반환
+img = cv2.imread('image.jpg')
+
+# 2. 화면에 표시 - 윈도우 이름과 이미지 배열을 전달
+cv2.imshow('Original', img)
+cv2.waitKey(0)          # 0: 키 입력이 있을 때까지 무한 대기
+cv2.destroyAllWindows() # 모든 윈도우 창 닫기
+
+# 3. 저장 - 파일명과 이미지 배열을 전달
+cv2.imwrite('output.jpg', img)
+
+주의: cv2.imshow() 사용 시 반드시 cv2.waitKey()를 호출해야 창이 정상적으로 표시된다.
+Jupyter/Colab 환경에서는 matplotlib을 사용하여 plt.imshow()로 대체한다.</div></div>` },
   { q:"DNN(심층 신경망)과 CNN(합성곱 신경망)의 구조적 차이점과 CNN이 이미지 처리에 유리한 이유를 설명하시오.",
     a:`<table class="tbl"><thead><tr><th>항목</th><th>DNN</th><th>CNN</th></tr></thead><tbody>
 <tr><td>주요 레이어</td><td>Dense(Fully Connected)</td><td>Conv2D + Pooling + Dense</td></tr>
@@ -1249,50 +1430,174 @@ cv2.<span class="fn">imwrite</span>(<span class="st">'output.jpg'</span>, img)</
 <tr><td>파라미터 수</td><td>매우 많음</td><td>가중치 공유로 적음</td></tr>
 <tr><td>공간 정보</td><td>위치 정보 손실</td><td>공간 구조 보존</td></tr>
 </tbody></table>
-<p><strong>CNN이 유리한 이유</strong>: 필터가 이미지 전체를 슬라이딩하며 <em>가중치를 공유</em>하므로 파라미터가 적고, 위치에 무관한 특징 추출이 가능합니다.</p>` },
+<p><strong>CNN이 유리한 이유</strong>: 필터가 이미지 전체를 슬라이딩하며 <em>가중치를 공유</em>하므로 파라미터가 적고, 위치에 무관한 특징 추출이 가능합니다.</p>
+<div class="official-ans"><span class="off-label">📋 출제자 샘플 정답</span><br>
+<strong>DNN</strong>: 완전 연결층(Fully Connected Layer)만으로 구성. 모든 입력 뉴런과 출력 뉴런이 연결되어 파라미터 수가 매우 많아짐.<br>
+<strong>CNN</strong>: 합성곱층(Conv) + 풀링층(Pooling) + 완전 연결층 조합. 지역적 특징 추출 및 공간 구조 보존.<br>
+CNN이 이미지에 유리한 이유: ① 가중치 공유로 파라미터 대폭 감소 ② 공간적 위치 관계 유지 ③ 계층적 특징 학습(에지→패턴→객체 순서) ④ 이동 불변성 확보.</div>
+<div class="model-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">구조적 차이점:
+DNN(심층 신경망)은 완전 연결층(Fully Connected / Dense)만으로 구성되어, 모든 입력 뉴런이 다음 층의 모든 뉴런과 연결된다. 이미지를 입력할 때 2D 구조를 1D 벡터로 펼쳐야 하므로 공간적 위치 정보가 손실되고, 파라미터 수가 매우 많아진다.
+
+CNN(합성곱 신경망)은 합성곱층(Conv2D) + 풀링층(Pooling) + 완전 연결층의 조합으로 구성되어, 이미지의 2D 공간 구조를 그대로 유지하며 지역적 특징을 추출한다.
+
+CNN이 이미지 처리에 유리한 이유:
+① 가중치 공유(Weight Sharing): 동일 필터를 이미지 전체에 적용하므로 파라미터 수가 대폭 감소한다.
+② 공간 구조 보존: 픽셀 간의 위치 관계를 유지하여 이미지 패턴을 효과적으로 학습한다.
+③ 계층적 특징 학습: 얕은 층에서는 에지·텍스처, 깊은 층에서는 물체의 형태·객체를 학습한다.
+④ 이동 불변성: 객체의 위치가 달라져도 동일한 특징을 인식할 수 있다.</div></div>` },
 ];
 
 const DL_PRAC = [
   { n:"21번", tag:"NumPy", title:"shape (3,4) 영행렬과 ones 배열 생성 및 출력",
     code:`import numpy as np\n\n# 영행렬 (zeros)\nzeros = np.zeros((3, 4))\nprint("zeros:\\n", zeros)\n\n# ones 배열\nones = np.ones((3, 4))\nprint("ones:\\n", ones)\n\n# shape 확인\nprint("shape:", zeros.shape)`,
     out:`zeros:\n [[0. 0. 0. 0.]\n  [0. 0. 0. 0.]\n  [0. 0. 0. 0.]]\nones:\n [[1. 1. 1. 1.]\n  [1. 1. 1. 1.]\n  [1. 1. 1. 1.]]\nshape: (3, 4)`,
-    tip:"np.zeros, np.ones 외에 np.eye(n)으로 단위행렬, np.random.rand()로 난수 배열을 만들 수 있습니다." },
+    tip:"np.zeros, np.ones 외에 np.eye(n)으로 단위행렬, np.random.rand()로 난수 배열을 만들 수 있습니다.\n📋 출제자 기대 결과: zeros: 3×4 모두 0.0 행렬 출력",
+    model:`사용한 코드 칸:
+  import numpy as np
+  a = np.zeros((3, 4))
+  b = np.ones((3, 4))
+  print(a); print(b)
+
+확인 포인트 (캡처에 반드시 포함):
+  · np.zeros((3,4)) 결과: 3행 4열의 모든 값이 0.0인 배열 출력 화면
+  · np.ones((3,4)) 결과: 3행 4열의 모든 값이 1.0인 배열 출력 화면
+  · print(a.shape) 로 (3, 4) 출력 확인` },
   { n:"22번", tag:"Pandas", title:"DataFrame 생성 후 head(), info(), describe() 실행",
     code:`import pandas as pd\n\ndata = {\n    '이름': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],\n    '나이': [25, 30, 35, 28, 22],\n    '점수': [90.5, 85.0, 92.3, 78.5, 95.0]\n}\ndf = pd.DataFrame(data)\n\nprint(df.head())      # 상위 5행\nprint(df.info())      # 데이터 타입·결측값\nprint(df.describe())  # 기술 통계량`,
     out:`   이름  나이    점수\n0  Alice  25  90.5\n...\n<class 'pandas.core.frame.DataFrame'>\nRangeIndex: 5 entries\n       나이       점수\ncount  5.0    5.000\nmean  28.0   88.26\nstd    4.74   6.43...`,
-    tip:"info()는 null 수와 dtype 확인, describe()는 평균·표준편차·사분위수를 한번에 보여줍니다." },
+    tip:"info()는 null 수와 dtype 확인, describe()는 평균·표준편차·사분위수를 한번에 보여줍니다.\n📋 출제자 기대 결과: head: 상위 5행 / info: 열 타입 / describe: 통계 요약 출력 확인",
+    model:`사용한 코드 칸:
+  import pandas as pd
+  df = pd.read_csv('data.csv')  # 또는 dict로 생성
+  print(df.head()); df.info(); df.describe()
+
+확인 포인트 (캡처에 반드시 포함):
+  · df.head() — 상위 5행 데이터 출력 화면
+  · df.info() — 컬럼명, dtype, non-null count 출력 화면
+  · df.describe() — count/mean/std/min/max 등 통계 요약 출력 화면
+  · 세 가지 결과 모두 하나의 캡처 또는 각각 캡처하여 첨부` },
   { n:"23번", tag:"Matplotlib/Seaborn", title:"sin 함수 꺾은선 그래프 + 히트맵 시각화",
-    code:`import numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# sin 그래프\nx = np.linspace(0, 2 * np.pi, 100)\ny = np.sin(x)\nplt.figure(figsize=(8, 3))\nplt.plot(x, y, color='steelblue', linewidth=2)\nplt.title('Sin Function')\nplt.xlabel('x'); plt.ylabel('sin(x)')\nplt.grid(True, alpha=0.3)\nplt.tight_layout(); plt.show()\n\n# 히트맵\ndata = np.random.rand(8, 8)\nplt.figure(figsize=(6, 5))\nsns.heatmap(data, annot=True, fmt='.2f', cmap='viridis')\nplt.title('Random Heatmap')\nplt.show()`,
-    out:`[sin 함수 꺾은선 그래프 창 출력]\n[8x8 히트맵 창 출력]`,
-    tip:"plt.tight_layout()은 레이블이 잘리지 않도록 여백을 자동 조정합니다." },
+    code:`import numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# sin 그래프\nx = np.linspace(0, 2 * np.pi, 100)\ny = np.sin(x)\nplt.figure(figsize=(8, 3))\nplt.plot(x, y, color='steelblue', linewidth=2)\nplt.title('Sin Function')\nplt.xlabel('x'); plt.ylabel('sin(x)')\nplt.grid(True, alpha=0.3)\nplt.tight_layout(); plt.show()\n\n# 히트맵\ndata = np.random.rand(5, 5)\nplt.figure(figsize=(5, 4))\nsns.heatmap(data, annot=True, fmt='.2f', cmap='viridis')\nplt.title('Random Heatmap')\nplt.show()`,
+    out:`[sin 함수 꺾은선 그래프 창 출력]\n[5x5 히트맵 창 출력]`,
+    tip:"plt.tight_layout()은 레이블이 잘리지 않도록 여백을 자동 조정합니다.\n📋 출제자 기대 결과: sin 곡선 그래프 + 5×5 heatmap 출력 캡처",
+    model:`사용한 코드 칸:
+  import matplotlib.pyplot as plt
+  import seaborn as sns; import numpy as np
+  x = np.linspace(0, 2*np.pi, 100)
+  plt.plot(x, np.sin(x)); plt.show()
+  sns.heatmap(np.random.rand(5,5), annot=True); plt.show()
+
+확인 포인트 (캡처에 반드시 포함):
+  · Matplotlib sin 함수 꺾은선 그래프 출력 화면
+  · Seaborn 히트맵(5×5 또는 8×8) 출력 화면
+  · 두 그래프 모두 캡처 첨부 필수` },
   { n:"24번", tag:"OpenCV", title:"이미지 그레이스케일 변환 후 원본과 나란히 출력",
-    code:`import cv2\nimport matplotlib.pyplot as plt\n\n# 이미지 읽기\nimg = cv2.imread('sample.jpg')\nimg_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # BGR→RGB\nimg_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\n\n# 나란히 출력\nfig, axes = plt.subplots(1, 2, figsize=(10, 4))\naxes[0].imshow(img_rgb)\naxes[0].set_title('Original (RGB)')\naxes[1].imshow(img_gray, cmap='gray')\naxes[1].set_title('Grayscale')\nplt.tight_layout(); plt.show()\n\n# 저장\ncv2.imwrite('gray_output.jpg', img_gray)`,
+    code:`import cv2\nimport matplotlib.pyplot as plt\n\n# 이미지 읽기\nimg = cv2.imread('sample.jpg')\nimg_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)\nimg_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\n\n# 나란히 출력\nfig, axes = plt.subplots(1, 2, figsize=(10, 4))\naxes[0].imshow(img_rgb)\naxes[0].set_title('Original (RGB)')\naxes[1].imshow(img_gray, cmap='gray')\naxes[1].set_title('Grayscale')\nplt.tight_layout(); plt.show()\n\ncv2.imwrite('gray_output.jpg', img_gray)`,
     out:`[원본 컬러 이미지와 그레이스케일 이미지 나란히 출력]\ngray_output.jpg 저장 완료`,
-    tip:"OpenCV는 BGR 순서로 읽으므로 Matplotlib 출력 전 cv2.COLOR_BGR2RGB 변환이 필요합니다." },
+    tip:"OpenCV는 BGR 순서로 읽으므로 Matplotlib 출력 전 cv2.COLOR_BGR2RGB 변환이 필요합니다.\n📋 출제자 기대 결과: 컬러/그레이 이미지 나란히 출력 캡처",
+    model:`사용한 코드 칸:
+  import cv2
+  img = cv2.imread('img.jpg')
+  gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+  cv2.imshow('Color', img); cv2.imshow('Gray', gray)
+  cv2.waitKey(0); cv2.destroyAllWindows()
+
+확인 포인트 (캡처에 반드시 포함):
+  · 원본 컬러 이미지와 그레이스케일 이미지가 나란히 표시된 화면
+  · (Jupyter/Colab 환경) matplotlib의 plt.subplots로 나란히 출력한 화면
+  · cv2.imwrite()로 저장된 파일 확인 (선택)` },
   { n:"25번", tag:"퍼셉트론", title:"NumPy로 AND 게이트 구현 및 4가지 입력 검증",
-    code:`import numpy as np\n\ndef perceptron_and(x1, x2):\n    # 가중치와 임계값\n    w1, w2, theta = 0.5, 0.5, 0.7\n    total = w1 * x1 + w2 * x2\n    return 1 if total >= theta else 0\n\n# 4가지 입력 테스트\nfor x1, x2 in [(0,0), (0,1), (1,0), (1,1)]:\n    result = perceptron_and(x1, x2)\n    print(f"AND({x1}, {x2}) = {result}")`,
-    out:`AND(0, 0) = 0\nAND(0, 1) = 0\nAND(1, 0) = 0\nAND(1, 1) = 1`,
-    tip:"AND 게이트: 두 입력이 모두 1일 때만 1을 출력. 가중치와 임계값(theta) 조정으로 OR, NAND도 구현 가능합니다." },
+    code:`import numpy as np\n\ndef AND(x1, x2):\n    w1, w2, b = 0.5, 0.5, -0.7\n    return int(w1*x1 + w2*x2 + b > 0)\n\nfor i, j in [(0,0),(0,1),(1,0),(1,1)]:\n    print(f"AND({i},{j}) = {AND(i,j)}")`,
+    out:`AND(0,0) = 0\nAND(0,1) = 0\nAND(1,0) = 0\nAND(1,1) = 1`,
+    tip:"AND 게이트: 두 입력이 모두 1일 때만 1을 출력합니다.\n📋 출제자 기대 결과: 출력: 0,0,0,1 (AND 게이트 진리표와 일치)",
+    model:`사용한 코드 칸:
+  import numpy as np
+  def AND(x1, x2):
+      w1, w2, b = 0.5, 0.5, -0.7
+      return int(w1*x1 + w2*x2 + b > 0)
+  for i,j in [(0,0),(0,1),(1,0),(1,1)]: print(AND(i,j))
+
+확인 포인트 (캡처에 반드시 포함):
+  · 4가지 입력에 대한 출력 결과: 0, 0, 0, 1 (AND 진리표와 일치)
+  · (1,1) 입력에서만 1이 출력되는 것을 확인
+  · 가중치(w1, w2)와 편향(b) 값 설정 코드도 함께 캡처` },
   { n:"26번", tag:"MLP/Keras", title:"Sequential MLP 모델 정의 후 summary() 출력",
-    code:`import tensorflow as tf\nfrom tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Dense\n\nmodel = Sequential([\n    Dense(64, activation='relu', input_shape=(784,)),  # 입력+은닉층\n    Dense(32, activation='relu'),                       # 은닉층\n    Dense(1,  activation='sigmoid')                     # 출력층\n])\n\nmodel.summary()`,
-    out:`Model: "sequential"\n_________________________________________________________________\nLayer (type)          Output Shape         Param #\n=================================================================\ndense (Dense)         (None, 64)           50240\ndense_1 (Dense)       (None, 32)           2080\ndense_2 (Dense)       (None, 1)            33\n=================================================================\nTotal params: 52,353`,
-    tip:"input_shape는 첫 번째 레이어에만 지정합니다. Dense(units, activation)로 층을 쌓습니다." },
+    code:`from tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Dense\n\nmodel = Sequential([\n    Dense(64, activation='relu', input_shape=(10,)),\n    Dense(1,  activation='sigmoid')\n])\n\nmodel.summary()`,
+    out:`Model: "sequential"\n_________________________________________________________________\nLayer (type)          Output Shape         Param #\n=================================================================\ndense (Dense)         (None, 64)           704\ndense_1 (Dense)       (None, 1)            65\n=================================================================\nTotal params: 769`,
+    tip:"input_shape는 첫 번째 레이어에만 지정합니다.\n📋 출제자 기대 결과: model.summary() 출력 캡처 (레이어 구조, 파라미터 수 확인)",
+    model:`사용한 코드 칸:
+  from tensorflow.keras.models import Sequential
+  from tensorflow.keras.layers import Dense
+  model = Sequential([
+    Dense(64, activation='relu', input_shape=(10,)),
+    Dense(1, activation='sigmoid')])
+  model.summary()
+
+확인 포인트 (캡처에 반드시 포함):
+  · model.summary() 전체 출력 화면
+  · 레이어 이름(dense, dense_1), Output Shape, Param # 확인
+  · Total params 숫자 확인
+  · 입력층-은닉층(ReLU)-출력층(Sigmoid) 구조임을 명시` },
   { n:"27번", tag:"DNN 학습", title:"MNIST 데이터로 DNN 컴파일 및 5 epochs 학습",
-    code:`import tensorflow as tf\n\n# 데이터 로드 및 전처리\n(X_train, y_train), (X_test, y_test) = tf.keras.datasets.mnist.load_data()\nX_train = X_train.reshape(-1, 784) / 255.0\nX_test  = X_test.reshape(-1, 784)  / 255.0\n\n# 모델 정의\nmodel = tf.keras.Sequential([\n    tf.keras.layers.Dense(128, activation='relu', input_shape=(784,)),\n    tf.keras.layers.Dense(64,  activation='relu'),\n    tf.keras.layers.Dense(10,  activation='softmax')\n])\n\n# 컴파일\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\n\n# 학습\nmodel.fit(X_train, y_train, epochs=5, batch_size=32, validation_split=0.1)`,
-    out:`Epoch 1/5\n1688/1688 - loss: 0.2541 - accuracy: 0.9253\nEpoch 5/5\n1688/1688 - loss: 0.0612 - accuracy: 0.9813`,
-    tip:"MNIST는 28×28 손글씨 숫자 이미지. reshape(-1, 784)로 1D로 펼치고 /255.0 으로 정규화합니다." },
+    code:`from tensorflow.keras.datasets import mnist\nfrom tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Dense\n\n(x_tr, y_tr), (x_te, y_te) = mnist.load_data()\nx_tr = x_tr.reshape(-1, 784) / 255.0\n\nmodel = Sequential([\n    Dense(128, activation='relu', input_shape=(784,)),\n    Dense(64,  activation='relu'),\n    Dense(10,  activation='softmax')\n])\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\nmodel.fit(x_tr, y_tr, epochs=5, batch_size=32)`,
+    out:`Epoch 1/5 - loss: 0.2541 - accuracy: 0.9253\nEpoch 5/5 - loss: 0.0612 - accuracy: 0.9813`,
+    tip:"MNIST는 28×28 손글씨 숫자 이미지. reshape(-1, 784)로 1D로 펼치고 /255.0으로 정규화합니다.\n📋 출제자 기대 결과: 5 epoch 학습 로그(loss, accuracy) 출력 캡처",
+    model:`사용한 코드 칸:
+  (x_tr, y_tr), (x_te, y_te) = mnist.load_data()
+  x_tr = x_tr.reshape(-1, 784) / 255.0
+  model.compile('adam', 'sparse_categorical_crossentropy', ['accuracy'])
+  model.fit(x_tr, y_tr, epochs=5, batch_size=32)
+
+확인 포인트 (캡처에 반드시 포함):
+  · Epoch 1/5 ~ Epoch 5/5 전체 학습 로그 출력 화면
+  · 각 epoch의 loss와 accuracy 값이 표시된 화면
+  · Epoch 5 기준 accuracy가 97% 이상이면 정상` },
   { n:"28번", tag:"CNN 정의", title:"Conv2D→MaxPooling→Flatten→Dense CNN 모델 정의 및 summary()",
-    code:`import tensorflow as tf\nfrom tensorflow.keras import layers, models\n\nmodel = models.Sequential([\n    layers.Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),\n    layers.MaxPooling2D((2,2)),\n    layers.Conv2D(64, (3,3), activation='relu'),\n    layers.MaxPooling2D((2,2)),\n    layers.Flatten(),\n    layers.Dense(64, activation='relu'),\n    layers.Dense(10, activation='softmax')\n])\n\nmodel.summary()`,
-    out:`Model: "sequential"\n_________________________________________________________________\nLayer (type)          Output Shape         Param #\n=================================================================\nconv2d (Conv2D)       (None, 26, 26, 32)   320\nmax_pooling2d         (None, 13, 13, 32)   0\nconv2d_1 (Conv2D)     (None, 11, 11, 64)   18496\nmax_pooling2d_1       (None, 5, 5, 64)     0\nflatten (Flatten)     (None, 1600)          0\ndense (Dense)         (None, 64)           102464\ndense_1 (Dense)       (None, 10)           650\n=================================================================\nTotal params: 121,930`,
-    tip:"Flatten() 은 2D Feature Map을 1D 벡터로 펼쳐 Dense 층에 연결합니다." },
+    code:`from tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense\n\nmodel = Sequential([\n    Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),\n    MaxPooling2D(2,2),\n    Flatten(),\n    Dense(64, activation='relu'),\n    Dense(10, activation='softmax')\n])\nmodel.summary()`,
+    out:`Model: "sequential"\nconv2d (Conv2D)    (None, 26, 26, 32)   320\nmax_pooling2d      (None, 13, 13, 32)   0\nflatten            (None, 5408)          0\ndense (Dense)      (None, 64)            346176\ndense_1 (Dense)    (None, 10)            650\nTotal params: 347,146`,
+    tip:"Flatten()은 2D Feature Map을 1D 벡터로 펼쳐 Dense 층에 연결합니다.\n📋 출제자 기대 결과: Conv2D→MaxPool→Flatten→Dense 구조 summary 캡처",
+    model:`사용한 코드 칸:
+  from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+  model = Sequential([
+    Conv2D(32,(3,3),activation='relu',input_shape=(28,28,1)),
+    MaxPooling2D(2,2), Flatten(),
+    Dense(64,activation='relu'), Dense(10,activation='softmax')])
+  model.summary()
+
+확인 포인트 (캡처에 반드시 포함):
+  · model.summary() 전체 출력 화면
+  · Conv2D → MaxPooling2D → Flatten → Dense → Dense 순서 확인
+  · 각 레이어의 Output Shape 변화 확인
+  · Total params 숫자 확인` },
   { n:"29번", tag:"CNN 학습", title:"MNIST CNN 학습 및 테스트 정확도 출력",
-    code:`import tensorflow as tf\n\n# 데이터 로드 및 전처리\n(X_train, y_train), (X_test, y_test) = tf.keras.datasets.mnist.load_data()\nX_train = X_train.reshape(-1,28,28,1).astype('float32') / 255.0\nX_test  = X_test.reshape(-1,28,28,1).astype('float32')  / 255.0\n\n# 모델 (위 28번 모델 재사용)\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\nmodel.fit(X_train, y_train, epochs=5, batch_size=64, validation_split=0.1)\n\n# 평가\ntest_loss, test_acc = model.evaluate(X_test, y_test, verbose=0)\nprint(f"\\n테스트 정확도: {test_acc:.4f}")`,
-    out:`Epoch 5/5 - accuracy: 0.9921\n\n테스트 정확도: 0.9912`,
-    tip:"CNN은 DNN보다 파라미터가 적으면서 이미지 분류 성능이 높습니다. MNIST에서 99%+ 달성 가능." },
+    code:`import tensorflow as tf\n\n(X_train, y_train), (X_test, y_test) = tf.keras.datasets.mnist.load_data()\nX_train = X_train.reshape(-1,28,28,1).astype('float32') / 255.0\nX_test  = X_test.reshape(-1,28,28,1).astype('float32')  / 255.0\n\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\nmodel.fit(X_train, y_train, epochs=5, batch_size=64)\n\nloss, acc = model.evaluate(X_test.reshape(-1,28,28,1)/255, y_test)\nprint(f'Test acc: {acc:.4f}')`,
+    out:`Epoch 5/5 - accuracy: 0.9921\n\nTest acc: 0.9912`,
+    tip:"CNN은 DNN보다 파라미터가 적으면서 이미지 분류 성능이 높습니다. MNIST에서 99%+ 달성 가능.\n📋 출제자 기대 결과: Test accuracy 출력 (MNIST 기준 99% 이상 가능) 캡처",
+    model:`사용한 코드 칸:
+  x_tr = x_tr.reshape(-1,28,28,1) / 255.0
+  model.compile('adam','sparse_categorical_crossentropy',['accuracy'])
+  model.fit(x_tr, y_tr, epochs=5)
+  loss, acc = model.evaluate(x_te.reshape(-1,28,28,1)/255, y_te)
+  print(f'Test acc: {acc:.4f}')
+
+확인 포인트 (캡처에 반드시 포함):
+  · 5 epoch 학습 로그 출력 화면
+  · model.evaluate() 후 'Test acc: 0.99xx' 형태의 정확도 출력 화면
+  · MNIST 기준 테스트 정확도 99% 이상이면 만점 수준` },
   { n:"30번", tag:"YOLO", title:"YOLOv8로 샘플 이미지 객체 탐지 및 바운딩 박스 출력",
-    code:`# 설치: pip install ultralytics\nfrom ultralytics import YOLO\nimport cv2, matplotlib.pyplot as plt\n\n# YOLOv8 nano 모델 로드 (자동 다운로드)\nmodel = YOLO('yolov8n.pt')\n\n# 추론 (샘플 이미지)\nresults = model('https://ultralytics.com/images/bus.jpg')\n\n# 결과 시각화\nfor result in results:\n    img_with_boxes = result.plot()  # 바운딩 박스 그리기\n    img_rgb = cv2.cvtColor(img_with_boxes, cv2.COLOR_BGR2RGB)\n    plt.figure(figsize=(10, 8))\n    plt.imshow(img_rgb)\n    plt.axis('off')\n    plt.title('YOLOv8 Detection Result')\n    plt.show()\n    print("탐지된 객체 수:", len(result.boxes))`,
-    out:`[버스 이미지에 바운딩 박스 및 레이블 표시된 결과 출력]\n탐지된 객체 수: 4\n  - person (신뢰도 0.87)\n  - bus (신뢰도 0.95)\n  - ...`,
-    tip:"환경 미지원 시: YOLO 코드 작성만으로도 부분 점수 인정. Google Colab 환경 추천합니다." },
+    code:`# 설치: pip install ultralytics\nfrom ultralytics import YOLO\n\n# YOLOv8 nano 모델 로드\nmodel = YOLO('yolov8n.pt')\n\n# 추론\nresults = model('https://ultralytics.com/images/bus.jpg')\nresults[0].show()  # 탐지 결과 시각화\n\n# 탐지 결과 출력\nfor box in results[0].boxes:\n    print(f"클래스: {results[0].names[int(box.cls)]} / 신뢰도: {box.conf.item():.2f}")`,
+    out:`[버스 이미지에 바운딩 박스 및 레이블 표시된 결과 출력]\n클래스: bus / 신뢰도: 0.95\n클래스: person / 신뢰도: 0.87\n...`,
+    tip:"환경 미지원 시 모델 로드 및 추론 코드 작성만으로 부분 점수 인정. Google Colab 환경 추천합니다.\n📋 출제자 기대 결과: 바운딩 박스 + 클래스명 표시된 탐지 결과 이미지 캡처",
+    model:`사용한 코드 칸:
+  from ultralytics import YOLO
+  model = YOLO('yolov8n.pt')
+  results = model('sample.jpg')
+  results[0].show()  # 탐지 결과 시각화
+
+확인 포인트 (캡처에 반드시 포함):
+  · 바운딩 박스와 클래스명(person, bus 등)이 표시된 탐지 결과 이미지
+  · 탐지된 객체 수 또는 각 객체의 신뢰도(confidence) 출력 화면
+  · 환경 미지원 시: 위 코드를 정확히 작성하고 "환경 미지원으로 실행 불가" 명시 시 부분 점수 인정` },
 ];
 
 const DL_SUM = [

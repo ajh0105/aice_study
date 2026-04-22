@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>교통 안전을 위한 AI 솔루션 — 학습 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #080c14;
+  --bg2:        #0e1420;
+  --bg3:        #141c2e;
+  --bg4:        #1a2540;
+  --border:     #1e2d45;
+  --border2:    #2a3d5a;
+  --text:       #d8e4f5;
+  --text2:      #6e88aa;
+  --text3:      #3d5070;
+  --red:        #f87171;
+  --red-dim:    #3b0d0d;
+  --yellow:     #f5c842;
+  --radius:     11px;
+  --radius-sm:  6px;
+  /* Traffic AI theme: electric blue + amber */
+  --accent:     #38bdf8;
+  --accent-dim: #082030;
+  --hi:         #fb923c;
+  --hi-dim:     #2d1008;
+  --green:      #34d399;
+  --green-dim:  #052018;
+  --purple:     #a78bfa;
+  --purple-dim: #1e1040;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+
+/* ─── HEADER ─── */
+.site-header{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:0 16px;height:54px;display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:200;
+}
+.logo{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);display:flex;align-items:center;gap:8px}
+.logo-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--accent),var(--hi));border-radius:7px;display:grid;place-items:center;font-size:15px;color:#fff;flex-shrink:0}
+.score-pill{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:3px 11px;color:var(--text2);white-space:nowrap}
+.score-pill span{color:var(--yellow);font-weight:700}
+
+/* ─── NAV ─── */
+.nav-tabs{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:54px;z-index:150}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;padding:0 6px;overflow-x:auto;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-tab{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:11px 14px;cursor:pointer;border:none;border-bottom:2px solid transparent;color:var(--text2);white-space:nowrap;transition:all .18s;background:none;display:flex;align-items:center;gap:5px}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-count{font-size:10px;background:var(--bg3);border-radius:10px;padding:1px 5px}
+.nav-tab.active .tab-count{background:var(--accent-dim);color:var(--accent)}
+
+/* ─── MAIN ─── */
+.main{max-width:960px;margin:0 auto;padding:22px 14px 70px}
+.section{display:none}.section.active{display:block}
+
+/* ─── HERO ─── */
+.hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--border);border-radius:var(--radius);padding:26px;margin-bottom:18px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(56,189,248,.1) 0%,transparent 70%);pointer-events:none}
+.hero-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;padding:2px 8px;display:inline-block;margin-bottom:10px}
+.hero h1{font-size:clamp(17px,3.2vw,24px);font-weight:700;line-height:1.3;margin-bottom:6px}
+.hero h1 em{color:var(--accent);font-style:normal}
+.hero p{color:var(--text2);font-size:12.5px;margin-bottom:16px}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+.info-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px;text-align:center}
+.info-card .num{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--yellow)}
+.info-card .lbl{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* ─── SECTION HEADING ─── */
+.sec-head{display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.sec-head h2{font-size:15px;font-weight:700}
+.sec-badge{font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--accent-dim);color:var(--accent);border-radius:4px;padding:2px 7px}
+
+/* ─── QUIZ PROGRESS ─── */
+.qprog{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:13px 17px;margin-bottom:16px;display:flex;align-items:center;gap:13px}
+.pbar-wrap{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:3px;transition:width .4s;width:0%}
+.pstat{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);white-space:nowrap}
+.pstat span{color:var(--yellow)}
+.btn-rst-all{font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 10px;border-radius:var(--radius-sm);border:1px solid var(--border2);cursor:pointer;background:transparent;color:var(--text3);white-space:nowrap;transition:all .15s}
+.btn-rst-all:hover{border-color:var(--red);color:var(--red)}
+
+/* ─── QUIZ CARD ─── */
+.qcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:13px;overflow:hidden;animation:fadeUp .3s ease both}
+.qcard.correct-card{border-color:var(--green)}
+.qcard.wrong-card{border-color:var(--red)}
+.qhead{padding:14px 17px 10px;display:flex;gap:10px;align-items:flex-start}
+.qnum{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--bg);background:var(--accent);border-radius:4px;padding:2px 7px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.qcard.correct-card .qnum{background:var(--green)}
+.qcard.wrong-card .qnum{background:var(--red)}
+.qtext{font-size:13.5px;font-weight:500;line-height:1.55}
+.opts{padding:0 17px 12px;display:flex;flex-direction:column;gap:7px}
+.opt{display:flex;align-items:flex-start;gap:9px;padding:9px 13px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .14s;font-size:13px;line-height:1.5;background:var(--bg3)}
+.opt:hover:not(.dis){border-color:var(--accent);background:var(--accent-dim)}
+.opt.sel{border-color:var(--accent);background:var(--accent-dim)}
+.opt.ok-ans{border-color:var(--green)!important;background:var(--green-dim)!important}
+.opt.bad-sel{border-color:var(--red)!important;background:var(--red-dim)!important}
+.opt.dis{cursor:default}
+.opt-circ{width:20px;height:20px;border:1.5px solid var(--border2);border-radius:50%;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--text2);flex-shrink:0;transition:all .14s;margin-top:1px}
+.opt.sel .opt-circ{border-color:var(--accent);color:var(--accent)}
+.opt.ok-ans .opt-circ{border-color:var(--green);color:var(--green);background:var(--green-dim)}
+.opt.bad-sel .opt-circ{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+.qfooter{padding:0 17px 13px;display:flex;gap:8px;align-items:center}
+.btn-check{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:7px 15px;border-radius:var(--radius-sm);border:none;cursor:pointer;background:var(--accent);color:var(--bg);transition:opacity .15s,transform .1s}
+.btn-check:hover{opacity:.85}.btn-check:active{transform:scale(.97)}.btn-check:disabled{opacity:.35;cursor:default}
+.btn-rst-one{font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 11px;border-radius:var(--radius-sm);border:1px solid var(--border2);cursor:pointer;background:transparent;color:var(--text2);transition:all .14s}
+.btn-rst-one:hover{border-color:var(--text2);color:var(--text)}
+.rmsg{font-family:'JetBrains Mono',monospace;font-size:11px;display:none}
+.rmsg.show{display:block}.rmsg.ok{color:var(--green)}.rmsg.bad{color:var(--red)}
+.explain{margin:0 17px 13px;padding:11px 13px;background:var(--bg);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:12.5px;color:var(--text2);display:none;line-height:1.65}
+.explain.show{display:block}
+.explain .tlabel{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);margin-bottom:5px;display:block}
+.explain strong{color:var(--text)}.explain code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 4px;border-radius:3px;color:var(--yellow)}
+/* Official answer */
+.off-ans{margin-top:9px;padding:10px 12px;background:rgba(245,200,66,.06);border:1px solid rgba(245,200,66,.22);border-radius:var(--radius-sm);font-size:12px;line-height:1.7;color:var(--text2)}
+.off-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--yellow);background:rgba(245,200,66,.15);border:1px solid rgba(245,200,66,.35);border-radius:3px;padding:1px 6px;display:inline-block;margin-bottom:6px}
+/* Model answer */
+.mdl-ans{margin-top:8px;padding:10px 12px;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.25);border-radius:var(--radius-sm);font-size:12px;line-height:1.75;color:var(--text)}
+.mdl-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:#34d399;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.35);border-radius:3px;padding:1px 6px;display:inline-block;margin-bottom:6px}
+.mdl-text{background:rgba(0,0,0,.25);border:1px solid rgba(52,211,153,.15);border-radius:var(--radius-sm);padding:9px 12px;white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.8}
+
+/* ─── ACCORDION ─── */
+.acc-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:11px;overflow:hidden;animation:fadeUp .3s ease both}
+.acc-header{padding:13px 17px;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;gap:10px;user-select:none;transition:background .14s}
+.acc-header:hover{background:var(--bg3)}
+.acc-q{display:flex;gap:9px;align-items:flex-start;flex:1}
+.acc-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--bg);border-radius:4px;padding:2px 7px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.num-short{background:var(--purple)}
+.num-fill{background:var(--hi)}
+.num-prac{background:var(--yellow);color:#111!important}
+.acc-title{font-size:13.5px;font-weight:500;line-height:1.5}
+.chevron{width:18px;height:18px;display:grid;place-items:center;color:var(--text3);flex-shrink:0;transition:transform .22s;font-size:11px}
+.acc-card.open .chevron{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 17px 17px;border-top:1px solid var(--border)}
+.acc-card.open .acc-body{display:block}
+.ans-box{margin-top:12px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.ans-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);margin-bottom:7px;display:block}
+.ans-content{font-size:13px;line-height:1.75}
+.ans-content p{margin-bottom:7px}.ans-content p:last-child{margin-bottom:0}
+.ans-content strong{color:var(--yellow)}.ans-content em{color:var(--accent);font-style:normal}
+.tbl{width:100%;border-collapse:collapse;margin:9px 0;font-size:12px}
+.tbl th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:7px 9px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace}
+.tbl td{padding:6px 9px;border:1px solid var(--border);vertical-align:top;line-height:1.5}
+.tbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.tbl code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 4px;border-radius:3px;color:var(--yellow)}
+.cb{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin:8px 0;overflow-x:auto}
+.cb pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word}
+.tip-box{margin-top:10px;padding:9px 12px;background:rgba(56,189,248,.07);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:12px;color:var(--text2);line-height:1.6}
+
+/* ─── FLOW DIAGRAM ─── */
+.flow-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:16px;overflow-x:auto}
+.flow-box h3{font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text2)}
+.flow-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;margin-bottom:8px}
+.flow-row:last-child{margin-bottom:0}
+.fnode{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:5px 11px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text);white-space:nowrap}
+.fnode.hi{border-color:var(--accent);color:var(--accent)}
+.fnode.hi2{border-color:var(--hi);color:var(--hi)}
+.farrow{color:var(--text3);font-size:12px;display:flex;flex-direction:column;align-items:center}
+.farrow small{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--accent);white-space:nowrap}
+
+/* ─── SUMMARY ─── */
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px;margin-bottom:20px}
+.sum-chip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;transition:border-color .14s}
+.sum-chip:hover{border-color:var(--border2)}
+.sum-chip .cn{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:3px}
+.sum-chip .cd{font-size:11.5px;color:var(--text2)}
+
+/* ─── MISC ─── */
+.scroll-top{position:fixed;bottom:18px;right:18px;width:38px;height:38px;border-radius:50%;background:var(--bg2);border:1px solid var(--border2);cursor:pointer;display:none;place-items:center;color:var(--text2);font-size:15px;transition:all .2s;z-index:300}
+.scroll-top.show{display:grid}.scroll-top:hover{border-color:var(--accent);color:var(--accent)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.hero{padding:16px 13px}.info-grid{grid-template-columns:repeat(2,1fr)}.sum-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">
+    <div class="logo-icon">🚦</div>
+    교통 AI 솔루션 학습
+  </div>
+  <div class="score-pill" id="scorePill">4지선다 <span id="scoreNum">0</span> / 20</div>
+</header>
+
+<nav class="nav-tabs">
+  <div class="nav-inner">
+    <button class="nav-tab active" data-tab="overview">📋 개요</button>
+    <button class="nav-tab" data-tab="quiz">🎯 4지선다 <span class="tab-count">20</span></button>
+    <button class="nav-tab" data-tab="short">📝 단답형 <span class="tab-count">10</span></button>
+    <button class="nav-tab" data-tab="fill">🔲 괄호넣기 <span class="tab-count">10</span></button>
+    <button class="nav-tab" data-tab="prac">⚙️ 실무형 <span class="tab-count">10</span></button>
+    <button class="nav-tab" data-tab="sum">📚 요약</button>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ═══ 개요 ═══ -->
+<section class="section active" id="sec-overview">
+  <div class="hero">
+    <span class="hero-tag">✦ 에스트래픽 스마트 모빌리티 DX Academy</span>
+    <h1>교통 안전을 위한<br><em>AI 솔루션</em> 예상문제 학습</h1>
+    <p>평가일: 2026.04.23 · 4지선다(10문항 × 4점) + 단답/괄호/실무형(10문항 × 6점) = 100점</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="num">40점</div><div class="lbl">4지선다 10문항</div></div>
+      <div class="info-card"><div class="num">60점</div><div class="lbl">단답/괄호/실무 10문항</div></div>
+      <div class="info-card"><div class="num">5개</div><div class="lbl">출제 영역</div></div>
+      <div class="info-card"><div class="num">50개</div><div class="lbl">예상 문항</div></div>
+    </div>
+  </div>
+
+  <div class="flow-box">
+    <h3>📚 출제 범위 5개 영역</h3>
+    <div class="flow-row">
+      <div class="fnode hi">01 AI 개요</div><div class="farrow">→</div>
+      <div class="fnode hi">02 교통 시스템</div><div class="farrow">→</div>
+      <div class="fnode hi">03 사고 예측</div><div class="farrow">→</div>
+      <div class="fnode hi">04 교통 데이터</div><div class="farrow">→</div>
+      <div class="fnode hi2">05 고장 예측</div>
+    </div>
+  </div>
+
+  <div class="flow-box">
+    <h3>🔄 핵심 아키텍처 흐름</h3>
+    <div class="flow-row">
+      <div class="fnode">라즈베리파이 + 카메라</div>
+      <div class="farrow">→<small>영상수집</small></div>
+      <div class="fnode">YOLO 객체탐지</div>
+      <div class="farrow">→<small>전송</small></div>
+      <div class="fnode">FastAPI 서버</div>
+      <div class="farrow">→<small>저장</small></div>
+      <div class="fnode hi">PostgreSQL</div>
+      <div class="farrow">→<small>시각화</small></div>
+      <div class="fnode hi2">대시보드</div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
+    <h3 style="font-size:13px;margin-bottom:13px;color:var(--text2)">📌 학습 탭 안내</h3>
+    <div style="display:grid;gap:9px;font-size:13px">
+      <div style="display:flex;gap:9px;align-items:center"><span style="font-size:17px">🎯</span><div><strong>4지선다</strong> — 20문항 직접 선택 후 채점, 정답·풀이·답안 예시 확인</div></div>
+      <div style="display:flex;gap:9px;align-items:center"><span style="font-size:17px">📝</span><div><strong>단답형</strong> — 10문항 아코디언으로 정답 및 해설 확인</div></div>
+      <div style="display:flex;gap:9px;align-items:center"><span style="font-size:17px">🔲</span><div><strong>괄호넣기</strong> — 10문항 빈칸 채우기 정답 확인</div></div>
+      <div style="display:flex;gap:9px;align-items:center"><span style="font-size:17px">⚙️</span><div><strong>실무형</strong> — 10문항 서술·설계 문제 정답과 풀이</div></div>
+      <div style="display:flex;gap:9px;align-items:center"><span style="font-size:17px">📚</span><div><strong>요약</strong> — 핵심 용어 카드 및 비교표 빠른 참조</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4지선다 ═══ -->
+<section class="section" id="sec-quiz">
+  <div class="sec-head"><h2>🎯 4지선다 예상문항</h2><span class="sec-badge">각 4점 × 10문항 = 40점 (예상 20문항)</span></div>
+  <div class="qprog">
+    <div class="pbar-wrap"><div class="pbar-fill" id="pbar"></div></div>
+    <div class="pstat"><span id="answered">0</span> / 20 완료</div>
+    <button class="btn-rst-all" onclick="resetAll()">↺ 초기화</button>
+  </div>
+  <div id="quiz-container"></div>
+</section>
+
+<!-- ═══ 단답형 ═══ -->
+<section class="section" id="sec-short">
+  <div class="sec-head"><h2>📝 단답형 문항</h2><span class="sec-badge">10문항 (실제 출제 포함)</span></div>
+  <div id="short-container"></div>
+</section>
+
+<!-- ═══ 괄호넣기 ═══ -->
+<section class="section" id="sec-fill">
+  <div class="sec-head"><h2>🔲 괄호 넣기 문항</h2><span class="sec-badge">10문항 (실제 출제 포함)</span></div>
+  <div id="fill-container"></div>
+</section>
+
+<!-- ═══ 실무형 ═══ -->
+<section class="section" id="sec-prac">
+  <div class="sec-head"><h2>⚙️ 실무형 사고 문제</h2><span class="sec-badge">10문항 (실제 출제 포함)</span></div>
+  <p style="font-size:12.5px;color:var(--text2);margin-bottom:16px">개념 이해를 바탕으로 한 설계·서술형 문제입니다. 핵심 키워드와 흐름을 정확히 서술하세요.</p>
+  <div id="prac-container"></div>
+</section>
+
+<!-- ═══ 요약 ═══ -->
+<section class="section" id="sec-sum">
+  <div class="sec-head"><h2>📚 핵심 용어 요약</h2><span class="sec-badge">빠른 참조</span></div>
+  <div id="sum-container"></div>
+</section>
+</main>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ═══════════════ DATA ═══════════════ */
+
+const QUIZ = [
+  {
+    q:"인공지능(AI)의 정의로 가장 적절한 것은?",
+    opts:["단순 계산 자동화 기술","인간의 지능을 모방하는 시스템","데이터 저장 기술","네트워크 관리 기술"],
+    ans:1,
+    off:`정답: ② 인간의 지능을 모방하는 시스템`,
+    exp:`AI는 인간의 학습·추론·지각·언어 이해 능력을 컴퓨터로 구현하는 기술입니다.\n① 계산 자동화는 AI의 일부 기능이지만 정의가 아닙니다.\n③④는 인프라 기술 영역입니다.`,
+    mdl:`정답: ② 인간의 지능을 모방하는 시스템\n\n인공지능(Artificial Intelligence)은 인간과 유사한 지능을 가진 기계 또는 컴퓨터 프로그램을 만드는 학문 분야로, 인간의 학습능력·추론능력·지각능력·자연어 이해능력을 컴퓨터 프로그램으로 실현한 기술이다.\n나머지 보기는 AI의 정의와 무관한 개념이다.`
+  },
+  {
+    q:"다음 중 올바른 포함 관계는?",
+    opts:["딥러닝 > 머신러닝 > AI","AI > 머신러닝 > 딥러닝","머신러닝 > AI > 딥러닝","AI > 딥러닝 > 머신러닝"],
+    ans:1,
+    off:`정답: ② AI > 머신러닝 > 딥러닝`,
+    exp:`AI가 가장 상위 개념이고, 머신러닝은 AI의 한 분야, 딥러닝은 머신러닝의 한 분야입니다.\n인공지능 > 기계학습 > 딥러닝 구조를 반드시 암기하세요.`,
+    mdl:`정답: ② AI > 머신러닝 > 딥러닝\n\n포함 관계: 인공지능(AI) ⊃ 기계학습(Machine Learning) ⊃ 딥러닝(Deep Learning)\n딥러닝은 머신러닝의 일종이고, 머신러닝은 AI의 일종이다.\n①③④는 포함 방향이 잘못되었다.`
+  },
+  {
+    q:"지도학습의 특징은?",
+    opts:["정답 없음","보상 기반","정답(label) 존재","군집 생성"],
+    ans:2,
+    off:`정답: ③ 정답(label) 존재`,
+    exp:`지도학습은 입력 데이터와 함께 정답(label)이 제공되어 모델을 학습시키는 방식입니다.\n① 정답 없음 → 비지도학습 / ② 보상 기반 → 강화학습 / ④ 군집 생성 → 비지도학습(클러스터링)`,
+    mdl:`정답: ③ 정답(label) 존재\n\n지도학습(Supervised Learning)은 입력값(X)과 정답(label, y)이 쌍으로 존재하는 데이터로 모델을 학습시키는 방식이다. 대표 알고리즘: 회귀, 분류.\n비지도학습: 정답 없이 데이터 패턴 학습 / 강화학습: 보상 신호 기반 / 군집화: 비지도학습의 대표 기법`
+  },
+  {
+    q:"강화학습에서 중요한 요소는?",
+    opts:["레이블","보상","클러스터","평균값"],
+    ans:1,
+    off:`정답: ② 보상`,
+    exp:`강화학습은 에이전트가 환경과 상호작용하며 보상(Reward)을 최대화하도록 학습합니다.\n레이블 → 지도학습 / 클러스터 → 비지도학습`,
+    mdl:`정답: ② 보상(Reward)\n\n강화학습(Reinforcement Learning)은 에이전트가 환경과 상호작용하면서 특정 행동에 대해 보상 또는 패널티를 받아 누적 보상을 최대화하는 방향으로 정책(Policy)을 학습하는 방식이다. 자율주행, 게임 AI, 로봇 제어에 활용된다.`
+  },
+  {
+    q:"비지도 학습의 대표 목적은?",
+    opts:["분류","회귀","군집화","예측"],
+    ans:2,
+    off:`정답: ③ 군집화`,
+    exp:`비지도학습은 정답(label) 없이 데이터의 숨겨진 패턴을 학습합니다. 군집화(Clustering)와 차원 축소가 대표적입니다.\n분류·회귀·예측은 지도학습의 목적입니다.`,
+    mdl:`정답: ③ 군집화(Clustering)\n\n비지도학습(Unsupervised Learning)은 정답이 없는 데이터에서 숨겨진 구조나 패턴을 스스로 학습한다. 대표적으로 K-Means 군집화, 계층적 군집화, 주성분분석(PCA) 등이 있다. 이상 탐지에도 활용된다.`
+  },
+  {
+    q:"CNN이 주로 활용되는 분야는?",
+    opts:["자연어 처리","이미지 처리","시계열 분석","데이터 저장"],
+    ans:1,
+    off:`정답: ② 이미지 처리`,
+    exp:`CNN(합성곱 신경망)은 이미지의 공간적 특징을 합성곱 필터로 추출하여 분류·탐지하는 데 최적화되어 있습니다.\n자연어 처리 → Transformer/RNN / 시계열 → LSTM`,
+    mdl:`정답: ② 이미지 처리\n\nCNN(Convolutional Neural Network, 합성곱 신경망)은 이미지에서 엣지·텍스처·형태 등 지역적 특징을 합성곱 필터로 추출하고, 풀링을 통해 공간 크기를 줄이며 특징을 계층적으로 학습한다. 교통 분야에서는 차량 검지, 번호판 인식, 무단횡단 감지 등에 활용된다.`
+  },
+  {
+    q:"RNN/LSTM이 적합한 데이터는?",
+    opts:["이미지","텍스트/시계열","정형 데이터","로그 데이터"],
+    ans:1,
+    off:`정답: ② 텍스트/시계열`,
+    exp:`LSTM은 시간에 따라 변화하는 순차 데이터(시계열, 텍스트)를 처리하는 데 강점이 있습니다. 장단기 기억(Long Short-Term Memory) 구조로 장기 의존성 문제를 해결합니다.`,
+    mdl:`정답: ② 텍스트/시계열\n\nRNN(순환 신경망)과 LSTM(Long Short-Term Memory)은 순서가 있는 순차 데이터를 처리하는 데 적합하다. 교통 분야에서는 장비 상태 시계열 데이터 기반 이상 탐지, 교통 사고 발생 예측 등에 LSTM이 활용된다. LSTM은 일반 RNN의 기울기 소실 문제를 개선한 모델이다.`
+  },
+  {
+    q:"ITS의 의미는?",
+    opts:["Intelligent Traffic Server","Intelligent Transport Systems","Integrated Transport Server","Intelligent Transfer System"],
+    ans:1,
+    off:`정답: ② Intelligent Transport Systems`,
+    exp:`ITS = 지능형 교통 시스템(Intelligent Transport Systems). 도로·철도·공항·도심 모빌리티 전반에 AI를 적용한 교통 관리 시스템입니다.`,
+    mdl:`정답: ② Intelligent Transport Systems (지능형 교통 시스템)\n\nITS는 도로·철도·공항·MaaS 데이터를 분석해 수요와 위험을 예측하고 운영을 실시간 최적화하는 AI 기반 교통 시스템이다. 국내에는 ETCS(전자요금징수), FTMS(고속도로관리), BIMS(버스정보), ATSCS(신호제어), ATES(자동단속) 등이 있다.`
+  },
+  {
+    q:"다음 중 비정형 데이터는?",
+    opts:["CSV","DB 테이블","영상 데이터","엑셀"],
+    ans:2,
+    off:`정답: ③ 영상 데이터`,
+    exp:`데이터 유형:\n• 정형: CSV, DB 테이블, 엑셀 (행·열 구조)\n• 반정형: JSON, XML, 로그\n• 비정형: 영상, 이미지, 음성, 자연어 텍스트\n교통 영상 데이터는 대표적인 비정형 데이터입니다.`,
+    mdl:`정답: ③ 영상 데이터\n\n데이터 유형 분류:\n· 정형 데이터: 행과 열로 구성 (CSV, DB 테이블, 엑셀)\n· 반정형 데이터: 구조가 있지만 완전 정형은 아님 (JSON, XML)\n· 비정형 데이터: 구조화되지 않은 데이터 (영상, 이미지, 음성, 자연어)\n교통 카메라 영상, CCTV 데이터는 대표적인 비정형 데이터이다.`
+  },
+  {
+    q:"ETCS 시스템의 핵심 기능은?",
+    opts:["교통 신호 제어","차량 번호 인식 및 요금 징수","드론 배송","철도 제어"],
+    ans:1,
+    off:`정답: ② 차량 번호 인식 및 요금 징수`,
+    exp:`ETCS(Electronic Toll Collection System) = 전자요금징수시스템\n주요 구성: 차종분류시스템, 차량번호 자동인식 시스템, 무선통신, 백오피스\n고속도로 하이패스가 대표적 사례입니다.`,
+    mdl:`정답: ② 차량 번호 인식 및 요금 징수\n\nETCS(전자요금징수시스템)는 고속도로 진출입 시 차량 번호를 자동 인식하고 등록된 정보에 따라 통행료를 자동 징수하는 시스템이다. 구성 요소: 차종분류시스템, 차량번호 자동인식 시스템, 무선통신, 백오피스. 하이패스(Hi-Pass)가 대표적 사례이다.`
+  },
+  {
+    q:"FTMS에서 사용되는 장비가 아닌 것은?",
+    opts:["차량검지기","IP 카메라","교통카드 단말기","전광표지"],
+    ans:2,
+    off:`정답: ③ 교통카드 단말기`,
+    exp:`FTMS(고속도로관리시스템) 구성: 차량검지기, 차종분류시스템, IP 카메라, 도로전광표지, 차로제어시스템\n교통카드 단말기는 AFC(역무 자동화설비 - 철도) 구성 요소입니다.`,
+    mdl:`정답: ③ 교통카드 단말기\n\nFTMS(고속도로관리시스템) 구성 장비:\n· 차량검지기, 차종분류시스템, IP 카메라, 도로전광표지(VMS), 차로제어시스템\n교통카드 단말기는 철도의 AFC(역무 자동화설비) 구성 요소이다. FTMS는 도로 시스템이고, AFC는 철도 시스템이므로 구분이 중요하다.`
+  },
+  {
+    q:"AFC 시스템이 적용되는 분야는?",
+    opts:["도로","철도","공항","드론"],
+    ans:1,
+    off:`정답: ② 철도`,
+    exp:`AFC(Automatic Fare Collection) = 역무 자동화설비\n철도 분야의 자동 발매기, 자동 개집표기, 교통카드 단말기 등이 포함됩니다.`,
+    mdl:`정답: ② 철도\n\nAFC(Automatic Fare Collection, 역무 자동화설비)는 철도 역사에서 운임을 자동으로 수납하는 시스템이다. 구성: 자동발매기, 자동개집표기, 역단위전산기, 통신제어전산기, 교통카드단말기. 지하철·도시철도에서 볼 수 있는 개찰구 시스템이 대표적이다.`
+  },
+  {
+    q:"ILS 시스템의 목적은?",
+    opts:["교통 흐름 분석","항공기 착륙 유도","차량 검지","영상 분석"],
+    ans:1,
+    off:`정답: ② 항공기 착륙 유도`,
+    exp:`ILS(Instrument Landing System) = 계기 착륙 시스템\n공항에서 항공기가 활주로에 안전하게 착륙할 수 있도록 전파 신호로 유도하는 시스템입니다.\n구성: 로컬라이저 설비, 글라이드 슬로프 설비, 마커 비컨 설비`,
+    mdl:`정답: ② 항공기 착륙 유도\n\nILS(Instrument Landing System, 계기 착륙 시스템)는 공항 분야의 AI 기반 교통시스템으로, 항공기가 시정이 좋지 않은 기상 조건에서도 안전하게 착륙할 수 있도록 전파 신호로 유도한다. 구성: 로컬라이저(수평 유도), 글라이드 슬로프(수직 유도), 마커 비컨(거리 정보), 거리측정장치.`
+  },
+  {
+    q:"예지보전(PdM)의 핵심 목적은?",
+    opts:["고장 후 수리","고장 전 예측","데이터 저장","네트워크 관리"],
+    ans:1,
+    off:`정답: ② 고장 전 예측`,
+    exp:`PdM(Predictive Maintenance) = 예지보전\n장비 상태 데이터를 수집·분석하여 고장이 발생하기 전에 미리 예측·대응하는 기술입니다.\n사후 유지보수(BM) → 예방 유지보수(PM) → 예지보전(PdM)으로 발전`,
+    mdl:`정답: ② 고장 전 예측\n\n예지보전(Predictive Maintenance, PdM)은 장비의 상태 데이터(온도, 진동, 전류, 회전 속도 등)를 실시간으로 수집하고 AI 모델로 분석하여 고장이 발생하기 전에 미리 예측·대응하는 유지보수 전략이다. BM(사후) → PM(예방) → PdM(예지)으로 고도화된다. 교통 분야에서는 터널 제트팬, VMS 등에 적용된다.`
+  },
+  {
+    q:"LSTM Autoencoder의 주요 용도는?",
+    opts:["이미지 분류","이상 탐지","데이터 저장","네트워크 제어"],
+    ans:1,
+    off:`정답: ② 이상 탐지`,
+    exp:`LSTM Autoencoder는 정상 패턴의 시계열 데이터를 학습하여 재구성한 뒤, 재구성 오차(Reconstruction Error)가 큰 경우를 이상으로 판단합니다. 라벨 없는 비지도 이상 탐지에 적합합니다.`,
+    mdl:`정답: ② 이상 탐지\n\nLSTM Autoencoder는 시계열 데이터의 정상 패턴을 학습하는 인코더-디코더 구조이다. 학습 시에는 정상 데이터만 사용하고, 추론 시 입력과 재구성 출력의 차이(재구성 오차)를 계산하여 오차가 임계값을 초과하면 이상으로 판정한다. 라벨이 없는 비지도 이상 탐지에 특히 적합하다.`
+  },
+  {
+    q:"YOLO 알고리즘의 특징은?",
+    opts:["느린 처리","실시간 객체 검출","텍스트 분석","DB 처리"],
+    ans:1,
+    off:`정답: ② 실시간 객체 검출`,
+    exp:`YOLO(You Only Look Once)는 이미지 전체를 한 번에 처리하여 객체의 클래스와 위치(바운딩 박스)를 동시에 예측합니다. R-CNN 계열보다 빠르며 실시간 처리가 가능합니다.`,
+    mdl:`정답: ② 실시간 객체 검출\n\nYOLO(You Only Look Once)는 이미지를 그리드로 분할하고 단 한 번의 신경망 순전파로 모든 그리드 셀의 객체 클래스와 바운딩 박스를 동시에 예측하는 알고리즘이다. 교통 분야에서는 차량 검지, 번호판 인식, 보행자 무단횡단 감지에 활용된다. YOLOv11까지 발전했으며 실시간 처리 속도가 강점이다.`
+  },
+  {
+    q:"CLAHE의 목적은?",
+    opts:["노이즈 증가","이미지 대비 향상","데이터 삭제","속도 감소"],
+    ans:1,
+    off:`정답: ② 이미지 대비 향상`,
+    exp:`CLAHE(Contrast Limited Adaptive Histogram Equalization)는 이미지의 지역적 대비(Contrast)를 향상시키는 전처리 기법입니다. 야간·역광·터널 등 열악한 조건의 교통 영상 화질 개선에 활용됩니다.`,
+    mdl:`정답: ② 이미지 대비 향상\n\nCLAHE(Contrast Limited Adaptive Histogram Equalization)는 이미지를 작은 타일로 나누어 각 타일별로 히스토그램 평활화를 수행하되, 과도한 대비 증폭을 클리핑 제한으로 방지하는 알고리즘이다. 교통 영상 전처리 단계에서 야간 CCTV, 터널 내부, 역광 상황의 차량·번호판 인식률을 높이는 데 사용된다.`
+  },
+  {
+    q:"FastAPI의 주요 역할은?",
+    opts:["데이터 분석","웹 API 서버 구축","DB 저장","영상 처리"],
+    ans:1,
+    off:`정답: ② 웹 API 서버 구축`,
+    exp:`FastAPI는 Python 기반의 고성능 웹 API 프레임워크입니다. AI 모델 예측 결과를 REST API로 제공하거나, 엣지 디바이스(라즈베리파이)로부터 데이터를 수신하는 서버 역할을 합니다.`,
+    mdl:`정답: ② 웹 API 서버 구축\n\nFastAPI는 Python 기반의 고성능 비동기 웹 API 프레임워크이다. MLOps에서 학습된 AI 모델을 REST API 형태로 서빙(Serving)하는 데 사용된다. 엣지 디바이스(라즈베리파이)에서 수집된 데이터를 POST 요청으로 수신하고, 모델 추론 결과를 반환하며, PostgreSQL에 저장하는 중간 서버 역할을 담당한다.`
+  },
+  {
+    q:"PostgreSQL의 역할은?",
+    opts:["영상 분석","데이터베이스 관리","모델 학습","네트워크 제어"],
+    ans:1,
+    off:`정답: ② 데이터베이스 관리`,
+    exp:`PostgreSQL은 오픈소스 관계형 데이터베이스(RDBMS)입니다. 교통 AI 시스템에서 수집된 이벤트 로그, 이상 탐지 결과, 장비 상태 데이터 등을 저장·관리합니다.`,
+    mdl:`정답: ② 데이터베이스 관리\n\nPostgreSQL은 오픈소스 관계형 데이터베이스 관리 시스템(RDBMS)이다. 교통 AI 아키텍처에서 FastAPI 서버가 수신한 데이터(이벤트 로그, 이상 탐지 결과, 장비 상태)를 구조화된 테이블로 저장·관리하는 역할을 한다. 대시보드에서 통계·시각화 데이터를 조회하는 백엔드 저장소로 활용된다.`
+  },
+  {
+    q:"라즈베리파이의 역할로 적절한 것은?",
+    opts:["클라우드 서버","엣지 디바이스","DB 서버","대용량 분석 서버"],
+    ans:1,
+    off:`정답: ② 엣지 디바이스`,
+    exp:`라즈베리파이는 소형 싱글보드 컴퓨터로, 현장에서 데이터를 수집·처리하는 엣지 디바이스로 활용됩니다. 카메라와 연결하여 영상을 수집하고, 간단한 AI 추론 후 FastAPI 서버로 전송합니다.`,
+    mdl:`정답: ② 엣지 디바이스\n\n엣지 디바이스(Edge Device)는 데이터 발생 현장(엣지)에 배치되어 데이터를 수집하고 1차 처리하는 소형 장치이다. 라즈베리파이는 카메라와 연결하여 현장에서 영상을 수집하고, 가벼운 AI 추론(YOLO Lite 등)을 수행한 후 결과를 FastAPI 서버로 전송한다. 클라우드 의존도를 줄이고 응답 지연을 최소화하는 역할을 한다.`
+  },
+];
+
+const SHORT_Q = [
+  { q:"AI의 영어 풀네임은?", off:"Artificial Intelligence",
+    exp:`인공지능(Artificial Intelligence)은 1956년 존 매카시(John McCarthy)가 처음 제안한 용어로, 인간의 지능적 행동을 모방하는 컴퓨터 시스템을 연구하는 분야이다.` },
+  { q:"딥러닝은 무엇의 하위 개념인가?", off:"머신러닝 (기계학습)",
+    exp:`AI ⊃ 머신러닝(Machine Learning) ⊃ 딥러닝(Deep Learning). 딥러닝은 인공신경망을 여러 층으로 쌓아 학습하는 머신러닝의 한 종류이다.` },
+  { q:"보상을 통해 학습하는 방식은?", off:"강화학습 (Reinforcement Learning)",
+    exp:`강화학습은 에이전트가 환경과 상호작용하며 행동(Action)의 결과로 보상(Reward)을 받고, 누적 보상을 최대화하는 방향으로 정책을 학습하는 방식이다.` },
+  { q:"이미지 처리에 특화된 모델은?", off:"CNN (합성곱 신경망, Convolutional Neural Network)",
+    exp:`CNN은 합성곱(Convolution) 연산으로 이미지의 지역적 특징을 추출하고, 풀링(Pooling)으로 공간 크기를 줄이는 구조로, 이미지 분류·탐지에 최적화되어 있다.` },
+  { q:"시계열 데이터 분석 모델은?", off:"LSTM (또는 RNN)",
+    exp:`LSTM(Long Short-Term Memory)은 RNN의 기울기 소실 문제를 해결한 모델로, 게이트(입력·망각·출력) 메커니즘으로 장기 의존성을 학습한다. 시계열 기반 장비 이상 탐지에 적합하다.` },
+  { q:"교통 데이터에서 영상은 어떤 데이터 유형인가?", off:"비정형 데이터",
+    exp:`비정형 데이터는 행·열 구조가 없는 데이터로, 이미지·영상·음성·자연어가 해당된다. 교통 CCTV, 블랙박스 영상 등이 대표적이다. AI 전처리 파이프라인이 필요하다.` },
+  { q:"ITS의 한글 명칭은?", off:"지능형 교통 시스템",
+    exp:`ITS(Intelligent Transport Systems)는 교통 인프라에 AI·통신·센서 기술을 융합하여 교통 흐름을 실시간으로 최적화하고 사고를 예방하는 스마트 교통 체계이다.` },
+  { q:"FastAPI는 무엇을 구축하기 위한 프레임워크인가?", off:"API 서버 (웹 API 서버)",
+    exp:`FastAPI는 Python 기반 고성능 비동기 REST API 프레임워크로, AI 모델을 서비스로 배포(AI Serving)하거나 마이크로서비스 아키텍처 구현에 사용된다.` },
+  { q:"YOLO의 주요 기능은?", off:"객체 검출 (Object Detection)",
+    exp:`YOLO(You Only Look Once)는 실시간 객체 검출 알고리즘으로, 이미지에서 객체의 클래스(종류)와 위치(바운딩 박스)를 단 한 번의 추론으로 동시에 예측한다.` },
+  { q:"예지보전의 목적은?", off:"고장 예측 (고장 발생 전 예측·대응)",
+    exp:`예지보전(PdM)은 장비 상태 데이터를 AI로 분석하여 고장이 발생하기 전에 유지보수 시점을 예측함으로써 가동 중단 시간과 비용을 최소화하는 것이 목적이다.` },
+];
+
+const FILL_Q = [
+  { q:"AI는 (   )과 유사한 지능을 구현하는 기술이다.", off:"인간",
+    exp:`인공지능의 정의: "인간과 유사한 지능을 가진 기계 또는 컴퓨터 프로그램을 만드는 학문 분야". 인간의 학습·추론·지각·언어 이해 능력을 모방한다.` },
+  { q:"AI > 머신러닝 > (   ) 구조를 가진다.", off:"딥러닝",
+    exp:`포함 관계: AI ⊃ 머신러닝 ⊃ 딥러닝. 딥러닝은 머신러닝의 한 분야이고, 인공신경망을 깊게(deep) 쌓은 구조이다.` },
+  { q:"정답(label)이 있는 학습은 (   )이다.", off:"지도학습",
+    exp:`지도학습(Supervised Learning)은 (입력, 정답) 쌍의 학습 데이터로 모델을 훈련시킨다. 분류(Classification)와 회귀(Regression)가 대표적이다.` },
+  { q:"보상 기반 학습은 (   )이다.", off:"강화학습",
+    exp:`강화학습(Reinforcement Learning): 에이전트 - 환경 - 행동 - 보상의 사이클로 학습. 최적의 정책(Policy)을 찾는 것이 목표이다.` },
+  { q:"이미지 분석 모델은 (   )이다.", off:"CNN",
+    exp:`CNN(Convolutional Neural Network): 합성곱 필터가 이미지를 슬라이딩하며 특징을 추출. 가중치 공유로 파라미터 수 감소, 공간 구조 보존이 장점이다.` },
+  { q:"시계열 분석 모델은 (   )이다.", off:"LSTM",
+    exp:`LSTM(Long Short-Term Memory): 입력 게이트, 망각 게이트, 출력 게이트를 통해 장기 의존성을 효과적으로 학습. 시계열 기반 예지보전에 핵심적으로 사용된다.` },
+  { q:"YOLO는 (   ) 검출 알고리즘이다.", off:"객체",
+    exp:`YOLO는 Object Detection(객체 검출) 알고리즘. 이미지에서 "무엇이(클래스)", "어디에(바운딩 박스)" 있는지를 동시에 예측한다.` },
+  { q:"FastAPI는 (   ) 서버를 구축한다.", off:"API",
+    exp:`FastAPI는 웹 API(Application Programming Interface) 서버를 구축하는 프레임워크. REST API 형태로 AI 모델 추론 결과를 외부 시스템에 제공한다.` },
+  { q:"PostgreSQL은 (   ) 시스템이다.", off:"데이터베이스",
+    exp:`PostgreSQL은 관계형 데이터베이스 관리 시스템(RDBMS). SQL로 데이터를 조회·저장·수정하며, 교통 AI 시스템의 이벤트 로그와 분석 결과를 저장한다.` },
+  { q:"라즈베리파이는 (   ) 디바이스이다.", off:"엣지",
+    exp:`엣지 디바이스(Edge Device)는 데이터가 생성되는 현장(엣지)에서 데이터를 수집하고 1차 처리하는 장치. 중앙 서버로 전송 전에 로컬에서 처리함으로써 지연을 줄인다.` },
+];
+
+const PRAC_Q = [
+  {
+    n:"실무 1",
+    q:"라즈베리파이 + 카메라 + YOLO + FastAPI + PostgreSQL 구조에서 데이터 흐름을 설명하시오.",
+    off:`라즈베리파이 → 영상 수집 → YOLO 객체 탐지 → FastAPI 서버로 전송 → PostgreSQL 저장 → 대시보드 출력`,
+    offHint:"핵심 흐름: 엣지 → AI → API → DB → 시각화",
+    exp:`데이터 흐름 단계별 설명:\n\n① 라즈베리파이 + 카메라: 현장(엣지)에서 실시간 영상 수집. 소형·저전력 엣지 디바이스로 현장에 설치.\n\n② YOLO 객체 탐지: 수집된 영상 프레임에서 차량, 보행자, 이상 상황 등을 실시간으로 탐지하고 바운딩 박스와 클래스 레이블을 생성.\n\n③ FastAPI 서버로 전송: 탐지 결과(JSON 형태)를 HTTP POST 요청으로 중앙 FastAPI 서버에 전송. 인증 토큰으로 보안 처리.\n\n④ PostgreSQL 저장: FastAPI가 수신한 데이터를 이벤트 로그 테이블에 저장 (timestamp, location, event_type, confidence 등).\n\n⑤ 대시보드 출력: 저장된 데이터를 프론트엔드 대시보드에서 실시간 조회·시각화.`
+  },
+  {
+    n:"실무 2",
+    q:"예지보전 시스템에서 LSTM Autoencoder를 사용하는 이유는?",
+    off:`정상 패턴 학습 후 재구성 오차 기반으로 이상 여부 판단 (이상 탐지)`,
+    offHint:"비지도 학습 → 라벨 없이도 이상 탐지 가능",
+    exp:`LSTM Autoencoder를 사용하는 이유:\n\n① 라벨 없는 데이터 처리: 장비 이상 이벤트는 드물어 라벨(고장 기록)이 부족하다. 비지도 방식으로 정상 데이터만으로 학습 가능.\n\n② 시계열 패턴 학습: LSTM이 시간에 따른 정상 동작 패턴을 학습하고, Autoencoder가 이를 압축·복원한다.\n\n③ 재구성 오차 기반 이상 탐지: 학습된 정상 패턴에서 벗어난 데이터는 복원 오차(Reconstruction Error)가 크게 나타난다. 임계값 초과 시 이상으로 판정.\n\n④ 교통 장비 적용: 터널 제트팬, VMS 등 장비의 온도·진동·전류 시계열 데이터에서 고장 전조를 조기 탐지할 수 있다.`
+  },
+  {
+    n:"실무 3",
+    q:"고속도로에 FTMS + ATES + VMS 시스템을 통합하여 사고를 예방하려 한다. Python + FastAPI + PostgreSQL + 라즈베리파이를 활용한 전체 데이터 흐름 구조를 설계하시오.",
+    off:`라즈베리파이 + 센서/카메라 → 데이터 수집 → YOLO 차량/이상 탐지 → FastAPI 수신·처리 → PostgreSQL 저장 → VMS 경고 메시지 출력`,
+    offHint:"핵심: 엣지 → AI 분석 → API → DB → 서비스 출력 + 실시간성 + 자동 대응",
+    exp:`통합 시스템 설계:\n\n[수집 레이어]\n· 라즈베리파이 + IP 카메라: 고속도로 영상 수집 (FTMS)\n· 차량검지기: 차량 속도·밀도 측정 (FTMS)\n· 속도 위반 감지 카메라 (ATES)\n\n[AI 분석 레이어]\n· YOLO v11: 차량 탐지, 사고·이상 상황(정지 차량, 역주행) 감지\n· 번호판 인식 모듈: 위반 차량 번호 추출 (ATES)\n· 속도 추정 모듈: Homography 기반 실시간 속도 계산\n\n[API·저장 레이어]\n· FastAPI 서버: POST /event, POST /violation API로 데이터 수신\n· PostgreSQL: events, violations 테이블에 이벤트 저장\n\n[서비스 출력 레이어]\n· VMS(도로전광표지): 사고 감지 시 경고 메시지 자동 출력\n· 관제 대시보드: 실시간 영상·이벤트 모니터링`
+  },
+  {
+    n:"실무 4",
+    q:"터널 제트팬 예지보전을 위해 수집해야 할 데이터 5가지를 설계하시오.",
+    off:`① 온도  ② 진동  ③ 전류  ④ 회전 속도  ⑤ 가동 시간`,
+    offHint:"장비의 물리적 상태 변화를 나타내는 센서 데이터",
+    exp:`터널 제트팬 예지보전 데이터 설계:\n\n① 온도 (Temperature): 팬 모터 및 베어링 온도. 과열은 고장 전조.\n② 진동 (Vibration): 베어링 마모·불균형 시 진동 패턴 변화 감지.\n③ 전류 (Current): 모터 부하 상태 파악. 전류 급증 = 과부하 신호.\n④ 회전 속도 (RPM): 설계 회전수 대비 편차로 성능 저하 감지.\n⑤ 가동 시간 (Runtime): 누적 운전 시간으로 수명 예측.\n\n추가 수집 권장:\n⑥ 소음(dB): 이상 소음으로 기계적 결함 탐지\n⑦ 전압(V): 전원 안정성 모니터링\n\n수집된 데이터는 LSTM Autoencoder로 정상 패턴 학습 후 이상 점수 산출.`
+  },
+  {
+    n:"실무 5",
+    q:"차량 사고 발생 가능성 예측 (시간 흐름 기반 데이터) — 가장 적절한 모델을 선택하고 이유를 설명하시오.",
+    off:`LSTM (또는 RNN)\n이유: 사고는 시간에 따라 변화하는 패턴이므로 시계열 데이터 처리에 강한 LSTM이 적합하다.`,
+    offHint:"시간 흐름 = 시계열 → LSTM",
+    exp:`모델 선택: LSTM (Long Short-Term Memory)\n\n선택 이유:\n① 시간 의존성: 사고 발생 가능성은 교통량 변화, 기상 조건, 시간대별 패턴처럼 시간 흐름에 따라 변화하는 시계열 데이터이다.\n② 장기 패턴 학습: LSTM의 게이트 메커니즘이 장기적인 교통 패턴(출퇴근 시간대, 계절 패턴)을 기억할 수 있다.\n③ 비교: CNN은 공간 특징 추출에 강하지만 시간 의존성에 약함. MLP는 시간 순서 정보를 무시함.\n\n응용 예시:\n· 입력: 교통량, 차량 속도, 기상 데이터, 시간대 정보 (시계열)\n· 출력: 향후 N분 내 사고 발생 확률`
+  },
+  {
+    n:"실무 6",
+    q:"라벨이 없는 장비 데이터만 존재할 때 이상 탐지를 위한 방법은?",
+    off:`비지도 학습 또는 Autoencoder 기반 이상 탐지\n이유: 정상 패턴 학습 후 재구성 오차 기반으로 이상 판정`,
+    offHint:"라벨 없음 = 비지도학습 → Autoencoder",
+    exp:`방법: 비지도 학습 기반 이상 탐지 (LSTM Autoencoder)\n\n접근 방식:\n① 정상 데이터만으로 학습: 라벨 없이 정상 운영 구간의 시계열 데이터로 Autoencoder를 학습.\n② 재구성 오차 계산: 새로운 데이터를 모델에 입력 → 인코더 압축 → 디코더 복원 → 원본과 복원 값의 차이(MSE) 계산.\n③ 임계값 설정: 정상 데이터의 재구성 오차 분포에서 95~99 퍼센타일을 임계값으로 설정.\n④ 이상 판정: 재구성 오차 > 임계값 → 이상(Anomaly) 판정.\n\n장점: 고장 라벨 수집이 어려운 현실적 제약을 극복 가능.`
+  },
+  {
+    n:"실무 7",
+    q:"라즈베리파이에서 수집된 교통 데이터를 FastAPI 서버로 전송할 때 필요한 API 설계 요소 3가지를 작성하시오.",
+    off:`① POST 요청 API  ② JSON 데이터 포맷  ③ 인증 또는 토큰 처리`,
+    offHint:"보안 + 데이터 구조 + REST 설계",
+    exp:`FastAPI 설계 요소 3가지:\n\n① POST 요청 API (HTTP Method)\n· 데이터 전송에는 HTTP POST 메서드 사용\n· 예: POST /api/v1/events, POST /api/v1/detections\n· RESTful API 설계 원칙 준수\n\n② JSON 데이터 포맷\n· 구조화된 JSON으로 데이터 직렬화\n· 예: {"timestamp": "2026-04-23T10:30:00", "location": "터널A", "event_type": "이상", "confidence": 0.92}\n· FastAPI의 Pydantic 모델로 유효성 자동 검증\n\n③ 인증/토큰 처리 (Security)\n· API Key 또는 JWT(JSON Web Token)로 인증\n· 무단 접근 차단 및 데이터 무결성 보장\n· HTTPS 암호화 통신 적용`
+  },
+  {
+    n:"실무 8",
+    q:"무단횡단 감지를 위한 영상 처리 파이프라인을 설계하시오.",
+    off:`OpenCV 전처리 → YOLO 객체 탐지(보행자) → ROI 설정(횡단보도 영역) → 규칙 기반 판단(신호 위반 여부) → 이벤트 발생 → DB 저장`,
+    offHint:"전처리 → 탐지 → 판단 → 저장/알림 구조",
+    exp:`무단횡단 감지 파이프라인:\n\n[1단계] 영상 수집\n· IP 카메라 또는 라즈베리파이 + 카메라로 교차로 영상 수집\n\n[2단계] 전처리 (OpenCV)\n· CLAHE 적용: 야간·역광 화질 개선\n· 프레임 크기 조정, 노이즈 제거\n\n[3단계] YOLO 객체 탐지\n· 보행자(Person) 클래스 탐지 및 바운딩 박스 추출\n· 차량 탐지로 교통 흐름 파악\n\n[4단계] ROI 설정\n· 횡단보도 영역을 관심 영역(ROI)으로 지정\n· ROI 내 보행자 존재 여부 판단\n\n[5단계] 규칙 기반 판단\n· 신호등 상태(적색 = 정지 신호) + ROI 내 보행자 탐지 = 무단횡단 판정\n· 트래킹으로 동일 보행자 연속 추적\n\n[6단계] 이벤트 발생·저장\n· 위반 이미지 캡처 → FastAPI 전송 → PostgreSQL 저장\n· 관제 센터 알림`
+  },
+  {
+    n:"실무 9",
+    q:"교통 사고 로그 저장을 위한 PostgreSQL 테이블 설계를 간단히 작성하시오.",
+    off:`id(PK), timestamp, location, event_type, vehicle_id, confidence`,
+    offHint:"시간 + 위치 + 이벤트 유형이 핵심",
+    exp:`교통 사고 로그 테이블 설계:\n\nCREATE TABLE traffic_events (\n  id          SERIAL PRIMARY KEY,       -- 자동 증가 기본키\n  timestamp   TIMESTAMP NOT NULL,       -- 이벤트 발생 시각\n  location    VARCHAR(100),             -- 위치 (터널명, 도로명)\n  latitude    DECIMAL(9,6),             -- 위도 (GPS 좌표)\n  longitude   DECIMAL(9,6),             -- 경도\n  event_type  VARCHAR(50) NOT NULL,     -- 이벤트 유형 (사고, 역주행, 무단횡단)\n  vehicle_id  VARCHAR(20),              -- 차량 번호판\n  confidence  DECIMAL(5,4),             -- AI 탐지 신뢰도 (0.0~1.0)\n  image_path  TEXT,                     -- 캡처 이미지 경로\n  created_at  TIMESTAMP DEFAULT NOW()   -- 레코드 생성 시각\n);\n\n설계 핵심: 시간(timestamp) + 위치(location/GPS) + 이벤트 유형(event_type)이 핵심 컬럼이다.`
+  },
+  {
+    n:"실무 10",
+    q:"FastAPI 기반 예측 모델을 운영할 때 필요한 MLOps 요소 3가지를 설명하시오.",
+    off:`① 모델 버전 관리  ② 성능 모니터링  ③ 자동 재학습(재훈련)`,
+    offHint:"AI 시스템은 지속적인 운영과 개선이 필수",
+    exp:`MLOps 핵심 요소 3가지:\n\n① 모델 버전 관리 (Model Version Control)\n· MLflow, DVC 등으로 모델 아티팩트와 실험 파라미터를 버전별 관리\n· A/B 테스트로 신구 모델 성능 비교 후 안전하게 배포\n· 문제 발생 시 이전 버전으로 즉시 롤백 가능\n\n② 성능 모니터링 (Performance Monitoring)\n· 실시간 예측 정확도, 응답 시간, API 처리량 모니터링\n· 데이터 드리프트(Data Drift) 감지: 실제 데이터 분포가 학습 데이터와 달라지는 현상 탐지\n· Prometheus + Grafana 등으로 대시보드 구성\n\n③ 자동 재학습 (Auto Retraining)\n· 모델 성능 저하 감지 시 새로운 데이터로 자동 재학습 트리거\n· CI/CD 파이프라인으로 학습 → 평가 → 배포 자동화\n· 교통 패턴 변화(계절, 도로 공사 등)에 지속적으로 적응`
+  },
+];
+
+const SUM_CHIPS = [
+  {c:"AI", d:"인공지능 - 인간 지능 모방 기술"},
+  {c:"머신러닝", d:"AI의 하위 - 데이터 기반 학습"},
+  {c:"딥러닝", d:"머신러닝의 하위 - 신경망 기반"},
+  {c:"지도학습", d:"label 있는 데이터로 학습"},
+  {c:"비지도학습", d:"label 없이 패턴/군집 학습"},
+  {c:"강화학습", d:"보상 기반 정책 학습"},
+  {c:"CNN", d:"이미지 처리 특화 신경망"},
+  {c:"RNN/LSTM", d:"시계열/순차 데이터 처리"},
+  {c:"ITS", d:"지능형 교통 시스템"},
+  {c:"ETCS", d:"전자요금징수시스템 (하이패스)"},
+  {c:"FTMS", d:"고속도로관리시스템"},
+  {c:"BIMS", d:"버스정보관리시스템"},
+  {c:"ATSCS", d:"신호제어시스템"},
+  {c:"ATES", d:"자동단속시스템"},
+  {c:"AFC", d:"역무 자동화설비 (철도)"},
+  {c:"CMS", d:"혼잡도 관리시스템"},
+  {c:"ILS", d:"계기 착륙 시스템 (공항)"},
+  {c:"UAM", d:"도심 항공 모빌리티"},
+  {c:"PdM", d:"예지보전 - 고장 전 예측"},
+  {c:"LSTM Autoencoder", d:"비지도 시계열 이상 탐지"},
+  {c:"YOLO", d:"실시간 객체 검출 알고리즘"},
+  {c:"CLAHE", d:"이미지 대비 향상 전처리"},
+  {c:"ROI", d:"관심 영역 추출"},
+  {c:"Homography", d:"픽셀-실거리 매핑 (속도 추정)"},
+  {c:"FastAPI", d:"Python 기반 API 서버 구축"},
+  {c:"PostgreSQL", d:"관계형 DB 저장·관리"},
+  {c:"라즈베리파이", d:"엣지 디바이스 - 현장 수집"},
+  {c:"MLOps", d:"AI 모델 운영·자동화 체계"},
+  {c:"비정형 데이터", d:"영상·음성·텍스트 등"},
+  {c:"재구성 오차", d:"Autoencoder 이상 탐지 기준"},
+];
+
+const SUM_TABLES = `
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px">
+<h3 style="font-size:13px;margin-bottom:12px">기계학습 유형 비교</h3>
+<table class="tbl"><thead><tr><th>유형</th><th>정답(label)</th><th>목적</th><th>대표 알고리즘</th></tr></thead><tbody>
+<tr><td>지도학습</td><td>있음</td><td>분류, 회귀</td><td>SVM, RF, DNN</td></tr>
+<tr><td>비지도학습</td><td>없음</td><td>군집화, 차원축소</td><td>K-Means, PCA, Autoencoder</td></tr>
+<tr><td>강화학습</td><td>보상</td><td>정책 최적화</td><td>DQN, PPO</td></tr>
+<tr><td>준지도학습</td><td>일부 있음</td><td>분류+패턴</td><td>Semi-supervised</td></tr>
+</tbody></table></div>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px">
+<h3 style="font-size:13px;margin-bottom:12px">ITS 시스템 분류</h3>
+<table class="tbl"><thead><tr><th>분야</th><th>시스템</th><th>핵심 기능</th></tr></thead><tbody>
+<tr><td>도로</td><td>ETCS, FTMS, BIMS, ATSCS, ATES</td><td>요금징수, 고속도로관리, 버스, 신호, 단속</td></tr>
+<tr><td>철도</td><td>AFC, CMS, FSDS, TCMS, RSS</td><td>역무자동화, 혼잡도, 스크린도어, 열차제어</td></tr>
+<tr><td>공항</td><td>ILS, ABC, 스마트패스, 셀프체크인</td><td>착륙유도, 출입국심사, 수하물</td></tr>
+<tr><td>모빌리티</td><td>UAM, 드론배송, PM, DRT, TaaS</td><td>도심항공, 개인이동, 수요응답교통</td></tr>
+</tbody></table></div>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px">
+<h3 style="font-size:13px;margin-bottom:12px">데이터 유형</h3>
+<table class="tbl"><thead><tr><th>유형</th><th>특징</th><th>예시</th></tr></thead><tbody>
+<tr><td>정형</td><td>행·열 구조</td><td>CSV, DB 테이블, 엑셀</td></tr>
+<tr><td>반정형</td><td>구조 일부 존재</td><td>JSON, XML, 로그</td></tr>
+<tr><td>비정형</td><td>구조 없음</td><td>영상, 이미지, 음성, 텍스트</td></tr>
+</tbody></table></div>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px">
+<h3 style="font-size:13px;margin-bottom:12px">신경망 모델 비교</h3>
+<table class="tbl"><thead><tr><th>모델</th><th>특화 분야</th><th>주요 특징</th></tr></thead><tbody>
+<tr><td>CNN</td><td>이미지/영상</td><td>합성곱 필터, 가중치 공유, 공간 구조 보존</td></tr>
+<tr><td>RNN/LSTM</td><td>시계열/텍스트</td><td>순차 처리, 장기 의존성 학습</td></tr>
+<tr><td>Transformer</td><td>자연어/멀티모달</td><td>어텐션 메커니즘, 병렬 처리</td></tr>
+<tr><td>Autoencoder</td><td>이상 탐지/압축</td><td>인코더-디코더, 재구성 오차</td></tr>
+</tbody></table></div>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
+<h3 style="font-size:13px;margin-bottom:12px">핵심 아키텍처 흐름</h3>
+<table class="tbl"><thead><tr><th>레이어</th><th>구성 요소</th><th>역할</th></tr></thead><tbody>
+<tr><td>엣지(수집)</td><td>라즈베리파이 + 카메라</td><td>현장 영상 수집</td></tr>
+<tr><td>AI(분석)</td><td>YOLO, LSTM, OpenCV</td><td>객체 탐지, 이상 감지</td></tr>
+<tr><td>API(전송)</td><td>FastAPI</td><td>데이터 수신, 모델 서빙</td></tr>
+<tr><td>DB(저장)</td><td>PostgreSQL</td><td>이벤트 로그 저장</td></tr>
+<tr><td>시각화</td><td>대시보드</td><td>실시간 모니터링</td></tr>
+</tbody></table></div>`;
+
+/* ═══════════════ STATE ═══════════════ */
+let quizState = Array(QUIZ.length).fill(null).map(()=>({sel:null,checked:false}));
+
+/* ═══════════════ NAV ═══════════════ */
+const TAB_MAP = {overview:'sec-overview',quiz:'sec-quiz',short:'sec-short',fill:'sec-fill',prac:'sec-prac',sum:'sec-sum'};
+document.querySelectorAll('.nav-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(TAB_MAP[btn.dataset.tab]).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ═══════════════ QUIZ ═══════════════ */
+function renderQuiz(){
+  const c=document.getElementById('quiz-container');
+  c.innerHTML=QUIZ.map((q,i)=>`
+  <div class="qcard" id="qc-${i}">
+    <div class="qhead"><span class="qnum" id="qn-${i}">${i+1}번</span><span class="qtext">${q.q}</span></div>
+    <div class="opts" id="op-${i}">
+      ${q.opts.map((o,j)=>`<div class="opt" id="o-${i}-${j}" onclick="sel(${i},${j})"><div class="opt-circ">${['①','②','③','④'][j]}</div><span>${o}</span></div>`).join('')}
+    </div>
+    <div class="explain" id="ex-${i}">
+      <span class="tlabel">▶ 핵심 포인트</span>${esc(q.exp)}
+      <div class="off-ans"><span class="off-label">📋 출제자 정답</span><br>${esc(q.off)}</div>
+      <div class="mdl-ans"><span class="mdl-label">✏️ 답안 작성 예시</span><div class="mdl-text">${esc(q.mdl)}</div></div>
+    </div>
+    <div class="qfooter">
+      <button class="btn-check" id="bc-${i}" onclick="check(${i})" disabled>채점하기</button>
+      <button class="btn-rst-one" onclick="resetOne(${i})">↺</button>
+      <span class="rmsg" id="rm-${i}"></span>
+    </div>
+  </div>`).join('');
+}
+
+function sel(qi,oi){
+  if(quizState[qi].checked)return;
+  quizState[qi].sel=oi;
+  QUIZ[qi].opts.forEach((_,j)=>document.getElementById(`o-${qi}-${j}`).classList.toggle('sel',j===oi));
+  document.getElementById(`bc-${qi}`).disabled=false;
+}
+
+function check(qi){
+  const st=quizState[qi]; if(st.checked||st.sel===null)return;
+  st.checked=true;
+  const ok=st.sel===QUIZ[qi].ans;
+  document.getElementById(`qc-${qi}`).classList.add(ok?'correct-card':'wrong-card');
+  QUIZ[qi].opts.forEach((_,j)=>{
+    const el=document.getElementById(`o-${qi}-${j}`);
+    el.classList.add('dis');
+    if(j===QUIZ[qi].ans)el.classList.add('ok-ans');
+    if(j===st.sel&&!ok)el.classList.add('bad-sel');
+  });
+  const rm=document.getElementById(`rm-${qi}`);
+  rm.textContent=ok?'✓ 정답!':`✗ 오답 — 정답: ${['①','②','③','④'][QUIZ[qi].ans]}`;
+  rm.className='rmsg show '+(ok?'ok':'bad');
+  document.getElementById(`ex-${qi}`).classList.add('show');
+  document.getElementById(`bc-${qi}`).disabled=true;
+  updateProgress();
+}
+
+function resetOne(qi){
+  quizState[qi]={sel:null,checked:false};
+  document.getElementById(`qc-${qi}`).classList.remove('correct-card','wrong-card');
+  QUIZ[qi].opts.forEach((_,j)=>document.getElementById(`o-${qi}-${j}`).className='opt');
+  document.getElementById(`ex-${qi}`).classList.remove('show');
+  document.getElementById(`rm-${qi}`).className='rmsg';
+  document.getElementById(`bc-${qi}`).disabled=true;
+  updateProgress();
+}
+
+function resetAll(){for(let i=0;i<QUIZ.length;i++)resetOne(i);}
+
+function updateProgress(){
+  const answered=quizState.filter(s=>s.checked).length;
+  const correct=quizState.filter((s,i)=>s.checked&&s.sel===QUIZ[i].ans).length;
+  document.getElementById('pbar').style.width=(answered/QUIZ.length*100)+'%';
+  document.getElementById('answered').textContent=answered;
+  document.getElementById('scoreNum').textContent=correct;
+}
+
+/* ═══════════════ SHORT ═══════════════ */
+function renderShort(){
+  const c=document.getElementById('short-container');
+  c.innerHTML=SHORT_Q.map((item,i)=>`
+  <div class="acc-card" id="sh-${i}">
+    <div class="acc-header" onclick="tog('sh-${i}')">
+      <div class="acc-q"><span class="acc-num num-short">${i+1}번</span><span class="acc-title">${item.q}</span></div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="ans-box">
+        <span class="ans-label">▶ 정답</span>
+        <div class="ans-content"><p><strong>${item.off}</strong></p></div>
+      </div>
+      <div class="mdl-ans" style="margin-top:8px"><span class="mdl-label">✏️ 해설</span><div class="mdl-text">${esc(item.exp)}</div></div>
+    </div>
+  </div>`).join('');
+}
+
+/* ═══════════════ FILL ═══════════════ */
+function renderFill(){
+  const c=document.getElementById('fill-container');
+  c.innerHTML=FILL_Q.map((item,i)=>`
+  <div class="acc-card" id="fi-${i}">
+    <div class="acc-header" onclick="tog('fi-${i}')">
+      <div class="acc-q"><span class="acc-num num-fill">${i+1}번</span><span class="acc-title">${item.q}</span></div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="ans-box">
+        <span class="ans-label">▶ 정답 (괄호 안에 들어갈 말)</span>
+        <div class="ans-content" style="font-size:16px;font-weight:700;color:var(--accent)">${item.off}</div>
+      </div>
+      <div class="mdl-ans" style="margin-top:8px"><span class="mdl-label">✏️ 해설</span><div class="mdl-text">${esc(item.exp)}</div></div>
+    </div>
+  </div>`).join('');
+}
+
+/* ═══════════════ PRAC ═══════════════ */
+function renderPrac(){
+  const c=document.getElementById('prac-container');
+  c.innerHTML=PRAC_Q.map((item,i)=>`
+  <div class="acc-card" id="pr-${i}">
+    <div class="acc-header" onclick="tog('pr-${i}')">
+      <div class="acc-q">
+        <span class="acc-num num-prac">${item.n}</span>
+        <span class="acc-title">${item.q}</span>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="acc-body">
+      <div class="ans-box">
+        <span class="ans-label">▶ 출제자 정답 (핵심 키워드)</span>
+        <div class="ans-content"><p>${esc(item.off)}</p></div>
+        <div class="tip-box" style="margin-top:8px">💡 ${esc(item.offHint)}</div>
+      </div>
+      <div class="mdl-ans" style="margin-top:10px">
+        <span class="mdl-label">✏️ 상세 풀이 및 답안 예시</span>
+        <div class="mdl-text">${esc(item.exp)}</div>
+      </div>
+    </div>
+  </div>`).join('');
+}
+
+/* ═══════════════ SUMMARY ═══════════════ */
+function renderSum(){
+  const c=document.getElementById('sum-container');
+  c.innerHTML=`
+  <div class="sum-grid">${SUM_CHIPS.map(ch=>`<div class="sum-chip"><div class="cn">${esc(ch.c)}</div><div class="cd">${ch.d}</div></div>`).join('')}</div>
+  ${SUM_TABLES}`;
+}
+
+/* ═══════════════ HELPERS ═══════════════ */
+function tog(id){document.getElementById(id).classList.toggle('open');}
+function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}
+
+/* ═══════════════ SCROLL ═══════════════ */
+window.addEventListener('scroll',()=>document.getElementById('scrollTop').classList.toggle('show',scrollY>300));
+
+/* ═══════════════ INIT ═══════════════ */
+renderQuiz(); renderShort(); renderFill(); renderPrac(); renderSum();
+</script>
+</body>
+</html>

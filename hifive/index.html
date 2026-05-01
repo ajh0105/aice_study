@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HiFive Architecture — 학습 노트</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Fira+Mono:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep:#080C18; --navy:#0B1840; --brand:#1B3BE8; --sky:#38BEF5; --cloud:#E8EFFE;
+  --bg:#F4F7FE; --panel:#ffffff; --ink:#0B1840; --muted:#5C6A8E;
+  --line:rgba(11,24,64,.10); --code-bg:#0B1840; --code-ink:#E6ECFF;
+  --hl:#FFEEAA; --ok:#2EB872; --warn:#E0A100; --danger:#E25856;
+  --headline:"Big Shoulders Display",sans-serif;
+  --mono:"Fira Mono",monospace;
+  --body:"Noto Sans KR",sans-serif;
+  --shadow:0 10px 30px rgba(8,12,24,.07);
+}
+[data-theme="dark"] {
+  --bg:#080C18; --panel:#0F1730; --ink:#E6ECFF; --muted:#8FA0CC;
+  --line:rgba(255,255,255,.08); --code-bg:#040713; --code-ink:#DCE5FF;
+  --hl:#5b4a00; --shadow:0 10px 30px rgba(0,0,0,.5);
+}
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; }
+body {
+  font-family:var(--body); background:var(--bg); color:var(--ink);
+  -webkit-font-smoothing:antialiased; line-height:1.7;
+}
+a { color:var(--brand); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+/* ===== Layout ===== */
+.app { display:grid; grid-template-columns:280px 1fr; min-height:100vh; }
+.sidebar {
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--line); padding:24px 18px;
+}
+.main-wrap { padding:32px clamp(20px,4vw,56px) 80px; }
+.main { max-width:980px; margin:0 auto; }
+
+/* ===== Sidebar ===== */
+.brand {
+  font-family:var(--headline); font-size:30px; color:var(--brand);
+  display:flex; align-items:center; gap:8px; margin-bottom:6px;
+}
+.brand small { font-family:var(--mono); font-size:10px; color:var(--muted); }
+.tagline { font-size:12px; color:var(--muted); margin-bottom:18px; }
+.toc { list-style:none; padding:0; margin:0; }
+.toc li { margin:0; }
+.toc a {
+  display:flex; align-items:center; gap:8px;
+  padding:8px 10px; border-radius:8px;
+  color:var(--ink); font-size:13px; font-weight:600;
+  border-left:3px solid transparent;
+  transition:background .15s, border-color .15s;
+}
+.toc a:hover { background:rgba(27,59,232,.06); text-decoration:none; }
+.toc a.active { background:rgba(27,59,232,.10); border-left-color:var(--brand); color:var(--brand); }
+.toc .check {
+  display:inline-block; width:14px; height:14px; border-radius:4px;
+  border:1.5px solid var(--muted); flex-shrink:0;
+}
+.toc a.done .check {
+  background:var(--ok); border-color:var(--ok);
+  background-image:linear-gradient(45deg,transparent 40%,#fff 40%,#fff 50%,transparent 50%,transparent 60%,#fff 60%,#fff 70%,transparent 70%);
+}
+.toc-num { font-family:var(--mono); font-size:10px; color:var(--muted); width:22px; }
+
+.progress-card {
+  margin:18px 0; padding:14px;
+  background:linear-gradient(135deg,var(--brand),var(--sky));
+  border-radius:12px; color:#fff;
+}
+.progress-card .label { font-family:var(--mono); font-size:10px; opacity:.85; letter-spacing:.15em; }
+.progress-card .value { font-family:var(--headline); font-size:30px; line-height:1; margin-top:4px; }
+.progress-bar { height:6px; border-radius:99px; background:rgba(255,255,255,.25); margin-top:8px; overflow:hidden; }
+.progress-bar i { display:block; height:100%; background:#fff; border-radius:inherit; transition:width .4s; }
+
+/* ===== Top bar ===== */
+.topbar {
+  position:sticky; top:0; z-index:20;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(10px);
+  display:flex; gap:10px; align-items:center;
+  padding:12px 0 14px; margin-bottom:10px;
+  border-bottom:1px solid var(--line);
+}
+.search {
+  flex:1; display:flex; align-items:center; gap:8px;
+  background:var(--panel); border:1px solid var(--line); border-radius:10px;
+  padding:8px 12px; font-size:13px;
+}
+.search input { flex:1; border:none; outline:none; background:transparent; color:var(--ink); font:inherit; }
+.search-count { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.btn-icon {
+  background:var(--panel); border:1px solid var(--line); border-radius:10px;
+  padding:8px 12px; cursor:pointer; font:inherit; color:var(--ink);
+  display:inline-flex; gap:6px; align-items:center;
+}
+.btn-icon:hover { border-color:var(--brand); color:var(--brand); }
+
+/* ===== Content ===== */
+h1 {
+  font-family:var(--headline); font-size:clamp(36px,5vw,56px); line-height:1; margin:18px 0 6px;
+  letter-spacing:.5px;
+}
+h1 + .lede { color:var(--muted); font-size:15px; margin-bottom:24px; }
+h2 {
+  font-family:var(--headline); font-size:30px; margin:48px 0 8px; padding-top:8px;
+  display:flex; align-items:center; gap:10px;
+}
+h2 .num { font-family:var(--mono); font-size:13px; color:var(--brand); padding:4px 8px; border:1px solid var(--brand); border-radius:6px; }
+h2 .recall {
+  margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--muted);
+  display:flex; gap:6px; align-items:center; cursor:pointer; user-select:none;
+}
+h2 .recall input { accent-color:var(--brand); width:16px; height:16px; cursor:pointer; }
+h2 .recall.done { color:var(--ok); }
+h3 { font-size:18px; margin:30px 0 8px; color:var(--ink); }
+h4 { font-size:14px; margin:18px 0 6px; color:var(--brand); font-family:var(--mono); letter-spacing:.05em; text-transform:uppercase; }
+p { margin:8px 0 12px; }
+ul, ol { padding-left:22px; }
+li { margin:4px 0; }
+strong { color:var(--brand); }
+mark { background:var(--hl); color:inherit; padding:0 2px; border-radius:2px; }
+
+code:not(pre code) {
+  font-family:var(--mono); font-size:.9em;
+  background:rgba(27,59,232,.08); color:var(--brand);
+  padding:2px 6px; border-radius:5px;
+}
+pre {
+  background:var(--code-bg); color:var(--code-ink);
+  padding:18px; border-radius:12px; overflow-x:auto;
+  font-family:var(--mono); font-size:12.5px; line-height:1.65;
+  box-shadow:var(--shadow);
+}
+pre.diagram { font-size:12px; line-height:1.5; }
+pre code { background:transparent; padding:0; color:inherit; }
+
+table {
+  width:100%; border-collapse:collapse; margin:14px 0;
+  background:var(--panel); border-radius:10px; overflow:hidden;
+  box-shadow:var(--shadow); font-size:13.5px;
+}
+th, td { padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
+th { background:rgba(27,59,232,.05); font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--muted); letter-spacing:.05em; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover { background:rgba(27,59,232,.04); }
+
+blockquote {
+  margin:14px 0; padding:12px 16px;
+  border-left:3px solid var(--sky);
+  background:rgba(56,190,245,.08); border-radius:0 8px 8px 0;
+  color:var(--ink);
+}
+
+.section {
+  background:var(--panel); border:1px solid var(--line);
+  border-radius:14px; padding:22px 26px; margin:18px 0;
+  box-shadow:var(--shadow);
+}
+.section.done { border-color:var(--ok); }
+.section.done h2 .num { background:var(--ok); color:#fff; border-color:var(--ok); }
+
+/* card grid for system summary */
+.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin:14px 0; }
+.card {
+  border:1px solid var(--line); border-radius:12px; padding:14px;
+  background:var(--bg);
+}
+.card .ttl { font-family:var(--mono); font-size:10px; color:var(--brand); text-transform:uppercase; letter-spacing:.1em; }
+.card .body { font-weight:700; margin-top:4px; }
+
+/* keyboard shortcut chip */
+kbd {
+  font-family:var(--mono); font-size:11px;
+  background:var(--bg); border:1px solid var(--line); border-bottom-width:2px;
+  padding:2px 6px; border-radius:5px; color:var(--ink);
+}
+
+/* small responsive */
+@media (max-width:900px) {
+  .app { grid-template-columns:1fr; }
+  .sidebar { position:static; height:auto; border-right:none; border-bottom:1px solid var(--line); }
+  .toc { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:4px; }
+}
+
+/* search highlight */
+.search-hit { background:var(--hl); border-radius:2px; }
+.search-hit.active { outline:2px solid var(--brand); }
+
+/* footer */
+.foot { color:var(--muted); font-size:12px; text-align:center; margin:60px 0 0; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">HiFive <small>LEARN</small></div>
+    <p class="tagline">스마트톨링 아키텍처 학습 노트</p>
+
+    <div class="progress-card">
+      <div class="label">RECALL PROGRESS</div>
+      <div class="value"><span id="progPct">0</span>%</div>
+      <div class="progress-bar"><i id="progBar" style="width:0%"></i></div>
+      <div style="font-size:11px; opacity:.85; margin-top:6px;">
+        <span id="progDone">0</span> / <span id="progTotal">0</span> 섹션 복기 완료
+      </div>
+    </div>
+
+    <ul class="toc" id="toc"></ul>
+
+    <div style="margin-top:18px; font-size:11px; color:var(--muted); line-height:1.6;">
+      <kbd>/</kbd> 검색  ·  <kbd>D</kbd> 다크토글<br>
+      각 섹션 우측 체크 = 복기 완료
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main-wrap">
+    <div class="main">
+
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="search">
+          <span>🔎</span>
+          <input id="searchBox" type="text" placeholder="페이지 내 검색 (예: gRPC, Pinia, 통과선)…" autocomplete="off">
+          <span class="search-count" id="searchCount"></span>
+        </div>
+        <button class="btn-icon" id="themeToggle" title="다크/라이트 전환">🌓 <span id="themeLabel">Dark</span></button>
+        <button class="btn-icon" id="resetProgress" title="복기 진행도 초기화">↺ Reset</button>
+      </div>
+
+      <h1>HiFive Smart Tolling — Architecture</h1>
+      <p class="lede">FastAPI Edge · Spring Boot Backend · Vue 3 Frontend 가 어떻게 묶여 있고, 어떤 코드가 어디에 있고, 무엇이 어디로 흐르는지를 한눈에 파악하기 위한 학습 노트입니다.</p>
+
+<!-- =========================================================== -->
+<!-- SECTION 1                                                   -->
+<!-- =========================================================== -->
+<section class="section" data-section="s1">
+<h2><span class="num">01</span> 한눈에 보는 시스템 구성
+  <label class="recall"><input type="checkbox" data-check="s1"> 복기 완료</label>
+</h2>
+
+<pre class="diagram">                                        +-----------------------------+
+                                        |   사용자 브라우저            |
+                                        |   http://localhost:5173      |
+                                        +--------------+--------------+
+                                                       |
+                                                       | (1) HTTP / 세션 쿠키
+                                                       v
++---------------------+   (2) HTTP /api/*    +-----------------------------+
+|  Vue 3 + Pinia       |  ---------------->  |  Spring Boot Backend         |
+|  frontend/           |   axios + proxy      |  backend/                    |
+|  Vite dev :5173      |  &lt;----------------   |  Tomcat :8080                |
++---------------------+   JSON response       |   - /api/auth/*              |
+                                              |   - /api/board               |
+                                              |   - gRPC server :9090        |
+                                              +-------------+----------------+
+                                                            ^
+                                                            | (3) gRPC + Protobuf
+                                                            |     양방향 스트림
++-----------------+   (A) HTTP POST   +------------------+  |
+|  YOLOv8/OpenCV  | ----------------&gt; |  FastAPI Edge    | -+
+|  카메라/Vision   |  /v1/yolo/...    |  fastapi-edge/   |
+|  GPS 수신기      | ----------------&gt; |  uvicorn :8000   |
++-----------------+   /v1/gps/...     +------------------+</pre>
+
+<table>
+<thead><tr><th>계층</th><th>폴더</th><th>런타임</th><th>포트</th><th>주 책임</th></tr></thead>
+<tbody>
+<tr><td>Edge (현장)</td><td><code>fastapi-edge/</code></td><td>uvicorn (Python)</td><td><strong>8000</strong></td><td>YOLO/OCR 결과 수신 → 가상 통과선 판정 → gRPC 송신</td></tr>
+<tr><td>Backend</td><td><code>backend/</code></td><td>Spring Boot 3</td><td><strong>8080</strong></td><td>회원·게시판 REST + gRPC 수신 + 정산 + DB 저장</td></tr>
+<tr><td>Frontend</td><td><code>frontend/</code></td><td>Vite + Vue 3</td><td><strong>5173</strong></td><td>랜딩/회원/대시보드 SPA, Pinia 상태관리</td></tr>
+<tr><td>Backend↔Edge</td><td>(proto 공유)</td><td>gRPC</td><td><strong>9090</strong></td><td><code>proto/tolling.proto</code> 한 파일로 양쪽 stub 생성</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- =========================================================== -->
+<!-- SECTION 2                                                   -->
+<!-- =========================================================== -->
+<section class="section" data-section="s2">
+<h2><span class="num">02</span> 시스템별 역할 요약
+  <label class="recall"><input type="checkbox" data-check="s2"> 복기 완료</label>
+</h2>
+
+<div class="cards">
+  <div class="card"><div class="ttl">EDGE · FastAPI</div><div class="body">YOLO 결과 → 통과 판정 → gRPC 송신</div></div>
+  <div class="card"><div class="ttl">BACKEND · Spring Boot</div><div class="body">REST API + gRPC 수신 + 정산</div></div>
+  <div class="card"><div class="ttl">FRONTEND · Vue</div><div class="body">SPA + Pinia + 실시간 대시보드</div></div>
+</div>
+
+<h3>FastAPI Edge (<code>fastapi-edge/</code>)</h3>
+<p>도로 카메라 옆에서 동작합니다. YOLOv8/OpenCV가 검출한 차량/번호판을 HTTP로 받고, <strong>가상 통과선 알고리즘</strong>으로 ENTRY/EXIT을 판정한 다음 <strong>gRPC + Protobuf</strong>로 백엔드에 실시간 송신합니다. 백엔드가 죽어도 자체 큐에 쌓고 지수 백오프로 재연결합니다. OCR 신뢰도가 낮은 케이스는 단건 RPC로 분기해 검수 큐에 적재되도록 합니다.</p>
+
+<h3>Spring Boot Backend (<code>backend/</code>)</h3>
+<ul>
+<li><strong>REST</strong>: <code>/api/auth/*</code> 회원가입/로그인/로그아웃, <code>/api/board</code> 게시판/검수. <mark>Spring Session 기반 세션 쿠키 인증</mark>.</li>
+<li><strong>gRPC</strong>: FastAPI에서 보낸 <code>PassageEventRequest</code>를 수신·역직렬화·정산·DB 적재.</li>
+</ul>
+
+<h3>Vue 3 Frontend (<code>frontend/</code>)</h3>
+<ul>
+<li>랜딩(<code>/</code>)과 회사소개/솔루션/기술/도입안내/문의 정적 페이지</li>
+<li>회원가입/로그인 폼</li>
+<li>관리자 <strong>실시간 관제 대시보드</strong>(KPI · 통과 로그 · GPS · 게시판)</li>
+<li>Pinia로 인증·게시판 상태, axios로 백엔드 호출, Vue Router 인증 가드</li>
+</ul>
+</section>
+
+<!-- =========================================================== -->
+<!-- SECTION 3                                                   -->
+<!-- =========================================================== -->
+<section class="section" data-section="s3">
+<h2><span class="num">03</span> 폴더 구조 &amp; 파일별 역할
+  <label class="recall"><input type="checkbox" data-check="s3"> 복기 완료</label>
+</h2>
+
+<h3>3.1 FastAPI Edge — <code>fastapi-edge/</code></h3>
+<pre class="diagram">fastapi-edge/
+├── proto/tolling.proto              ★ Edge↔Backend gRPC 계약 (양쪽이 공유)
+├── scripts/
+│   ├── generate_proto.py            proto → python stub 생성 (크로스플랫폼)
+│   └── smoke_test.py                서버 5단계 기능 자동 검증
+├── app/
+│   ├── main.py                      FastAPI 인스턴스 + lifespan
+│   ├── core/config.py               EDGE_ prefix Settings
+│   ├── models/schemas.py            YOLO 입력 Pydantic 스키마
+│   ├── services/
+│   │   ├── crossing.py              가상 통과선 알고리즘
+│   │   ├── gps_service.py           트랙/차로별 GPS 캐시
+│   │   └── grpc_client.py           비동기 gRPC 스트리밍 클라이언트
+│   ├── api/routes.py                /v1/yolo/detections, /v1/gps/*, /healthz
+│   └── grpc_generated/              protoc 산출물 (tolling_pb2*.py)
+└── RUN.md / README.md</pre>
+
+<h4>핵심 코드와 연결</h4>
+<ul>
+<li><code>proto/tolling.proto</code> — <code>service TollingEventService</code> 안에 3개 RPC: <code>SendPassageEvent</code>(단건), <code>StreamPassageEvents</code>(양방향 스트림), <code>Heartbeat</code>. Edge·Backend stub의 <strong>단일 소스</strong>.</li>
+<li><code>app/main.py</code> — <code>FastAPI(lifespan=...)</code>로 부팅 시 <code>CrossingLineDetector</code>, <code>GpsCache</code>, <code>TollingGrpcClient</code>를 만들어 <code>app.state</code>에 보관, <code>await grpc_client.start()</code>로 채널·워커 기동.</li>
+<li><code>app/api/routes.py</code> — <code>POST /v1/yolo/detections</code>가 각 검출에 대해 <code>detector.evaluate()</code>로 통과 판정 → 통과면 <code>grpc_client.enqueue_event()</code> 호출. <code>POST /v1/gps/track|lane/{id}</code>는 GPS 캐시 갱신.</li>
+<li><code>services/crossing.py</code> — 트랙별 직전 중심좌표 보존, (직전→현재) 선분이 통과선 선분과 교차하면 통과로 판정. 외적 부호로 ENTRY/EXIT, 2초 cooldown, 5초 미관측 GC.</li>
+<li><code>services/grpc_client.py</code> — 내부 <code>asyncio.Queue</code>. 정상 트래픽은 <code>StreamPassageEvents</code> 스트림, <mark>저신뢰 OCR(<code>plate_confidence &lt; 0.7</code>)은 단건 <code>SendPassageEvent</code></mark>로 분기. 채널 끊기면 0.5→1→2→4s 백오프 재연결, <code>event_id</code>(UUID)로 멱등성.</li>
+<li><code>services/gps_service.py</code> — 트랙 ID/차로 ID 기준 최신 <code>GpsSample</code> 보관 (스레드 안전).</li>
+<li><code>core/config.py</code> — <code>BaseSettings</code>로 <code>EDGE_GRPC_TARGET</code>, <code>EDGE_LOW_OCR_CONFIDENCE_THRESHOLD</code>, 통과선 좌표 4개 등 모든 튜닝 노브.</li>
+</ul>
+
+<h3>3.2 Spring Boot Backend — <code>backend/</code></h3>
+<pre class="diagram">backend/src/main/java/com/hifive/iot/
+├── IotApplication.java                @SpringBootApplication 진입점
+├── controller/
+│   ├── AuthController.java            /api/auth/{signup,login,logout}
+│   └── BoardController.java           /api/board GET/POST
+├── service/
+│   ├── MemberService.java             signUp / login
+│   └── BoardService.java              findAll / create
+├── dto/
+│   ├── SignUpRequest / LoginRequest   record
+│   ├── AuthResponse                   record(success,message,member)
+│   ├── MemberResponse                 record(memberId,memberName,plateNumber)
+│   └── BoardPostRequest               record(title,content,plateNumber,vehicleCount,recognitionConfidence)
+└── entity/
+    ├── Member                         record(memberId,password,memberName,plateNumber)
+    └── BoardPost                      record(postId,title,content,writerName,plateNumber,vehicleCount,recognitionConfidence,createdAt)</pre>
+
+<h4>핵심 코드와 연결</h4>
+<ul>
+<li><code>AuthController.signUp()</code> → <code>memberService.signUp()</code>. 신규는 201 + <code>AuthResponse(true,"가입완료")</code>, 중복은 409 + <code>AuthResponse(false,"이미 사용 중")</code>.</li>
+<li><code>AuthController.login()</code> → 성공 시 <code>session.setAttribute("loginMember", member)</code> 후 <code>MemberResponse</code> 반환. <strong>Vue 의 <code>useAuthStore.login()</code>이 <code>data.member</code>를 그대로 저장</strong>.</li>
+<li><code>BoardController</code> — <code>GET</code>은 모든 글, <code>POST</code>는 세션의 <code>loginMember</code>가 있으면 그 이름, 없으면 "방문자".</li>
+<li>현재 Service들은 in-memory. <em>PostgreSQL/JPA로 교체 시 이 클래스만 갈아끼우면 됨</em>.</li>
+</ul>
+
+<h3>3.3 Vue 3 Frontend — <code>frontend/</code></h3>
+<pre class="diagram">frontend/src/
+├── main.js                          Vue + Pinia + Router 부트
+├── App.vue                          home 라우트는 자체 chrome 사용
+├── router/index.js                  9 라우트 + requiresAuth/hideAuth 가드
+├── api/
+│   ├── client.js                    axios (withCredentials:true)
+│   ├── auth.js                      /api/auth/* 래퍼
+│   └── board.js                     /api/board 래퍼
+├── stores/
+│   ├── auth.js                      Pinia: signUp/login/logout/hydrate
+│   └── board.js                     Pinia: fetchAll/create + lowConfidencePosts
+├── components/AppHeader.vue, AppFooter.vue
+├── styles/main.css, home.css        home.css = 기존 index.html 디자인
+├── composables/
+│   ├── heroWave.js                  hero 배경 wave canvas
+│   └── decisionFlow.js              architecture 노드/패킷 다이어그램
+└── views/
+    ├── HomeView.vue                 메인. 자식 5개 섹션 합성
+    ├── home/{HomeHeader,SectionHero,SectionCore,SectionArchitecture,SectionCta}.vue
+    ├── LoginView / SignupView / DashboardView
+    └── CompanyView / SolutionView / TechnologyView / GuideView / ContactView</pre>
+
+<h4>핵심 코드와 연결</h4>
+<ul>
+<li><code>App.vue</code> — <code>route.name === 'home'</code>이면 글로벌 chrome 숨김. <code>onMounted</code>에서 <code>useAuthStore().hydrate()</code> 호출로 세션 복구.</li>
+<li><code>router/index.js</code> — <code>beforeEach</code>에서 <code>requiresAuth</code>면 비로그인 시 <code>/login?redirect=...</code>로, <code>hideAuth</code>면 이미 로그인 상태일 때 <code>/</code>로.</li>
+<li><code>api/client.js</code> — <code>axios.create({ withCredentials:true })</code>. dev에선 vite proxy <code>/api → :8080</code>.</li>
+<li><code>stores/auth.js</code> — state <code>member, loading, error</code>, getter <code>isLoggedIn</code>. <code>login()</code>은 호출 후 결과를 reactive에 반영하고 localStorage에 저장. <code>hydrate()</code>는 새로고침 후 복구.</li>
+<li><code>stores/board.js</code> — <code>posts, lowConfidencePosts</code>(신뢰도 0.7 미만 자동 필터). <code>createdAt</code>이 LocalDateTime 배열로 와도 ISO 문자열로 정규화.</li>
+<li><code>views/DashboardView.vue</code> — 시계/KPI/통과 로그 setInterval 시뮬레이션, GPS 패널, 게시판. 마운트 시 <code>board.fetchAll()</code>.</li>
+<li><code>views/HomeView.vue</code> + <code>views/home/*</code> — 자식 섹션 5개 합성. 마운트 시 <code>html.home-active</code> 클래스 부여(scroll-snap 등 글로벌 영향), <code>IntersectionObserver</code>로 reveal/카운트업 트리거.</li>
+</ul>
+</section>
+
+<!-- =========================================================== -->
+<!-- SECTION 4                                                   -->
+<!-- =========================================================== -->
+<section class="section" data-section="s4">
+<h2><span class="num">04</span> 데이터 / 호출 흐름 (시나리오)
+  <label class="recall"><input type="checkbox" data-check="s4"> 복기 완료</label>
+</h2>
+
+<h3>4.1 ★ 차량 통과 → 정산 (실시간 톨링 핵심 흐름)</h3>
+<pre class="diagram">[카메라 + YOLOv8/OpenCV]
+   │ 1. 프레임에서 차량/번호판 ROI 추출, OCR
+   │ 2. 결과 1배치를 HTTP POST 로 엣지에 전송
+   ▼
+[FastAPI Edge]  POST /v1/yolo/detections   (app/api/routes.py)
+   │ 3. routes.receive_detections()
+   │      gps      = det.gps or gps_cache.latest_for(track_id, lane_id)
+   │      decision = detector.evaluate(det)        # 통과선 판정
+   │      if decision.crossed:
+   │          await grpc_client.enqueue_event(det, decision, gps)
+   │
+   │ 4. enqueue_event() 가
+   │      plate_confidence &lt; 0.7  ⇒ asyncio.create_task(_send_unary(req))
+   │      그 외 정상            ⇒ self._queue.put_nowait(req)
+   ▼
+[gRPC 채널]   localhost:9090   (Protobuf 바이너리, JSON 대비 -70%)
+   │ 5. 정상: StreamPassageEvents 양방향 스트림
+   │    저신뢰: SendPassageEvent 단건
+   ▼
+[Spring Boot Backend]
+   │ 6. 수신·역직렬화 → DB 적재
+   │ 7. plate / lane / direction / GPS 로 요금 계산
+   │ 8. 저신뢰는 PENDING_REVIEW 상태로 검수 큐에 적재
+   │ 9. PassageEventResponse(event_id, status) 응답
+   ▼
+[Vue 대시보드]
+  10. /dashboard 에서 실시간 통과 로그·KPI 모니터링
+  11. 저신뢰 로그는 amber 하이라이트, 보정 후 재전송 가능</pre>
+
+<blockquote><strong>끊김에 강한 설계</strong> — 6단계의 백엔드가 죽어 있어도 4단계의 큐는 계속 받고, <code>_stream_worker</code>가 0.5 → 1 → 2 → 4s 백오프로 재연결합니다. <code>event_id</code>(UUID)가 멱등성 키라 중복 도달도 백엔드가 거를 수 있습니다.</blockquote>
+
+<h3>4.2 회원가입 → 로그인 → 대시보드 진입</h3>
+<pre class="diagram">[/signup] SignupView.vue submit
+   → useAuthStore().signUp(form) → axios POST /api/auth/signup
+                                            │ (vite proxy)
+                                            ▼
+[Spring Boot] AuthController.signUp()
+   → memberService.signUp(req)
+   → 신규: 201 + AuthResponse(true,"가입완료")
+   → 중복: 409 + AuthResponse(false,"이미 사용 중")
+   ▼ Vue 가 message 표시 후 800ms 뒤 router.push('/login')
+
+[/login] LoginView.vue submit
+   → useAuthStore().login(form) → POST /api/auth/login
+   ▼
+[Spring Boot] login() → session.setAttribute("loginMember", member)
+   → AuthResponse(true,"로그인됨", MemberResponse) + Set-Cookie:JSESSIONID
+   ▼ Vue: store.member = data.member, localStorage 저장
+
+[Vue 라우터]
+   → router.push(route.query.redirect ?? '/dashboard')
+   → router.beforeEach 가 requiresAuth + isLoggedIn 통과
+   ▼
+[DashboardView.vue]
+   → onMounted: clock/KPI/log 시뮬레이션 + board.fetchAll()
+   → axios 가 자동으로 JSESSIONID 동봉(withCredentials:true)
+   → BoardController.findAll() → List&lt;BoardPost&gt; JSON
+   → store.posts 갱신 → 화면 반영</pre>
+
+<h3>4.3 1:1 문의 / 게시판</h3>
+<pre class="diagram">[/contact] ContactView submit
+   → useBoardStore().create(form) → POST /api/board
+[Spring Boot]
+   → BoardController.create() — 세션의 loginMember 가 있으면 그 이름, 없으면 "방문자"
+   → boardService.create(req, writerName) → 201
+[Vue]
+   → 성공 시 board.fetchAll() 자동 재호출 → 목록 갱신</pre>
+<p>게시판은 동시에 <strong>검수 게시판</strong>으로도 사용됩니다. <code>recognitionConfidence &lt; 0.7</code>인 글은 <code>useBoardStore.lowConfidencePosts</code> getter에 잡혀 대시보드에서 amber 색으로 강조됩니다.</p>
+</section>
+
+<!-- =========================================================== -->
+<!-- SECTION 5                                                   -->
+<!-- =========================================================== -->
+<section class="section" data-section="s5">
+<h2><span class="num">05</span> 컴포넌트 간 연결 매트릭스
+  <label class="recall"><input type="checkbox" data-check="s5"> 복기 완료</label>
+</h2>
+
+<h3>5.1 Vue 화면 ↔ Pinia ↔ axios ↔ Spring Boot</h3>
+<table>
+<thead><tr><th>Vue 화면</th><th>Pinia action</th><th>axios 모듈</th><th>Spring 엔드포인트</th><th>DTO</th></tr></thead>
+<tbody>
+<tr><td><code>SignupView.vue</code></td><td><code>useAuthStore().signUp()</code></td><td><code>api/auth.signUp()</code></td><td><code>POST /api/auth/signup</code></td><td><code>SignUpRequest</code> → <code>AuthResponse</code></td></tr>
+<tr><td><code>LoginView.vue</code></td><td><code>useAuthStore().login()</code></td><td><code>api/auth.login()</code></td><td><code>POST /api/auth/login</code></td><td><code>LoginRequest</code> → <code>AuthResponse</code></td></tr>
+<tr><td><code>AppHeader/HomeHeader.vue</code></td><td><code>useAuthStore().logout()</code></td><td><code>api/auth.logout()</code></td><td><code>POST /api/auth/logout</code></td><td>—</td></tr>
+<tr><td><code>DashboardView.vue</code> (init)</td><td><code>useBoardStore().fetchAll()</code></td><td><code>api/board.list()</code></td><td><code>GET /api/board</code></td><td>→ <code>List&lt;BoardPost&gt;</code></td></tr>
+<tr><td><code>DashboardView.vue</code> (글등록)</td><td><code>useBoardStore().create()</code></td><td><code>api/board.create()</code></td><td><code>POST /api/board</code></td><td><code>BoardPostRequest</code></td></tr>
+<tr><td><code>ContactView.vue</code></td><td><code>useBoardStore().create()</code></td><td><code>api/board.create()</code></td><td><code>POST /api/board</code></td><td><code>BoardPostRequest</code></td></tr>
+</tbody>
+</table>
+<blockquote>모든 axios 호출은 <code>withCredentials:true</code>로 <code>JSESSIONID</code> 쿠키를 자동 동봉. 운영에서는 Spring Security CORS에 <code>http://localhost:5173</code>을 <code>allowCredentials=true</code>로 허용해 주세요.</blockquote>
+
+<h3>5.2 FastAPI ↔ gRPC stub ↔ Spring Boot</h3>
+<table>
+<thead><tr><th>FastAPI 코드</th><th>proto 정의</th><th>Spring Boot 코드 (예정)</th></tr></thead>
+<tbody>
+<tr><td><code>grpc_client.py:_stream_loop()</code></td><td><code>rpc StreamPassageEvents(stream …) returns(stream …)</code></td><td><code>@GrpcService.streamPassageEvents()</code></td></tr>
+<tr><td><code>grpc_client.py:_send_unary()</code></td><td><code>rpc SendPassageEvent(...)</code></td><td><code>sendPassageEvent()</code> — 검수 큐 적재</td></tr>
+<tr><td><code>grpc_client.py:_build_request()</code></td><td><code>message PassageEventRequest</code></td><td><code>TollingProto.PassageEventRequest</code></td></tr>
+<tr><td><code>crossing.py:CrossingDecision</code></td><td><code>enum CrossingDirection {ENTRY, EXIT}</code></td><td>같은 enum</td></tr>
+<tr><td><code>schemas.py:VehicleTypeEnum</code></td><td><code>enum VehicleType</code></td><td>같은 enum</td></tr>
+</tbody>
+</table>
+
+<h3>5.3 FastAPI 내부 객체 그래프</h3>
+<pre class="diagram">FastAPI(app)
+  └─ lifespan
+       ├─ app.state.settings        : Settings              (core/config.py)
+       ├─ app.state.detector        : CrossingLineDetector  (services/crossing.py)
+       ├─ app.state.gps_cache       : GpsCache              (services/gps_service.py)
+       └─ app.state.grpc_client     : TollingGrpcClient     (services/grpc_client.py)
+                                       │
+                                       ├─ asyncio.Queue (송신 버퍼)
+                                       ├─ grpc.aio.Channel → :9090
+                                       └─ _stream_worker Task (백그라운드)
+
+routes.receive_detections(batch, Depends(...))
+  ├─ detector.evaluate(det)              ← 통과 판정
+  ├─ gps_cache.latest_for(track,lane)    ← GPS 결합
+  └─ grpc_client.enqueue_event(...)      ← 단건 또는 큐</pre>
+</section>
+
+<!-- =========================================================== -->
+<!-- SECTION 6                                                   -->
+<!-- =========================================================== -->
+<section class="section" data-section="s6">
+<h2><span class="num">06</span> 실행 / 운영
+  <label class="recall"><input type="checkbox" data-check="s6"> 복기 완료</label>
+</h2>
+
+<h3>6.1 처음 띄우는 순서</h3>
+<pre><code># 1) Spring Boot Backend  (REST + gRPC 9090)
+cd backend
+./gradlew bootRun                 # → http://localhost:8080
+
+# 2) FastAPI Edge (별도 터미널)
+cd fastapi-edge
+python -m venv .venv && .\.venv\Scripts\Activate.ps1   # Windows PS
+pip install -r requirements.txt
+python scripts/generate_proto.py  # ★ proto stub 생성 (필수)
+uvicorn app.main:app --reload --port 8000
+# → http://localhost:8000/docs (Swagger), /healthz
+
+# 3) Vue Frontend (또 다른 터미널)
+cd frontend
+npm install
+npm run dev                       # → http://localhost:5173</code></pre>
+
+<p>각 서비스는 다른 서비스가 떠 있지 않아도 부팅됩니다. 단 FastAPI는 백엔드(<code>localhost:9090</code>)가 없으면 gRPC 재연결 로그를 반복 출력하고, Vue는 <code>/api/*</code> 호출이 502가 됩니다. Vue mock UI(시계/KPI/통과 로그 시뮬레이션)는 백엔드 없이도 보입니다.</p>
+
+<h3>6.2 핵심 환경 변수</h3>
+<table>
+<thead><tr><th>시스템</th><th>변수</th><th>용도</th><th>기본값</th></tr></thead>
+<tbody>
+<tr><td>FastAPI</td><td><code>EDGE_GRPC_TARGET</code></td><td>Spring Boot gRPC 주소</td><td><code>localhost:9090</code></td></tr>
+<tr><td>FastAPI</td><td><code>EDGE_EDGE_NODE_ID</code></td><td>엣지 식별자</td><td><code>EDGE-LOCAL-01</code></td></tr>
+<tr><td>FastAPI</td><td><code>EDGE_LOW_OCR_CONFIDENCE_THRESHOLD</code></td><td>검수 분기 임계값</td><td><code>0.7</code></td></tr>
+<tr><td>FastAPI</td><td><code>EDGE_CROSSING_LINE_P{1,2}_{X,Y}</code></td><td>통과선 양 끝 좌표</td><td>(0,540)–(1920,540)</td></tr>
+<tr><td>Vue</td><td><code>VITE_API_BASE_URL</code></td><td>백엔드 base URL</td><td>(dev proxy)</td></tr>
+</tbody>
+</table>
+
+<h3>6.3 빠른 검증 체크리스트</h3>
+<ol>
+<li><code>curl http://localhost:8000/healthz</code> → <code>{"status":"ok"}</code></li>
+<li><code>curl http://localhost:8080/api/board</code> → <code>[]</code> 또는 글 배열</li>
+<li>브라우저 <code>http://localhost:5173/signup</code> → 가입 → 로그인 → <code>/dashboard</code> 진입</li>
+<li>FastAPI 터미널에서 <code>python scripts/smoke_test.py</code> → 5단계 PASS</li>
+</ol>
+</section>
+
+<!-- =========================================================== -->
+<!-- SECTION 7  — 복기 퀴즈                                      -->
+<!-- =========================================================== -->
+<section class="section" data-section="s7">
+<h2><span class="num">07</span> 복기 퀴즈
+  <label class="recall"><input type="checkbox" data-check="s7"> 복기 완료</label>
+</h2>
+<p>각 질문에 머리속으로 답한 뒤 <strong>"답 보기"</strong>를 눌러 확인하세요. 학습이 깊어집니다.</p>
+
+<div id="quiz"></div>
+</section>
+
+      <p class="foot">© HiFive Mobility Lab — 학습 노트 v1 · 단일 HTML, 인라인 CSS/JS</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   1) 사이드바 TOC 자동 생성 + 스크롤스파이
+   ============================================================ */
+const sections = Array.from(document.querySelectorAll('section.section'));
+const toc = document.getElementById('toc');
+sections.forEach((sec, idx) => {
+  const h2 = sec.querySelector('h2');
+  const id = sec.dataset.section;
+  sec.id = id;
+  const title = h2.childNodes[1].nodeValue.trim();
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="#${id}" data-link="${id}">
+      <span class="check"></span>
+      <span class="toc-num">${String(idx+1).padStart(2,'0')}</span>
+      ${title}
+    </a>`;
+  toc.appendChild(li);
+});
+
+/* 스크롤 스파이 */
+const links = Array.from(document.querySelectorAll('.toc a'));
+const linkById = Object.fromEntries(links.map(a => [a.dataset.link, a]));
+const spy = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(a => a.classList.remove('active'));
+      linkById[e.target.id]?.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => spy.observe(s));
+
+/* ============================================================
+   2) 복기 체크박스 (localStorage 저장) + 진행률
+   ============================================================ */
+const STORE_KEY = 'hifive.recall.v1';
+const recallState = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+
+function saveRecall() { localStorage.setItem(STORE_KEY, JSON.stringify(recallState)); }
+function refreshProgress() {
+  const total = sections.length;
+  const done  = sections.filter(s => recallState[s.dataset.section]).length;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('progPct').textContent = pct;
+  document.getElementById('progDone').textContent = done;
+  document.getElementById('progTotal').textContent = total;
+  document.getElementById('progBar').style.width = pct + '%';
+  // 사이드바 체크 표시
+  sections.forEach(s => {
+    const id = s.dataset.section;
+    const link = linkById[id];
+    if (recallState[id]) {
+      s.classList.add('done'); link?.classList.add('done');
+      s.querySelector('.recall')?.classList.add('done');
+    } else {
+      s.classList.remove('done'); link?.classList.remove('done');
+      s.querySelector('.recall')?.classList.remove('done');
+    }
+  });
+}
+
+document.querySelectorAll('input[data-check]').forEach(cb => {
+  const id = cb.dataset.check;
+  cb.checked = !!recallState[id];
+  cb.addEventListener('change', () => {
+    recallState[id] = cb.checked;
+    saveRecall();
+    refreshProgress();
+  });
+});
+
+document.getElementById('resetProgress').addEventListener('click', () => {
+  if (!confirm('복기 진행도를 초기화할까요?')) return;
+  for (const k of Object.keys(recallState)) delete recallState[k];
+  saveRecall();
+  document.querySelectorAll('input[data-check]').forEach(cb => cb.checked = false);
+  refreshProgress();
+});
+
+refreshProgress();
+
+/* ============================================================
+   3) 다크/라이트 토글 (localStorage)
+   ============================================================ */
+const THEME_KEY = 'hifive.theme';
+const html = document.documentElement;
+const themeBtn = document.getElementById('themeToggle');
+const themeLabel = document.getElementById('themeLabel');
+function applyTheme(t) {
+  html.dataset.theme = t;
+  themeLabel.textContent = t === 'dark' ? 'Light' : 'Dark';
+}
+applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+themeBtn.addEventListener('click', () => {
+  const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+});
+
+/* ============================================================
+   4) 페이지 내 검색 + 다음 매치로 점프
+   ============================================================ */
+const searchBox = document.getElementById('searchBox');
+const searchCount = document.getElementById('searchCount');
+let hits = [];
+let hitIdx = -1;
+
+function clearHighlights() {
+  document.querySelectorAll('.search-hit').forEach(el => {
+    const txt = document.createTextNode(el.textContent);
+    el.parentNode.replaceChild(txt, el);
+  });
+  hits = []; hitIdx = -1;
+  searchCount.textContent = '';
+}
+function highlight(query) {
+  clearHighlights();
+  if (!query || query.length < 2) return;
+  const re = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  const walker = document.createTreeWalker(document.querySelector('.main'), NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      const p = node.parentNode;
+      if (!p) return NodeFilter.FILTER_REJECT;
+      const tag = p.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
+      return re.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  const targets = [];
+  let n;
+  while ((n = walker.nextNode())) targets.push(n);
+  targets.forEach(node => {
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    node.nodeValue.replace(re, (m, off) => {
+      if (off > last) frag.appendChild(document.createTextNode(node.nodeValue.slice(last, off)));
+      const span = document.createElement('span');
+      span.className = 'search-hit';
+      span.textContent = m;
+      frag.appendChild(span);
+      hits.push(span);
+      last = off + m.length;
+    });
+    if (last < node.nodeValue.length) frag.appendChild(document.createTextNode(node.nodeValue.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+  searchCount.textContent = hits.length ? `${hits.length} 건` : '없음';
+  if (hits.length) jumpHit(0);
+}
+function jumpHit(i) {
+  if (!hits.length) return;
+  hits.forEach(h => h.classList.remove('active'));
+  hitIdx = (i + hits.length) % hits.length;
+  hits[hitIdx].classList.add('active');
+  hits[hitIdx].scrollIntoView({ behavior:'smooth', block:'center' });
+  searchCount.textContent = `${hitIdx+1} / ${hits.length}`;
+}
+let timer = null;
+searchBox.addEventListener('input', () => {
+  clearTimeout(timer);
+  timer = setTimeout(() => highlight(searchBox.value.trim()), 200);
+});
+searchBox.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); jumpHit(hitIdx + (e.shiftKey ? -1 : 1)); }
+  if (e.key === 'Escape') { searchBox.value=''; clearHighlights(); }
+});
+
+/* ============================================================
+   5) 글로벌 키보드 — / 검색, D 다크토글
+   ============================================================ */
+document.addEventListener('keydown', (e) => {
+  const tag = (e.target.tagName || '').toUpperCase();
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+  if (e.key === '/') { e.preventDefault(); searchBox.focus(); }
+  if (e.key.toLowerCase() === 'd') themeBtn.click();
+});
+
+/* ============================================================
+   6) 복기 퀴즈 카드 (Q/A 토글)
+   ============================================================ */
+const QUIZ = [
+  ['엣지 FastAPI는 백엔드가 죽었을 때 통과 이벤트를 어떻게 처리하나?',
+   '내부 asyncio.Queue 에 보존 + 0.5→1→2→4s 지수 백오프로 재연결. event_id(UUID) 멱등성 키로 중복도 백엔드가 거름.'],
+  ['OCR plate_confidence 가 임계값(0.7) 미만이면 어떤 RPC 가 사용되나?',
+   '단건 RPC SendPassageEvent. 백엔드는 PENDING_REVIEW 상태로 검수 큐에 적재.'],
+  ['가상 통과선 알고리즘이 ENTRY/EXIT 을 어떻게 구분하지?',
+   '직전 점이 통과선의 어느 쪽에 있었는지 외적 부호로 판정. 같은 트랙 중복 판정은 2초 cooldown 으로 차단.'],
+  ['Vue 의 useAuthStore.login() 이 성공한 다음 무엇을 저장하나?',
+   '백엔드 응답의 data.member 를 store.member 와 localStorage("hifive.member") 양쪽에. App.vue 가 부팅 시 hydrate() 로 복구.'],
+  ['Vue 라우터의 requiresAuth / hideAuth 가드는 무엇을 하나?',
+   'requiresAuth: 비로그인 시 /login?redirect=원래경로 로 리다이렉트. hideAuth: 이미 로그인 상태면 /login·/signup 접근을 / 로 막음.'],
+  ['proto/tolling.proto 한 파일이 양쪽 stub 의 단일 소스라는 말의 뜻은?',
+   'Edge 는 grpc_tools.protoc 로 python stub 생성, Backend 는 protobuf-gradle-plugin 으로 java stub 생성. 메시지/RPC 시그니처가 항상 일치.'],
+  ['검수 게시판은 어디서 자동 분류되는가?',
+   'frontend/src/stores/board.js 의 lowConfidencePosts getter — recognitionConfidence < 0.7 인 글만 필터링. DashboardView 에서 amber 강조.'],
+  ['처음 띄우는 권장 순서는?',
+   '1) backend gradlew bootRun  2) fastapi-edge 에서 venv→pip install→generate_proto.py→uvicorn  3) frontend 에서 npm install→npm run dev'],
+];
+const quizBox = document.getElementById('quiz');
+QUIZ.forEach(([q, a], i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.marginBottom = '8px';
+  card.innerHTML = `
+    <div class="ttl">Q${String(i+1).padStart(2,'0')}</div>
+    <div class="body" style="font-weight:700; margin:6px 0 8px;">${q}</div>
+    <details>
+      <summary style="cursor:pointer; font-size:12px; color:var(--brand);">답 보기</summary>
+      <p style="margin:8px 0 0; font-size:13.5px;">${a}</p>
+    </details>`;
+  quizBox.appendChild(card);
+});
+</script>
+</body>
+</html>

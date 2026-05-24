@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OCR Academy — 번호판 인식 AI 완전 정복</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- 읽기 진행 바 -->
+<div id="reading-progress">
+  <div id="reading-progress-inner"></div>
+</div>
+
+<!-- 상단 바 -->
+<header id="topbar">
+  <button id="hamburger" aria-label="메뉴 열기">&#9776;</button>
+  <span id="topbar-title">홈</span>
+</header>
+
+<!-- 사이드바 -->
+<nav id="sidebar">
+  <div class="sidebar-logo">🎓 OCR Academy</div>
+  <ul class="nav-list">
+    <li class="nav-item active" data-target="sec-intro"    onclick="showSection('sec-intro')">
+      <span class="nav-icon">🏠</span><span class="nav-label">홈</span>
+    </li>
+    <li class="nav-item" data-target="sec-glossary"  onclick="showSection('sec-glossary')">
+      <span class="nav-icon">📖</span><span class="nav-label">용어사전</span>
+    </li>
+    <li class="nav-item" data-target="sec-history"   onclick="showSection('sec-history')">
+      <span class="nav-icon">📅</span><span class="nav-label">버전 역사</span>
+    </li>
+    <li class="nav-item" data-target="sec-arch"      onclick="showSection('sec-arch')">
+      <span class="nav-icon">🏗️</span><span class="nav-label">모델 구조</span>
+    </li>
+    <li class="nav-item" data-target="sec-data"      onclick="showSection('sec-data')">
+      <span class="nav-icon">🗂️</span><span class="nav-label">데이터</span>
+    </li>
+    <li class="nav-item" data-target="sec-perf"      onclick="showSection('sec-perf')">
+      <span class="nav-icon">📊</span><span class="nav-label">성능 비교</span>
+    </li>
+    <li class="nav-item" data-target="sec-trouble"   onclick="showSection('sec-trouble')">
+      <span class="nav-icon">🔧</span><span class="nav-label">트러블슈팅</span>
+    </li>
+    <li class="nav-item" data-target="sec-usage"     onclick="showSection('sec-usage')">
+      <span class="nav-icon">💻</span><span class="nav-label">사용법</span>
+    </li>
+    <li class="nav-item" data-target="sec-qa"        onclick="showSection('sec-qa')">
+      <span class="nav-icon">❓</span><span class="nav-label">Q&amp;A</span>
+    </li>
+  </ul>
+  <div class="sidebar-footer">v1 → ocrv6.5 완전 정복</div>
+</nav>
+
+<!-- 메인 콘텐츠 -->
+<main id="main">
+
+<!-- ══════════════════════════════════════════════════
+     SEC-INTRO : 홈
+══════════════════════════════════════════════════ -->
+<section id="sec-intro" class="section active">
+  <div class="hero">
+    <div class="hero-badge">🚗 AI 번호판 인식 프로젝트</div>
+    <h1 class="hero-title">OCR Academy</h1>
+    <p class="hero-sub">
+      자동차 번호판을 읽는 인공지능이<br>
+      어떻게 태어나고 똑똑해졌는지<br>
+      <strong>초등학생도 이해할 수 있게</strong> 알려드려요!
+    </p>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="stat-num">v1→v6.5</span>
+        <span class="stat-label">총 8단계 진화</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">99.80%</span>
+        <span class="stat-label">최종 종합 정확도</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">어려운 번호판 정확도</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">이 사이트에서 배울 수 있는 것</h2>
+  <div class="card-grid">
+    <div class="card" onclick="showSection('sec-glossary')">
+      <div class="card-icon">📖</div>
+      <h3>용어사전</h3>
+      <p>OCR, AI, 딥러닝 등 어려운 단어를 쉽게 설명해드려요.</p>
+    </div>
+    <div class="card" onclick="showSection('sec-history')">
+      <div class="card-icon">📅</div>
+      <h3>버전 역사</h3>
+      <p>v1부터 v6.5까지 AI가 어떻게 발전했는지 타임라인으로 봐요.</p>
+    </div>
+    <div class="card" onclick="showSection('sec-arch')">
+      <div class="card-icon">🏗️</div>
+      <h3>모델 구조</h3>
+      <p>AI 두뇌가 어떻게 생겼는지 그림으로 이해해요.</p>
+    </div>
+    <div class="card" onclick="showSection('sec-data')">
+      <div class="card-icon">🗂️</div>
+      <h3>데이터</h3>
+      <p>AI 학습에 어떤 사진들이 사용됐는지 알아봐요.</p>
+    </div>
+    <div class="card" onclick="showSection('sec-perf')">
+      <div class="card-icon">📊</div>
+      <h3>성능 비교</h3>
+      <p>각 버전이 얼마나 정확한지 차트로 비교해요.</p>
+    </div>
+    <div class="card" onclick="showSection('sec-qa')">
+      <div class="card-icon">❓</div>
+      <h3>Q&amp;A</h3>
+      <p>자주 묻는 질문 40개에 모두 답했어요.</p>
+    </div>
+  </div>
+
+  <div class="info-box" style="background:#fef3c7; border-left-color:#f59e0b; color:#78350f;">
+    <h3>🧠 이 AI는 CNN 방식인가요?</h3>
+    <p>
+      <strong>정확히는 CNN + RNN 혼합 방식</strong>이에요. 한 줄로 요약하면:
+    </p>
+    <p style="margin:10px 0; font-size:15px; font-weight:700; text-align:center;">
+      "눈(CNN)으로 사진을 보고, 뇌(RNN)로 글자 순서를 읽는 AI"
+    </p>
+    <ul>
+      <li><strong>CNN 역할</strong> — 번호판 이미지를 스캔해서 선·모양·글자 패턴 같은 시각적 특징을 추출해요</li>
+      <li><strong>RNN(BiLSTM) 역할</strong> — CNN이 뽑은 특징을 앞뒤 양방향으로 읽으면서 글자 순서를 이해해요</li>
+      <li><strong>CTC 역할</strong> — 최종적으로 "12가3456" 같은 텍스트로 변환해서 출력해요</li>
+    </ul>
+    <p style="margin-top:8px;">
+      순수 CNN만으로는 글자 <strong>순서</strong>를 이해하기 어려워요. 번호판처럼 여러 글자가 순서대로 나열된 경우엔 앞뒤 관계를 기억하는 RNN이 반드시 필요해서, 이 모델은 <strong>CNN(특징 추출) + RNN(순서 이해) + CTC(텍스트 출력)</strong>을 조합한 구조예요.
+    </p>
+  </div>
+
+  <div class="info-box">
+    <h3>🚗 이 AI는 무엇을 하나요?</h3>
+    <p>
+      도로에서 자동차 번호판 사진을 찍으면, AI가 그 사진을 보고
+      <strong>번호판에 쓰인 글자를 그대로 텍스트로 읽어내는</strong> 기술이에요.
+      예를 들어 사진에서 <code>12가3456</code> 이라고 읽어주는 거죠.
+      이 기술을 <strong>OCR</strong>(광학 문자 인식)이라고 해요.
+    </p>
+    <p>
+      한국 번호판에는 두 가지 형식이 있어요:<br>
+      &nbsp;• <strong>7자리</strong>: 숫자 2개 + 한글 1개 + 숫자 4개 (예: <code>12가3456</code>)<br>
+      &nbsp;• <strong>8자리</strong>: 숫자 3개 + 한글 1개 + 숫자 4개 (예: <code>123가4567</code>)
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SEC-GLOSSARY : 용어사전
+══════════════════════════════════════════════════ -->
+<section id="sec-glossary" class="section">
+  <h2 class="section-title">📖 용어사전</h2>
+  <p class="section-desc">모르는 단어가 있어도 걱정 마세요! 여기서 모두 쉽게 설명해드려요.</p>
+
+  <h3 class="subsection-title">🔤 기초 AI 용어</h3>
+  <div class="glossary-grid">
+    <div class="gloss-card">
+      <div class="gloss-term">AI (인공지능)</div>
+      <div class="gloss-desc">사람처럼 생각하고 판단할 수 있도록 만든 컴퓨터 프로그램이에요. 사람이 직접 규칙을 짜지 않아도, 수많은 예시를 보면서 스스로 규칙을 찾아내요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">딥러닝 (Deep Learning)</div>
+      <div class="gloss-desc">AI 학습 방법 중 하나예요. 사람의 뇌 신경망을 흉내 낸 "층(layer)"을 여러 겹 쌓아서, 데이터에서 복잡한 특징을 스스로 찾아내요. "깊은(deep) 학습"이라는 뜻이에요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">OCR</div>
+      <div class="gloss-desc">Optical Character Recognition의 약자예요. "광학 문자 인식"이라고도 해요. 사진이나 이미지 속 글자를 읽어서 텍스트로 바꿔주는 기술이에요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">모델 (Model)</div>
+      <div class="gloss-desc">학습을 마친 AI를 파일로 저장한 것이에요. 마치 시험을 다 치른 학생이 "졸업장"을 받는 것처럼, 학습된 AI의 지식을 파일(best.pt)에 저장해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">학습 (Training)</div>
+      <div class="gloss-desc">AI에게 수많은 예시(번호판 사진 + 정답 텍스트)를 보여주면서 올바르게 읽는 방법을 가르치는 과정이에요. 학교에서 공부하는 것과 같아요!</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">에폭 (Epoch)</div>
+      <div class="gloss-desc">전체 학습 데이터를 한 번 다 보는 것을 "1 에폭"이라고 해요. 예를 들어 50 에폭 학습이면, 모든 사진을 50번씩 반복해서 공부하는 거예요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">정확도 (Accuracy)</div>
+      <div class="gloss-desc">AI가 100개의 번호판 중 몇 개를 맞혔는지 나타내요. 99.80%면 100개 중 99.8개를 정확히 읽는다는 뜻이에요. 숫자가 높을수록 좋아요!</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">손실 (Loss)</div>
+      <div class="gloss-desc">AI의 "틀린 정도"를 숫자로 나타낸 거예요. 정답에서 멀수록 손실이 크고, 정답에 가까울수록 손실이 작아져요. 학습 목표는 손실을 최대한 줄이는 것!</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">파라미터 (Parameter)</div>
+      <div class="gloss-desc">AI 내부의 수많은 숫자들이에요. 학습하면서 이 숫자들이 조금씩 바뀌면서 AI가 점점 똑똑해져요. 이 모델은 약 900만 개의 파라미터를 가지고 있어요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">학습률 (Learning Rate)</div>
+      <div class="gloss-desc">한 번 학습할 때 파라미터를 얼마나 크게 바꿀지 결정해요. 너무 크면 학습이 불안정하고, 너무 작으면 학습이 너무 느려요. 적절한 균형이 중요해요!</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">배치 (Batch)</div>
+      <div class="gloss-desc">한 번에 AI에게 보여주는 사진 묶음이에요. 배치 크기=32면 32장씩 묶어서 학습해요. 너무 크면 메모리가 부족하고, 너무 작으면 학습이 불안정해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">GPU</div>
+      <div class="gloss-desc">그래픽 처리 장치예요. 게임 그래픽에 쓰이지만, AI 학습에도 아주 빠른 계산이 필요하기 때문에 GPU를 사용해요. 이 프로젝트에서는 RTX 4060 Laptop을 사용했어요.</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">🧠 모델 구조 용어</h3>
+  <div class="glossary-grid">
+    <div class="gloss-card">
+      <div class="gloss-term">CNN (합성곱 신경망)</div>
+      <div class="gloss-desc">이미지에서 특징을 찾아내는 AI 구조예요. 사진을 여러 필터로 스캔하면서 선, 모서리, 글자 모양 등의 패턴을 찾아내요. 눈의 역할을 한다고 볼 수 있어요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">RNN / LSTM / BiLSTM</div>
+      <div class="gloss-desc">글자의 순서를 기억하는 AI 구조예요. "1", "2", "가", "3", "4", "5", "6" 처럼 글자가 이어지는 순서를 이해해요. Bi는 앞뒤 방향 모두 읽는다는 뜻이에요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">STN (공간 변환 네트워크)</div>
+      <div class="gloss-desc">기울어지거나 찌그러진 번호판을 자동으로 똑바로 펴주는 AI 모듈이에요. 비뚤어진 사진을 먼저 교정해주는 "교정기"라고 생각하면 돼요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">VGG 백본</div>
+      <div class="gloss-desc">이미지에서 특징을 뽑아내는 CNN 구조의 한 종류예요. 4단계(Stage)로 이미지를 점점 작게 만들면서 중요한 특징만 추려내요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">CBAM (어텐션 모듈)</div>
+      <div class="gloss-desc">"어디에 집중할지" 결정하는 모듈이에요. 사람이 글을 읽을 때 글자 부분에 집중하듯, AI도 번호판의 글자 부분에 더 집중하도록 도와줘요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">CTC (연결주의 시간분류)</div>
+      <div class="gloss-desc">번호판 사진에서 글자가 정확히 어디 있는지 몰라도 학습할 수 있게 해주는 특별한 방법이에요. "blank" 토큰을 이용해 글자 경계를 자동으로 찾아줘요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">Focal CTC</div>
+      <div class="gloss-desc">어려운 문제는 더 열심히 공부하도록 만든 개선된 CTC예요. 쉬운 번호판보다 어려운 번호판에 더 많은 "페널티"를 주어서 AI가 집중해서 배우게 해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">소프트맥스 (Softmax)</div>
+      <div class="gloss-desc">AI가 여러 글자 중 하나를 선택할 때 각 글자의 확률을 계산해요. 모든 확률을 더하면 100%가 돼요. 가장 높은 확률의 글자를 최종 답으로 선택해요.</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">⚙️ 학습 기법 용어</h3>
+  <div class="glossary-grid">
+    <div class="gloss-card">
+      <div class="gloss-term">증강 (Augmentation)</div>
+      <div class="gloss-desc">학습 데이터를 인위적으로 다양하게 변형하는 기법이에요. 사진을 기울이거나, 흐리게 하거나, 어둡게 해서 AI가 다양한 상황에 대비하도록 훈련시켜요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">EMA (지수이동평균)</div>
+      <div class="gloss-desc">여러 에폭의 모델 파라미터를 평균 내어 더 안정적인 모델을 만드는 기법이에요. 하지만 너무 높은 decay값(0.9995)을 쓰면 오히려 개선이 안 보이는 문제가 생겨요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">파인튜닝 (Fine-tuning)</div>
+      <div class="gloss-desc">이미 잘 학습된 모델을 기반으로 더 작은 학습률로 추가 학습하는 방법이에요. 처음부터 다시 학습하는 것보다 빠르고, 기존에 잘 하던 것을 잃지 않는 장점이 있어요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">커리큘럼 학습</div>
+      <div class="gloss-desc">처음엔 쉬운 문제부터, 나중엔 어려운 문제를 주는 학습 방법이에요. 마치 학교에서 1+1부터 시작해서 방정식을 배우는 것처럼, AI도 단계적으로 어려워지는 예제를 학습해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">웜업 (Warmup)</div>
+      <div class="gloss-desc">학습 초반에 학습률을 서서히 높이는 기법이에요. 너무 빠르게 시작하면 AI가 흔들리기 때문에, 처음엔 천천히 적응할 시간을 주는 거예요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">Early Stopping (조기 종료)</div>
+      <div class="gloss-desc">성능이 더 이상 개선되지 않으면 학습을 미리 멈추는 기법이에요. 과학습(overfitting)을 방지하고, 불필요한 학습 시간을 줄일 수 있어요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">과학습 (Overfitting)</div>
+      <div class="gloss-desc">AI가 학습 데이터만 너무 외워서, 새로운 데이터에는 틀리는 현상이에요. 시험 문제를 달달 외웠지만 조금 다른 응용 문제는 못 푸는 것과 비슷해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">WeightedRandomSampler</div>
+      <div class="gloss-desc">드문 데이터를 더 자주 뽑아서 학습시키는 방법이에요. '희귀 글자(바, 배, 사 등)'가 적게 있으면 AI가 이를 못 배울 수 있어서, 이런 데이터를 4배로 더 많이 보여줘요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">ECE (보정 오차)</div>
+      <div class="gloss-desc">AI가 "나는 90% 확신해"라고 할 때 실제로 90% 확률로 맞는지 측정해요. ECE가 낮을수록 AI의 자신감이 실제 정확도와 일치하는, "솔직한 AI"예요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">FP32 / FP16 (부동소수점 정밀도)</div>
+      <div class="gloss-desc">AI 내부 숫자를 저장하는 방식이에요. <strong>FP32</strong>(32비트, 4바이트)는 정밀하지만 무겁고, <strong>FP16</strong>(16비트, 2바이트)은 절반 크기로 GPU에서 2배 빠르게 계산해요. 학습은 FP32로, 배포(추론)는 FP16으로 변환하면 모델이 가벼워지고 속도가 빨라져요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">Tensor Core</div>
+      <div class="gloss-desc">NVIDIA GPU 안에 있는 특별한 연산 유닛이에요. FP16 행렬 계산을 FP32보다 최대 8배 빠르게 처리해요. RTX 4060에도 탑재되어 있어서 FP16 변환만 해도 추론 속도가 크게 올라가요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">AMP (자동 혼합 정밀도)</div>
+      <div class="gloss-desc">PyTorch가 자동으로 연산에 따라 FP32와 FP16을 골라서 쓰는 기능이에요. 무거운 계산(행렬곱)은 FP16으로 빠르게, 정밀도가 필요한 계산(소프트맥스)은 FP32로 안전하게 처리해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">ONNX</div>
+      <div class="gloss-desc">Open Neural Network Exchange의 약자예요. 다양한 AI 프레임워크(PyTorch, TensorFlow 등) 간에 모델을 공유할 수 있는 표준 파일 형식이에요. best.pt → best.onnx로 변환하면 TensorRT 등 다양한 배포 도구를 쓸 수 있어요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">TensorRT</div>
+      <div class="gloss-desc">NVIDIA가 만든 AI 추론 최적화 엔진이에요. FP16 변환 + 연산 최적화 + 메모리 최적화를 모두 자동으로 해줘요. ONNX 파일을 TensorRT 엔진으로 변환하면 같은 GPU에서 최대 4~8배까지 빠른 추론이 가능해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">그래디언트 클리핑</div>
+      <div class="gloss-desc">학습 중 파라미터가 너무 크게 변하지 않도록 제한하는 안전장치예요. 학습이 폭발적으로 불안정해지는 것을 막아줘요. GRAD_CLIP=2.0으로 설정했어요.</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">📊 평가 지표 용어</h3>
+  <div class="glossary-grid">
+    <div class="gloss-card">
+      <div class="gloss-term">Val Accuracy (검증 정확도)</div>
+      <div class="gloss-desc">학습에 사용하지 않은 검증용 사진으로 측정한 정확도예요. AI가 새로운 사진도 잘 읽는지 확인하는 지표예요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">Hard Accuracy (어려운 테스트 정확도)</div>
+      <div class="gloss-desc">6가지 어려운 상황(작은 번호판, 흔들림, 야간, 잘린 번호판, 기울어짐, 희귀 글자)에서 측정한 정확도예요. 이 점수가 높아야 실제 도로에서도 잘 동작해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">Rare Accuracy (희귀 글자 정확도)</div>
+      <div class="gloss-desc">데이터가 적은 희귀 한글(바, 배, 사, 아, 자, 허)이 들어간 번호판을 얼마나 잘 읽는지 측정해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">Comp Score (종합 점수)</div>
+      <div class="gloss-desc">여러 지표를 가중 평균한 최종 점수예요. 공식: 0.5×어려운정확도 + 0.3×희귀정확도 + 0.2×검증정확도 − ECE패널티. 이 점수가 가장 높을 때 best.pt를 저장해요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">Conf Accuracy (신뢰도 정확도)</div>
+      <div class="gloss-desc">AI의 예측 신뢰도가 높은 경우(예: 확신도 80% 이상)에만 평가한 정확도예요.</div>
+    </div>
+    <div class="gloss-card">
+      <div class="gloss-term">Hard 6개 카테고리</div>
+      <div class="gloss-desc">S=작은번호판(Small), B=모션블러(Blur), N=야간(Night), C=잘린이미지(Crop), K=기울어짐(sKew), R=희귀글자(Rare). 각 카테고리 약 250장씩 테스트해요.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SEC-HISTORY : 버전 역사
+══════════════════════════════════════════════════ -->
+<section id="sec-history" class="section">
+  <h2 class="section-title">📅 버전 역사 타임라인</h2>
+  <p class="section-desc">v1부터 ocrv6.5까지, 이 AI가 어떻게 탄생하고 성장했는지 알아봐요!</p>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#94a3b8;"></div>
+      <div class="tl-content">
+        <div class="tl-version">v1 · 시작</div>
+        <div class="tl-title">처음 만든 OCR — "일단 해보자!"</div>
+        <div class="tl-body">
+          <p>가장 단순한 규칙 기반 방식으로 시작했어요. AI가 스스로 배우는 게 아니라, 사람이 직접 "글자가 이런 모양이면 이거다"라고 규칙을 만들어준 거예요.</p>
+          <ul>
+            <li>방식: 규칙 기반(Template Matching) + 기본 이미지 처리</li>
+            <li>결과: 깨끗한 번호판은 어느 정도 읽지만, 조금만 어두워지거나 기울어지면 틀림</li>
+            <li>한계: 새로운 상황에 유연하게 대처하지 못함</li>
+          </ul>
+        </div>
+        <div class="tl-metric">정확도: ~70% 이하 (상황에 따라 크게 다름)</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#64748b;"></div>
+      <div class="tl-content">
+        <div class="tl-version">v2 · v3 · 개선 시도</div>
+        <div class="tl-title">딥러닝 도입 — "AI에게 직접 배우게 하자!"</div>
+        <div class="tl-body">
+          <p>규칙 기반의 한계를 느끼고 딥러닝을 도입했어요. 수천 장의 번호판 사진을 AI에게 보여주며 스스로 특징을 찾게 했어요.</p>
+          <ul>
+            <li>v2: 기본 CNN으로 글자 분류 시작. 번호판을 7~8개 칸으로 나눠서 각각 인식</li>
+            <li>v3: 데이터 양을 늘리고 증강 기법 추가. 어두운 사진, 기울어진 사진도 학습</li>
+            <li>여전히 한계: 글자가 붙어있거나 잘린 경우 오인식</li>
+          </ul>
+        </div>
+        <div class="tl-metric">정확도: ~85-90% 수준</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#3b82f6;"></div>
+      <div class="tl-content">
+        <div class="tl-version">v4 · 구조 혁신</div>
+        <div class="tl-title">CTC 도입 — "글자 경계를 AI가 직접 찾게 하자!"</div>
+        <div class="tl-body">
+          <p>v4에서 CTC(Connectionist Temporal Classification)를 도입했어요. 이전까지는 글자 하나하나의 위치를 직접 표시해줘야 했는데, CTC를 쓰면 전체 번호판 텍스트만 알려줘도 AI가 알아서 배워요.</p>
+          <ul>
+            <li>CNN으로 특징 추출 → RNN으로 순서 이해 → CTC로 최종 텍스트 출력</li>
+            <li>글자 경계 표시 작업(어노테이션) 부담 대폭 감소</li>
+            <li>이어진 글자도 올바르게 분리해서 읽기 시작</li>
+          </ul>
+        </div>
+        <div class="tl-metric">정확도: ~93-95% 수준</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#8b5cf6;"></div>
+      <div class="tl-content">
+        <div class="tl-version">v5 · 현재 구조 완성</div>
+        <div class="tl-title">V5OCR — 지금의 AI 구조가 완성되다!</div>
+        <div class="tl-body">
+          <p>v5에서 현재까지 사용하는 AI 구조(아키텍처)가 완성됐어요. STN → VGG 4단계 → CBAM → BiLSTM → CTC 파이프라인이 확정되었어요.</p>
+          <ul>
+            <li><strong>STN</strong>: 기울어진 번호판 자동 교정</li>
+            <li><strong>VGG 4단계 백본</strong>: 이미지 특징 추출</li>
+            <li><strong>CBAM 어텐션</strong>: 중요한 부분 집중</li>
+            <li><strong>2층 BiLSTM(256)</strong>: 앞뒤 방향으로 글자 순서 이해</li>
+            <li><strong>Linear(51)</strong>: 51개 클래스(blank + 숫자 10개 + 한글 40개) 분류</li>
+            <li>Focal CTC 도입으로 어려운 글자 학습 강화</li>
+          </ul>
+        </div>
+        <div class="tl-metric">Val: 98.70% / Hard: 98.00% / Rare: 100.00% / Conf: 99.24%</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#f59e0b;"></div>
+      <div class="tl-content">
+        <div class="tl-version">ocrv6 · 기반 확립</div>
+        <div class="tl-title">ocrv6 — 한글 40자 완전 지원!</div>
+        <div class="tl-body">
+          <p>v5를 기반으로 더 많은 한글 글자를 지원하고, 학습 데이터를 대폭 확충했어요. 희귀 글자(바·배·사·아·자·허)에 대한 별도 처리도 시작됐어요.</p>
+          <ul>
+            <li>한글 40자 전체 지원 (가~히 중 번호판에 쓰이는 글자 모두)</li>
+            <li>그룹 인식 기반 train/val 분리 (같은 번호판이 학습/검증에 둘 다 들어가는 오류 수정)</li>
+            <li>WeightedRandomSampler로 희귀 글자 3배 오버샘플링</li>
+          </ul>
+        </div>
+        <div class="tl-metric">Val: 99.5%+ 달성 시작</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#f59e0b;"></div>
+      <div class="tl-content">
+        <div class="tl-version">ocrv6.3 · 균형 달성</div>
+        <div class="tl-title">ocrv6.3 — 검증&어려운 지표 동시에 높이다!</div>
+        <div class="tl-body">
+          <p>ocrv6.3은 Val, Hard, Rare 지표를 모두 균형 있게 높이는 데 성공했어요. 커리큘럼 증강(단계별로 어려워지는 학습)을 체계적으로 적용했어요.</p>
+          <ul>
+            <li>커리큘럼 3단계: p1(쉬움, ep1-20) → p2(보통, ep21-50) → p3(어려움, ep51+)</li>
+            <li>Focal CTC γ=1.2 로 최적화</li>
+            <li>EMA decay=0.999로 안정적인 학습</li>
+            <li>Hard B(모션블러) = 96.77%로 약점 발견</li>
+          </ul>
+        </div>
+        <div class="tl-metric">Val: 99.70% / Hard: 100.00% / Rare: 97.48% / Comp: 99.18%</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#ef4444;"></div>
+      <div class="tl-content">
+        <div class="tl-version">ocrv6.4 · 도전과 실패</div>
+        <div class="tl-title">ocrv6.4 — 여러 번의 실패 끝에 얻은 교훈</div>
+        <div class="tl-body">
+          <p>ocrv6.4는 EMA(지수이동평균)을 도입해서 더 안정적인 모델을 만들려 했어요. 하지만 여러 문제가 발생했어요.</p>
+          <ul>
+            <li>1차 시도: 에폭 10에서 조기 종료 → best_comp=0.0 버그 + NUM_WORKERS=4 불안정</li>
+            <li>2차 시도: 에폭 20에서 조기 종료 → EMA 시작 후 rare 0.9904→0.9809 하락</li>
+            <li>최종 결과: ep8 BEST (EMA 시작 전), rare=0.9904 달성</li>
+            <li>모션블러(B) 95.16%로 여전히 약점 존재</li>
+            <li>교훈: EMA decay=0.9995는 파인튜닝에 너무 강함</li>
+          </ul>
+        </div>
+        <div class="tl-metric">Val: 98.92% / Hard: 98.80% / Rare: 99.04% / Comp: 98.90%</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#10b981;"></div>
+      <div class="tl-content">
+        <div class="tl-version">ocrv6.5 · 최종 완성</div>
+        <div class="tl-title">ocrv6.5 — 모든 지표 최고 달성! 🏆</div>
+        <div class="tl-body">
+          <p>ocrv6.4의 ep8 best.pt를 기반으로 파인튜닝을 했어요. EMA를 완전히 제거하고, 희귀 글자 오버샘플링을 4배로 높여서 모든 카테고리에서 완벽한 성능을 달성했어요!</p>
+          <ul>
+            <li>EMA 완전 제거 → eval_model = model (그대로 평가)</li>
+            <li>학습률 LR=5e-5 (파인튜닝용 소학습률)</li>
+            <li>희귀 글자 오버샘플링 3배 → 4배로 증가</li>
+            <li>증강 강도 p2 고정 (불필요한 변화 방지)</li>
+            <li>ep9 BEST, ep24 조기 종료 (patience=15)</li>
+            <li><strong>Hard 6개 카테고리 모두 100.00%!</strong></li>
+          </ul>
+        </div>
+        <div class="tl-metric">Val: 99.72% / Hard: 100.00% / Rare: 99.52% / Comp: 99.80% 🏆</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="info-box">
+    <h3>📈 핵심 진화 포인트</h3>
+    <p>
+      <strong>구조 변화</strong>: 규칙 기반 → CNN → CNN+RNN+CTC → STN+VGG+CBAM+BiLSTM+FocalCTC<br>
+      <strong>데이터 변화</strong>: 수백 장 → 수천 장 → 희귀 글자 오버샘플링<br>
+      <strong>학습 기법</strong>: 기본 학습 → 커리큘럼 → EMA → 파인튜닝<br>
+      <strong>핵심 교훈</strong>: 안정성보다 유연성이 중요! EMA는 때로 개선을 숨긴다
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SEC-ARCH : 모델 구조
+══════════════════════════════════════════════════ -->
+<section id="sec-arch" class="section">
+  <h2 class="section-title">🏗️ AI 모델 구조 (V5OCR Architecture)</h2>
+  <p class="section-desc">번호판 사진이 AI 안으로 들어가서 텍스트로 나오기까지의 여정을 따라가봐요!</p>
+
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-icon">📷</div>
+      <div class="pipe-label">입력 이미지</div>
+      <div class="pipe-desc">번호판 사진<br>(32×128 픽셀)</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">📐</div>
+      <div class="pipe-label">STN</div>
+      <div class="pipe-desc">기울기·왜곡<br>자동 교정</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🔍</div>
+      <div class="pipe-label">VGG 백본</div>
+      <div class="pipe-desc">4단계<br>특징 추출</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">👁️</div>
+      <div class="pipe-label">CBAM</div>
+      <div class="pipe-desc">중요 부분<br>집중</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🧠</div>
+      <div class="pipe-label">BiLSTM</div>
+      <div class="pipe-desc">글자 순서<br>이해 (2층)</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">📝</div>
+      <div class="pipe-label">CTC 디코딩</div>
+      <div class="pipe-desc">번호판<br>텍스트 출력</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">✅</div>
+      <div class="pipe-label">결과</div>
+      <div class="pipe-desc">"12가3456"<br>텍스트</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">각 단계 자세히 보기</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">📐</div>
+      <h3>1단계: STN (공간 변환)</h3>
+      <p>사진이 기울어져 있거나 원근감이 있어도 자동으로 정면에서 찍은 것처럼 교정해줘요. 6개의 숫자(변환 행렬)로 이미지를 변형해요. 나머지 단계가 훨씬 쉽게 글자를 읽을 수 있게 돕는 "전처리 담당"이에요.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔍</div>
+      <h3>2단계: VGG 백본 (특징 추출)</h3>
+      <p>4개의 단계(Stage)로 이미지를 점점 작게 만들면서 중요한 특징만 추려내요. Stage 1: 64채널 → Stage 2: 128채널 → Stage 3: 256채널 → Stage 4: 512채널. 각 단계마다 더 복잡한 패턴을 인식해요.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👁️</div>
+      <h3>3단계: CBAM (어텐션)</h3>
+      <p>채널 어텐션(어떤 특징이 중요한지)과 공간 어텐션(이미지의 어느 위치가 중요한지)을 계산해요. "지금은 이 부분의 이 특징에 집중해!" 라고 알려주는 안내자 역할이에요.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <h3>4단계: BiLSTM (순서 이해)</h3>
+      <p>256 유닛짜리 양방향 LSTM 2층이에요. 왼쪽→오른쪽, 오른쪽→왼쪽 두 방향으로 모두 읽어서 앞뒤 문맥을 이해해요. "3 다음에 뭐가 오지?" 같은 순서 관계를 학습해요.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>5단계: Linear 분류기</h3>
+      <p>Linear(512→51)로 51개 클래스 중 하나를 선택해요. 51개 = blank(1) + 숫자(10: 0-9) + 한글(40: 가~히 중 번호판 글자). 소프트맥스로 확률을 계산하고 가장 높은 확률의 글자를 선택해요.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📝</div>
+      <h3>6단계: CTC 디코딩</h3>
+      <p>blank 토큰을 제거하고 연속 중복을 합쳐서 최종 텍스트를 출력해요. 예: [blank, 1, 1, blank, 2, blank, 가, blank, 3, 4, 5, 6] → "12가3456". 글자 경계를 자동으로 찾아내는 마법 같은 기술!</p>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h3>🔢 모델 크기 정보</h3>
+    <p>
+      <strong>총 파라미터 수</strong>: 약 900만 개<br>
+      <strong>모델 파일 크기</strong>: 31.8 MB (best.pt)<br>
+      <strong>입력 이미지 크기</strong>: 32×128 픽셀 (높이×너비), 그레이스케일(흑백)<br>
+      <strong>출력 클래스</strong>: 51개 (blank + 숫자 10개 + 한글 40개)<br>
+      <strong>추론 속도</strong>: GPU 기준 약 5ms/장 (RTX 4060 기준)
+    </p>
+  </div>
+
+  <h3 class="subsection-title">YOLO + OCR 파이프라인</h3>
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-icon">🎥</div>
+      <div class="pipe-label">영상/사진</div>
+      <div class="pipe-desc">도로 카메라<br>원본</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🔲</div>
+      <div class="pipe-label">YOLO 감지</div>
+      <div class="pipe-desc">번호판 위치<br>박스 감지</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">✂️</div>
+      <div class="pipe-label">크롭</div>
+      <div class="pipe-desc">번호판 영역<br>자르기</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🧠</div>
+      <div class="pipe-label">ocrv6.5</div>
+      <div class="pipe-desc">번호판<br>텍스트 인식</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">✅</div>
+      <div class="pipe-label">결과</div>
+      <div class="pipe-desc">"12가3456"<br>+ 신뢰도</div>
+    </div>
+  </div>
+  <p style="margin-top:12px; color:#64748b; font-size:0.9em;">
+    v5 vs ocrv6.5 비교: ocrv6.5가 모든 어려운 상황(야간·모션블러·희귀글자)에서 더 높은 정확도를 보여요. YOLO와 함께 쓸 때 특히 잘린 번호판 처리에서 ocrv6.5의 강점이 두드러져요.
+  </p>
+
+  <h3 class="subsection-title">⚡ FP16 변환 — 배포를 위한 경량화</h3>
+  <div class="info-box" style="background:#fef3c7; border-left-color:#f59e0b; color:#78350f; margin-bottom:16px;">
+    <h3>🔢 왜 FP16으로 변환하나요?</h3>
+    <p>학습은 <strong>FP32(32비트)</strong>로 해서 수치가 정밀해요. 배포할 때 <strong>FP16(16비트)</strong>으로 바꾸면 파일 크기가 절반이 되고 GPU에서 2배 빠르게 처리할 수 있어요. 번호판 OCR처럼 정답 후보가 51개로 한정될 때는 FP16의 작은 오차가 정답을 바꾸지 않아서 정확도 손실이 거의 없어요.</p>
+  </div>
+
+  <div class="pipeline" style="flex-direction:column; align-items:flex-start; gap:8px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:20px; margin-bottom:16px;">
+    <p style="font-weight:700; color:#1e293b; margin-bottom:4px;">📦 FP16 변환 전체 흐름</p>
+    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+      <div class="pipe-step" style="background:#fff7ed; border-color:#f59e0b; min-width:130px;">
+        <div class="pipe-icon">🏋️</div>
+        <div class="pipe-label" style="color:#d97706;">학습 (FP32)</div>
+        <div class="pipe-desc">best.pt<br>31.8 MB</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step" style="background:#eff6ff; border-color:#3b82f6; min-width:130px;">
+        <div class="pipe-icon">🔄</div>
+        <div class="pipe-label" style="color:#2563eb;">FP16 변환</div>
+        <div class="pipe-desc">model.half()<br>또는 AMP</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step" style="background:#f0fdf4; border-color:#10b981; min-width:130px;">
+        <div class="pipe-icon">🚀</div>
+        <div class="pipe-label" style="color:#059669;">추론 (FP16)</div>
+        <div class="pipe-desc">~16 MB<br>2× 빠름</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step" style="background:#faf5ff; border-color:#8b5cf6; min-width:130px;">
+        <div class="pipe-icon">📦</div>
+        <div class="pipe-label" style="color:#7c3aed;">ONNX 배포</div>
+        <div class="pipe-desc">best_fp16.onnx<br>TensorRT 연계</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; font-size:12px; color:#64748b; line-height:1.8;">
+      <strong style="color:#1e293b;">방법 A (model.half())</strong>: 한 줄 변환, 테스트용 &nbsp;|&nbsp;
+      <strong style="color:#1e293b;">방법 B (AMP autocast)</strong>: 자동 혼합 정밀도, 운영 서버 권장 &nbsp;|&nbsp;
+      <strong style="color:#1e293b;">방법 C (ONNX FP16)</strong>: 엣지·배포 환경 권장<br>
+      <span style="color:#ef4444;">⚠ FP16은 CUDA GPU 전용 — CPU에서는 오히려 느려짐</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SEC-DATA : 데이터
+══════════════════════════════════════════════════ -->
+<section id="sec-data" class="section">
+  <h2 class="section-title">🗂️ 학습에 사용된 데이터</h2>
+  <p class="section-desc">AI가 공부한 사진들은 어떤 것들이었을까요?</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">📸</div>
+      <h3>학습 데이터 구성</h3>
+      <p>실제 도로에서 촬영된 번호판 사진과, 증강(가공)된 사진이 함께 사용됐어요. 번호판 텍스트가 정답 레이블로 달려 있어요.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">✂️</div>
+      <h3>Train/Val 분리</h3>
+      <p>같은 번호판이 학습과 검증 양쪽에 들어가면 시험 문제가 유출되는 것과 같아요. 그래서 번호판 번호를 기준으로 그룹 분리를 해요. (80% 학습 / 20% 검증)</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>Hard Val 세트</h3>
+      <p>6가지 어려운 상황 카테고리별 약 250장씩 따로 모아서 테스트해요. S(작은), B(흔들림), N(야간), C(잘린), K(기울어짐), R(희귀글자).</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚖️</div>
+      <h3>오버샘플링</h3>
+      <p>희귀 한글(바·배·사·아·자·허)이 들어간 번호판은 원래 데이터가 적어요. 이런 데이터를 4배로 더 자주 뽑아서 AI가 충분히 학습할 수 있게 해요.</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">데이터 증강 (Augmentation) 상세</h3>
+  <div class="info-box">
+    <h3>단계별 증강 강도</h3>
+    <p>AI를 학습시킬 때 사진에 다양한 변형을 주어서 더 강인한 AI를 만들어요. 단계별로 점점 어려운 변형을 적용해요:</p>
+    <table class="perf-table" style="margin-top:12px;">
+      <thead>
+        <tr><th>단계</th><th>에폭</th><th>회전</th><th>블러</th><th>밝기</th><th>노이즈</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>p1 (쉬움)</td><td>ep 1-20</td><td>±5°</td><td>약</td><td>약</td><td>약</td></tr>
+        <tr><td>p2 (보통)</td><td>ep 21-50</td><td>±10°</td><td>보통</td><td>보통</td><td>보통</td></tr>
+        <tr><td>p3 (어려움)</td><td>ep 51+</td><td>±15°</td><td>강</td><td>강</td><td>강</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:8px;">ocrv6.5는 파인튜닝이라 p2 고정을 사용해요 (불필요한 변화 방지).</p>
+  </div>
+
+  <h3 class="subsection-title">한국 번호판 형식</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🔢</div>
+      <h3>7자리 번호판</h3>
+      <p>숫자 2자리 + 한글 1자리 + 숫자 4자리<br>예: <code>12가3456</code><br>구형 번호판 형식이에요.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔢</div>
+      <h3>8자리 번호판</h3>
+      <p>숫자 3자리 + 한글 1자리 + 숫자 4자리<br>예: <code>123가4567</code><br>2019년 이후 신형 번호판 형식이에요.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌟</div>
+      <h3>희귀 한글 6자</h3>
+      <p>데이터가 적어 AI가 배우기 어려운 글자들:<br><strong>바 · 배 · 사 · 아 · 자 · 허</strong><br>오버샘플링과 FocalCTC로 특별 관리!</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">CTC 레이블 규칙</h3>
+  <div class="info-box">
+    <h3>⚠️ 중요: CTC 인덱스 규칙</h3>
+    <p>
+      AI가 글자를 숫자로 관리해요. 아주 중요한 약속이 있어요:<br><br>
+      &nbsp;• <strong>인덱스 0 = blank</strong> (CTC에서 "아무 글자도 없음"을 표현)<br>
+      &nbsp;• <strong>인덱스 1-10 = 숫자 0-9</strong><br>
+      &nbsp;• <strong>인덱스 11-50 = 한글 40자</strong> (가, 나, 다 ... 허 순서)<br><br>
+      이 규칙이 틀리면 모든 예측이 어긋나요! "blank=0"은 이 프로젝트에서 절대 바꾸면 안 되는 핵심 약속이에요.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SEC-PERF : 성능 비교
+══════════════════════════════════════════════════ -->
+<section id="sec-perf" class="section">
+  <h2 class="section-title">📊 버전별 성능 비교</h2>
+  <p class="section-desc">각 버전이 얼마나 정확한지 비교해봐요. 숫자가 높을수록 좋아요!</p>
+
+  <h3 class="subsection-title">종합 점수 (Comp Score) 비교</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">v5</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-width="60%" style="background:#3b82f6;"></div>
+      </div>
+      <div class="bar-value">98.74%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">ocrv6.3</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-width="72%" style="background:#f59e0b;"></div>
+      </div>
+      <div class="bar-value">99.18%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">ocrv6.4</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-width="30%" style="background:#ef4444;"></div>
+      </div>
+      <div class="bar-value">98.90%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">ocrv6.5 🏆</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-width="100%" style="background:#10b981;"></div>
+      </div>
+      <div class="bar-value">99.80%</div>
+    </div>
+  </div>
+  <p style="font-size:0.8em; color:#94a3b8; margin-top:4px;">* 바 차트 너비는 97%~100% 범위에서 정규화됨</p>
+
+  <h3 class="subsection-title">지표별 전체 비교표</h3>
+  <div style="overflow-x:auto;">
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>버전</th>
+          <th>Val</th>
+          <th>Hard</th>
+          <th>Rare</th>
+          <th>Conf</th>
+          <th>ECE</th>
+          <th>Comp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>v5</strong></td>
+          <td>98.70%</td>
+          <td>98.00%</td>
+          <td>100.00%</td>
+          <td>99.24%</td>
+          <td>—</td>
+          <td>98.74%</td>
+        </tr>
+        <tr>
+          <td><strong>ocrv6</strong></td>
+          <td>99.50%+</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>ocrv6.3</strong></td>
+          <td>99.70%</td>
+          <td>100.00%</td>
+          <td>97.48%</td>
+          <td>99.66%</td>
+          <td>—</td>
+          <td>99.18%</td>
+        </tr>
+        <tr>
+          <td><strong>ocrv6.4</strong></td>
+          <td>98.92%</td>
+          <td>98.80%</td>
+          <td>99.04%</td>
+          <td>98.80%</td>
+          <td>0.0061</td>
+          <td>98.90%</td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>ocrv6.5 🏆</strong></td>
+          <td><strong>99.72%</strong></td>
+          <td><strong>100.00%</strong></td>
+          <td><strong>99.52%</strong></td>
+          <td><strong>99.70%</strong></td>
+          <td><strong>낮음</strong></td>
+          <td><strong>99.80%</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="subsection-title">ocrv6.5 Hard 카테고리 세부 성능</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">S (작은)</div>
+      <div class="bar-track"><div class="bar-fill" data-width="100%" style="background:#10b981;"></div></div>
+      <div class="bar-value">100.00%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">B (블러)</div>
+      <div class="bar-track"><div class="bar-fill" data-width="100%" style="background:#10b981;"></div></div>
+      <div class="bar-value">100.00%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">N (야간)</div>
+      <div class="bar-track"><div class="bar-fill" data-width="100%" style="background:#10b981;"></div></div>
+      <div class="bar-value">100.00%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">C (잘린)</div>
+      <div class="bar-track"><div class="bar-fill" data-width="100%" style="background:#10b981;"></div></div>
+      <div class="bar-value">100.00%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">K (기울임)</div>
+      <div class="bar-track"><div class="bar-fill" data-width="100%" style="background:#10b981;"></div></div>
+      <div class="bar-value">100.00%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">R (희귀)</div>
+      <div class="bar-track"><div class="bar-fill" data-width="100%" style="background:#10b981;"></div></div>
+      <div class="bar-value">100.00%</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">레이더 차트 — 다차원 비교</h3>
+  <div class="radar-wrap">
+    <canvas id="radarCanvas" width="400" height="400"></canvas>
+    <div class="radar-legend">
+      <div class="legend-item"><span style="background:#3b82f6;"></span> v5</div>
+      <div class="legend-item"><span style="background:#f59e0b;"></span> ocrv6.3</div>
+      <div class="legend-item"><span style="background:#10b981;"></span> ocrv6.5</div>
+      <div style="margin-top:8px; font-size:0.8em; color:#94a3b8;">
+        축: Val / Hard / Rare / Conf / Comp<br>
+        범위: 97%~100% 정규화
+      </div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">v5 vs ocrv6.5 : 주요 개선 포인트</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <h3>Val 정확도</h3>
+      <p>98.70% → <strong>99.72%</strong><br>+1.02%p 개선</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💪</div>
+      <h3>Hard 정확도</h3>
+      <p>98.00% → <strong>100.00%</strong><br>+2.00%p 개선 🏆</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌟</div>
+      <h3>Rare 정확도</h3>
+      <p>100.00% → <strong>99.52%</strong><br>v5도 희귀 글자 강했어요!</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚀</div>
+      <h3>YOLO 효율성</h3>
+      <p>ocrv6.5는 잘린 번호판(C), 야간(N) 처리가 특히 강해서 YOLO 파이프라인에서 더 유리해요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SEC-TROUBLE : 트러블슈팅
+══════════════════════════════════════════════════ -->
+<section id="sec-trouble" class="section">
+  <h2 class="section-title">🔧 트러블슈팅 가이드</h2>
+  <p class="section-desc">학습하면서 겪은 문제들과 해결 방법을 정리했어요. 같은 실수를 반복하지 않아요!</p>
+
+  <div class="ts-list">
+
+    <div class="ts-item">
+      <div class="ts-header" onclick="toggleTs(this)">
+        <span class="ts-num">TS-1</span>
+        <span class="ts-title">에폭 10에서 학습이 멈춰버렸어요!</span>
+        <span class="ts-badge error">치명적 버그</span>
+        <span class="ts-chevron">▼</span>
+      </div>
+      <div class="ts-body">
+        <p><strong>증상:</strong> ocrv6.4 1차 학습 중 에폭 10에 갑자기 "조기 종료"가 발생. no_improve가 빠르게 쌓임.</p>
+        <p><strong>원인 1 — best_comp=0.0 버그:</strong> 초기값이 0.0이라 ep1의 comp(약 0.0)가 0.0보다 크지 않아서 best를 갱신하지 못하고 no_improve가 계속 쌓였어요.</p>
+        <p><strong>원인 2 — NUM_WORKERS=4 불안정:</strong> Windows에서 DataLoader의 멀티프로세싱(Workers=4)이 불안정해서 데이터 로딩이 꼬였어요.</p>
+        <p><strong>해결:</strong></p>
+        <ul>
+          <li><code>best_comp = -1.0</code>으로 초기화 변경 (어떤 값이라도 -1.0보다 크기 때문에 항상 첫 에폭에 갱신)</li>
+          <li><code>NUM_WORKERS = 0</code>으로 변경 (Windows에서 안전한 싱글 프로세스 데이터 로딩)</li>
+          <li><code>PATIENCE_START = 20</code> 추가 (20 에폭 이전에는 조기 종료 체크 안 함)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ts-item">
+      <div class="ts-header" onclick="toggleTs(this)">
+        <span class="ts-num">TS-2</span>
+        <span class="ts-title">EMA 시작 후 성능이 오히려 떨어졌어요!</span>
+        <span class="ts-badge error">성능 퇴화</span>
+        <span class="ts-chevron">▼</span>
+      </div>
+      <div class="ts-body">
+        <p><strong>증상:</strong> ocrv6.4 2차 학습에서 ep10부터 EMA 시작 후 rare가 0.9904 → 0.9809로 하락.</p>
+        <p><strong>원인:</strong> EMA_DECAY=0.999로 설정했는데, ep10에서 EMA가 시작되면 처음 몇 에폭 동안 "무거운 초기 가중치"가 많이 반영되어 성능이 일시 저하됩니다. 또한 이전 에폭(ep10 이전)의 약한 모델 상태가 평균에 포함돼요.</p>
+        <p><strong>해결:</strong> ocrv6.5에서 EMA 완전 제거. <code>eval_model = model</code>로 그대로 평가. 파인튜닝에서는 LR=5e-5로 이미 안정적이므로 EMA 불필요.</p>
+      </div>
+    </div>
+
+    <div class="ts-item">
+      <div class="ts-header" onclick="toggleTs(this)">
+        <span class="ts-num">TS-3</span>
+        <span class="ts-title">6 에폭 동안 지표가 전혀 변하지 않아요!</span>
+        <span class="ts-badge warning">지표 동결</span>
+        <span class="ts-chevron">▼</span>
+      </div>
+      <div class="ts-body">
+        <p><strong>증상:</strong> ocrv6.5 초기 버전(EMA 포함)에서 ep1~ep6 모두 val=0.9892, rare=0.9904, comp=0.9890으로 완전히 동일.</p>
+        <p><strong>원인 — EMA decay 수학:</strong></p>
+        <ul>
+          <li>EMA_DECAY = 0.9995 (ocrv6.5 초기 설정)</li>
+          <li>6 에폭 후 새 가중치 반영 비율 = 1 - 0.9995^6 ≈ 0.3%</li>
+          <li>즉, 새로 학습한 내용이 0.3%밖에 반영이 안 되니 지표가 안 변하는 것!</li>
+        </ul>
+        <p><strong>해결:</strong> EMA 완전 제거. eval_model = model (raw model)로 직접 평가. 즉시 지표 개선 확인.</p>
+      </div>
+    </div>
+
+    <div class="ts-item">
+      <div class="ts-header" onclick="toggleTs(this)">
+        <span class="ts-num">TS-4</span>
+        <span class="ts-title">"&amp;는 예상되지 않았습니다" 오류가 나요!</span>
+        <span class="ts-badge info">환경 오류</span>
+        <span class="ts-chevron">▼</span>
+      </div>
+      <div class="ts-body">
+        <p><strong>증상:</strong> cmd.exe에서 <code>&amp; "C:\cuda\cuda\Scripts\python.exe" scripts/train.py</code> 실행 시 "&amp;는 예상되지 않았습니다" 오류.</p>
+        <p><strong>원인:</strong> <code>&amp;</code>는 PowerShell의 "호출 연산자"예요. cmd.exe(명령 프롬프트)에서는 사용할 수 없어요.</p>
+        <p><strong>해결:</strong> cmd.exe에서는 <code>&amp;</code> 없이 직접 실행:</p>
+        <pre>"C:\cuda\cuda\Scripts\python.exe" scripts/train.py</pre>
+        <p>PowerShell에서는 <code>&amp;</code> 사용 가능:</p>
+        <pre>&amp; "C:\cuda\cuda\Scripts\python.exe" scripts/train.py</pre>
+      </div>
+    </div>
+
+    <div class="ts-item">
+      <div class="ts-header" onclick="toggleTs(this)">
+        <span class="ts-num">TS-5</span>
+        <span class="ts-title">로그 파일에 이상한 문자가 섞여요!</span>
+        <span class="ts-badge warning">인코딩 문제</span>
+        <span class="ts-chevron">▼</span>
+      </div>
+      <div class="ts-body">
+        <p><strong>증상:</strong> PowerShell Tee-Object로 저장한 logs/run.log 파일에서 글자 간격이 넓거나 이상한 문자가 나타남.</p>
+        <p><strong>원인:</strong> PowerShell의 기본 파일 인코딩이 UTF-16 LE(BOM 포함)이라 일반 텍스트 에디터와 호환성이 없어요.</p>
+        <p><strong>해결:</strong></p>
+        <ul>
+          <li>VS Code 터미널에서 직접 출력을 보거나</li>
+          <li>Python 코드 내부에서 <code>logging</code> 모듈로 직접 파일 저장(UTF-8)</li>
+          <li>또는 <code>Tee-Object -Encoding utf8</code> 옵션 사용</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ts-item">
+      <div class="ts-header" onclick="toggleTs(this)">
+        <span class="ts-num">TS-6</span>
+        <span class="ts-title">RNN 메모리 경고가 계속 나와요!</span>
+        <span class="ts-badge info">비치명적 경고</span>
+        <span class="ts-chevron">▼</span>
+      </div>
+      <div class="ts-body">
+        <p><strong>증상:</strong> 학습 중 "UserWarning: RNN module weights are not part of single contiguous chunk of memory" 경고 반복 출력.</p>
+        <p><strong>원인:</strong> EMA의 ModelEMA.__init__에서 <code>copy.deepcopy(model)</code>을 사용할 때 LSTM 가중치가 메모리상 분산됨.</p>
+        <p><strong>해결:</strong> 학습 정확도에는 영향 없는 비치명적 경고예요. ocrv6.5에서 EMA를 제거한 후 자동으로 사라졌어요.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="info-box" style="margin-top:24px;">
+    <h3>📋 핵심 교훈 요약</h3>
+    <ul>
+      <li>Windows DataLoader는 <strong>NUM_WORKERS=0</strong>으로 설정하세요</li>
+      <li>best_comp 초기값은 반드시 <strong>-1.0</strong>으로 설정하세요</li>
+      <li>파인튜닝에 EMA를 쓸 때는 decay 값을 신중하게 선택하세요 (너무 높으면 개선이 안 보임)</li>
+      <li>cmd.exe와 PowerShell에서 <code>&amp;</code> 연산자 사용 여부가 다릅니다</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SEC-USAGE : 사용법
+══════════════════════════════════════════════════ -->
+<section id="sec-usage" class="section">
+  <h2 class="section-title">💻 ocrv6.5 사용법</h2>
+  <p class="section-desc">학습된 모델을 실제로 사용하는 방법을 알아봐요!</p>
+
+  <h3 class="subsection-title">환경 설정</h3>
+  <div class="info-box">
+    <h3>🛠️ 필요한 환경</h3>
+    <ul>
+      <li>Python: <code>C:\cuda\cuda\Scripts\python.exe</code></li>
+      <li>PyTorch: torch 2.5.1+cu121</li>
+      <li>GPU: RTX 4060 Laptop (CUDA 12.1)</li>
+      <li>모델 파일: <code>ocrv6.5/pt/best.pt</code> (31.8 MB)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">단일 이미지 추론</h3>
+  <pre class="code-block">
+<span class="code-comment"># ocrv6.5 단일 번호판 이미지 인식</span>
+import torch
+from pathlib import Path
+
+<span class="code-comment"># 모델 로드</span>
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+ckpt = torch.load("ocrv6.5/pt/best.pt", map_location=DEVICE)
+model = build_model()  <span class="code-comment"># V5OCR 아키텍처</span>
+model.load_state_dict(ckpt["model"])
+model.eval()
+
+<span class="code-comment"># 이미지 전처리</span>
+from PIL import Image
+import torchvision.transforms as T
+
+transform = T.Compose([
+    T.Grayscale(),
+    T.Resize((32, 128)),
+    T.ToTensor(),
+    T.Normalize([0.5], [0.5])
+])
+
+img = Image.open("plate.jpg")
+x = transform(img).unsqueeze(0).to(DEVICE)
+
+<span class="code-comment"># 추론</span>
+with torch.no_grad():
+    logits = model(x)          <span class="code-comment"># (1, T, 51)</span>
+    pred = ctc_decode(logits)  <span class="code-comment"># CTC greedy decode</span>
+    print(pred)                <span class="code-comment"># "12가3456"</span>
+</pre>
+
+  <h3 class="subsection-title">배치 추론 (여러 장 한꺼번에)</h3>
+  <pre class="code-block">
+<span class="code-comment"># 여러 번호판 이미지를 한 번에 처리</span>
+from pathlib import Path
+import torch
+
+image_paths = list(Path("plates/").glob("*.jpg"))
+results = []
+
+model.eval()
+BATCH = 32
+for i in range(0, len(image_paths), BATCH):
+    batch_paths = image_paths[i:i+BATCH]
+    imgs = torch.stack([transform(Image.open(p)) for p in batch_paths])
+    imgs = imgs.to(DEVICE)
+
+    with torch.no_grad():
+        logits = model(imgs)
+        preds = ctc_decode_batch(logits)
+        results.extend(zip(batch_paths, preds))
+
+for path, text in results:
+    print(f"{path.name}: {text}")
+</pre>
+
+  <h3 class="subsection-title">YOLO + ocrv6.5 파이프라인</h3>
+  <pre class="code-block">
+<span class="code-comment"># YOLO로 번호판 감지 후 ocrv6.5로 텍스트 인식</span>
+from ultralytics import YOLO
+import torch
+
+<span class="code-comment"># YOLO 모델 로드 (번호판 감지)</span>
+yolo = YOLO("yolo_plate.pt")
+
+<span class="code-comment"># OCR 모델 로드</span>
+ocr_model = load_ocr_model("ocrv6.5/pt/best.pt")
+
+<span class="code-comment"># 이미지 처리</span>
+frame = cv2.imread("road.jpg")
+results = yolo(frame)
+
+for box in results[0].boxes:
+    x1, y1, x2, y2 = map(int, box.xyxy[0])
+    <span class="code-comment"># 번호판 영역 크롭</span>
+    plate_crop = frame[y1:y2, x1:x2]
+
+    <span class="code-comment"># OCR 인식</span>
+    plate_text = ocr_predict(ocr_model, plate_crop)
+    confidence = box.conf[0].item()
+
+    print(f"번호판: {plate_text} (신뢰도: {confidence:.2%})")
+    <span class="code-comment"># 결과: 번호판: 12가3456 (신뢰도: 99.20%)</span>
+</pre>
+
+  <h3 class="subsection-title">학습 재현 (ocrv6.5 파인튜닝)</h3>
+  <pre class="code-block">
+<span class="code-comment"># ocrv6.5 학습 실행 (cmd.exe 기준)</span>
+cd C:\jh\team_hifive\260521_ocr_project\ocrv6.5
+"C:\cuda\cuda\Scripts\python.exe" scripts/train.py
+
+<span class="code-comment"># PowerShell 기준</span>
+Set-Location C:\jh\team_hifive\260521_ocr_project\ocrv6.5
+&amp; "C:\cuda\cuda\Scripts\python.exe" scripts/train.py
+
+<span class="code-comment"># 주요 하이퍼파라미터 (train.py 내부)</span>
+<span class="code-comment"># FINETUNE_FROM: ocrv6.4/pt/best.pt (ep8)</span>
+<span class="code-comment"># LR = 5e-5</span>
+<span class="code-comment"># MAX_EPOCHS = 50</span>
+<span class="code-comment"># RARE_REWEIGHT = 4.0</span>
+<span class="code-comment"># PATIENCE = 15, PATIENCE_START = 5</span>
+<span class="code-comment"># NUM_WORKERS = 0 (Windows 필수)</span>
+<span class="code-comment"># GRAD_CLIP = 2.0</span>
+</pre>
+
+  <h3 class="subsection-title">⚡ FP16 변환 — 더 빠르게, 더 가볍게</h3>
+
+  <div class="info-box" style="background:#f0fdf4; border-left-color:#10b981; color:#064e3b; margin-bottom:20px;">
+    <h3>🔢 FP32 vs FP16 — 왜 변환하나요?</h3>
+    <p>학습은 <strong>FP32(32비트)</strong>로 해서 수치가 정확해요. 하지만 배포(추론)할 때는 <strong>FP16(16비트)</strong>으로 바꾸면:</p>
+    <ul>
+      <li>모델 크기: <strong>31.8 MB → 약 16 MB</strong> (50% 절감)</li>
+      <li>추론 속도: <strong>최대 2배 향상</strong> (GPU Tensor Core 활용)</li>
+      <li>정확도 손실: <strong>거의 없음 (&lt;0.01%p)</strong> — 번호판 OCR은 51개 클래스 분류라 FP16 오차가 답을 바꾸지 않음</li>
+    </ul>
+  </div>
+
+  <h4 style="font-weight:700; color:#1e293b; margin:16px 0 8px;">방법 A: model.half() — 가장 단순한 변환</h4>
+  <pre class="code-block">
+<span class="code-comment"># FP16으로 변환 후 추론</span>
+device = torch.device("cuda")
+model = load_model("ocrv6.5/pt/best.pt", device)
+model.eval()
+
+<span class="code-comment"># 모든 파라미터를 float16으로 변환</span>
+model_fp16 = model.half()
+
+<span class="code-comment"># 입력도 반드시 .half()로 맞춰야 함 (타입 불일치 시 오류)</span>
+x = preprocess(img_bgr).unsqueeze(0).to(device).half()
+with torch.no_grad():
+    lp = F.log_softmax(model_fp16(x).permute(1, 0, 2), dim=-1)
+result = ctc_greedy(lp[:, 0, :])
+
+<span class="code-comment"># STN(grid_sample)이 불안정할 경우 STN만 FP32 유지</span>
+model.half()
+model.stn.float()   <span class="code-comment"># STN 서브모듈만 다시 FP32로</span>
+</pre>
+
+  <h4 style="font-weight:700; color:#1e293b; margin:16px 0 8px;">방법 B: AMP (자동 혼합 정밀도) — 실서비스 권장</h4>
+  <pre class="code-block">
+<span class="code-comment"># PyTorch AMP: 연산별로 FP16/FP32를 자동 선택</span>
+from torch.amp import autocast
+
+model.eval()
+
+def predict_amp(img_bgr):
+    x = preprocess(img_bgr).unsqueeze(0).to(device)   <span class="code-comment"># FP32 입력 그대로</span>
+    with torch.no_grad():
+        with autocast(device_type="cuda", dtype=torch.float16):
+            logits = model(x)                          <span class="code-comment"># conv/matmul은 FP16</span>
+        <span class="code-comment"># log_softmax는 FP32로 (언더플로우 방지)</span>
+        lp = F.log_softmax(logits.float().permute(1, 0, 2), dim=-1)
+    return ctc_greedy(lp[:, 0, :])
+
+<span class="code-comment"># AMP 장점: 입력 타입 걱정 없음, STN 자동 FP32 유지</span>
+</pre>
+
+  <h4 style="font-weight:700; color:#1e293b; margin:16px 0 8px;">방법 C: ONNX FP16 변환 — 배포/엣지 환경 권장</h4>
+  <pre class="code-block">
+<span class="code-comment"># Step 1: PyTorch → ONNX (FP32)</span>
+import torch.onnx
+
+dummy = torch.randn(1, 3, 48, 160).to(device)
+torch.onnx.export(
+    model, dummy, "ocrv6.5/pt/best.onnx",
+    opset_version=17,
+    input_names=["image"], output_names=["logits"],
+    dynamic_axes={"image": {0: "batch"}, "logits": {1: "batch"}},
+)
+
+<span class="code-comment"># Step 2: ONNX FP32 → FP16 변환</span>
+import onnx
+from onnxmltools.utils.float16_converter import convert_float_to_float16
+
+model_onnx = onnx.load("ocrv6.5/pt/best.onnx")
+model_fp16  = convert_float_to_float16(model_onnx, keep_io_types=True)
+onnx.save(model_fp16, "ocrv6.5/pt/best_fp16.onnx")
+<span class="code-comment"># 결과: best_fp16.onnx (~16MB)</span>
+
+<span class="code-comment"># Step 3: ONNX Runtime으로 추론 (GPU)</span>
+import onnxruntime as ort
+import numpy as np
+
+sess = ort.InferenceSession(
+    "ocrv6.5/pt/best_fp16.onnx",
+    providers=["CUDAExecutionProvider"]
+)
+x_np = preprocess(img_bgr).unsqueeze(0).numpy()      <span class="code-comment"># float32 입력</span>
+logits = sess.run(["logits"], {"image": x_np})[0]    <span class="code-comment"># 자동 변환</span>
+</pre>
+
+  <div class="info-box" style="background:#eff6ff; border-left-color:#3b82f6; color:#1e40af; margin-bottom:20px;">
+    <h3>📊 방법별 비교</h3>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-top:8px;">
+      <thead>
+        <tr style="background:#dbeafe;">
+          <th style="padding:7px 10px; text-align:left;">구분</th>
+          <th style="padding:7px 10px;">방법 A (half)</th>
+          <th style="padding:7px 10px;">방법 B (AMP)</th>
+          <th style="padding:7px 10px;">방법 C (ONNX)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:6px 10px;">난이도</td><td style="text-align:center;">쉬움</td><td style="text-align:center;">쉬움</td><td style="text-align:center;">중간</td></tr>
+        <tr style="background:#f0f9ff;"><td style="padding:6px 10px;">속도 향상</td><td style="text-align:center;">높음</td><td style="text-align:center;">높음</td><td style="text-align:center;">매우 높음</td></tr>
+        <tr><td style="padding:6px 10px;">파일 크기</td><td style="text-align:center;">~16 MB</td><td style="text-align:center;">31.8 MB 유지</td><td style="text-align:center;">~16 MB</td></tr>
+        <tr style="background:#f0f9ff;"><td style="padding:6px 10px;">안전성</td><td style="text-align:center;">보통</td><td style="text-align:center; font-weight:700; color:#1d4ed8;">높음 ★</td><td style="text-align:center; font-weight:700; color:#1d4ed8;">높음 ★</td></tr>
+        <tr><td style="padding:6px 10px;">권장 상황</td><td style="text-align:center;">테스트</td><td style="text-align:center; font-weight:700; color:#1d4ed8;">운영 서버</td><td style="text-align:center; font-weight:700; color:#1d4ed8;">엣지/배포</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px; font-size:12px;"><strong>주의:</strong> FP16은 CUDA GPU 전용이에요. CPU 환경에서는 오히려 느려질 수 있으므로 사용하지 마세요.</p>
+  </div>
+
+  <h3 class="subsection-title">파일 구조</h3>
+  <div class="info-box">
+    <h3>📁 프로젝트 폴더 구조</h3>
+    <pre style="background:transparent; border:none; padding:0; font-size:0.9em; color:#1e293b;">
+260521_ocr_project/
+├── ocrv6.5/
+│   ├── pt/
+│   │   └── best.pt          ← 최종 모델 (31.8 MB, ep9)
+│   ├── logs/
+│   │   ├── metrics.json     ← 전체 에폭 지표 기록
+│   │   └── train.csv        ← 에폭별 손실/정확도
+│   ├── scripts/
+│   │   └── train.py         ← 파인튜닝 학습 스크립트
+│   └── REPORT.md            ← 개발 보고서
+├── ocrv6.4/
+│   └── pt/best.pt           ← ocrv6.5 파인튜닝의 시작점
+├── VERSION_HISTORY.md       ← v1~v6.5 전체 역사
+└── reference/
+    └── ocr_project_academy/ ← 이 사이트!
+        ├── index.html
+        ├── style.css
+        └── script.js
+    </pre>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SEC-QA : Q&A
+══════════════════════════════════════════════════ -->
+<section id="sec-qa" class="section">
+  <h2 class="section-title">❓ Q&amp;A — 자주 묻는 질문</h2>
+  <p class="section-desc">이 내용을 다 읽으면 어떤 질문에도 막힘없이 대답할 수 있어요!</p>
+
+  <h3 class="subsection-title">🔤 기초 개념</h3>
+  <div class="qa-list">
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. OCR이 뭔가요? 어떻게 번호판을 읽나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      OCR은 Optical Character Recognition(광학 문자 인식)의 약자예요. 사진 속 글자를 인식해서 텍스트로 바꿔주는 기술이에요. 번호판 OCR은 ① 사진을 입력받아 → ② AI 신경망이 각 위치에서 글자 확률을 계산하고 → ③ CTC 디코딩으로 최종 텍스트를 출력해요. "12가3456" 같은 결과가 나오죠!
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 딥러닝과 일반 프로그래밍의 차이가 뭔가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      일반 프로그래밍은 사람이 직접 "이런 상황이면 이렇게 해"라는 규칙을 코드로 작성해요. 딥러닝은 수천~수만 개의 예시(사진+정답)를 보여주면 AI가 스스로 규칙을 찾아내요. 번호판이 어두워도, 기울어져도 스스로 적응하는 능력이 있어요!
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. CTC가 뭔가요? 왜 필요한가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      CTC(Connectionist Temporal Classification)는 글자 위치를 모르는 상태에서도 학습할 수 있게 해주는 기법이에요. 번호판에서 "12가3456"이 어디서부터 어디까지인지 일일이 표시하지 않아도 전체 텍스트만 알면 AI가 스스로 경계를 찾아요. blank 토큰을 이용해 [1, 1, blank, 2, blank, 가 ...] → "12가3456"으로 변환해요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 파라미터가 뭐고, 왜 많을수록 좋은 건가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      파라미터는 AI 내부의 숫자들이에요. 이 숫자들이 학습을 통해 조금씩 바뀌면서 AI가 똑똑해져요. 많을수록 더 복잡한 패턴을 학습할 수 있지만, 너무 많으면 학습 데이터만 외워서 새 데이터에는 못 쓰는 "과학습" 문제가 생겨요. 이 모델은 약 900만 개로 균형을 맞췄어요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 에폭(Epoch)이 많으면 무조건 좋은 건가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      꼭 그렇지 않아요! 에폭이 너무 많으면 AI가 학습 데이터를 "외워버려서" 새로운 사진에는 오히려 틀리는 과학습이 발생해요. 그래서 Early Stopping(조기 종료)을 사용해요. ocrv6.5에서는 ep9이 가장 좋았고, ep24에 PATIENCE=15에 걸려서 학습을 멈췄어요.
+    </div>
+
+  </div>
+
+  <h3 class="subsection-title">🏗️ 모델 구조</h3>
+  <div class="qa-list">
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. STN이 왜 필요한가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      실제 도로에서 찍은 번호판은 완벽하게 정면에서 찍히지 않아요. 카메라 각도, 차량 속도, 도로 굴곡 때문에 기울어지거나 원근감이 생겨요. STN(Spatial Transformer Network)이 이런 변형을 자동으로 교정해줘서 뒤의 CNN이 훨씬 쉽게 글자를 인식할 수 있게 해줘요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. BiLSTM이 단방향 LSTM보다 나은 이유는?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      단방향 LSTM은 왼쪽→오른쪽으로만 읽어요. 하지만 번호판에서 어떤 글자가 올지는 앞뒤 문맥을 모두 봐야 알 수 있어요. 예를 들어 "12?3456"에서 가운데 글자를 맞추려면 앞의 "12"와 뒤의 "3456" 모두 필요해요. BiLSTM은 양방향으로 읽어서 더 풍부한 문맥 정보를 활용해요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. CBAM 어텐션은 왜 추가했나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      번호판 이미지에는 배경, 테두리, 볼트 구멍 등 글자와 관계없는 부분이 있어요. CBAM은 "어떤 위치(공간 어텐션)의 어떤 특징(채널 어텐션)이 중요한가"를 학습해서 AI가 실제 글자 부분에 집중하도록 도와줘요. 불필요한 정보에 낭비하는 계산을 줄일 수 있어요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 왜 입력 이미지를 흑백(그레이스케일)으로 변환하나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      번호판 인식에서 글자의 형태가 중요하지, 색상은 중요하지 않아요. 흑백으로 변환하면 데이터 크기가 1/3로 줄어서 학습이 빠르고 메모리도 절약돼요. 또한 야간, 주간, 흐린 날 등 조명 변화에 덜 민감해져서 더 강인한 모델이 돼요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 왜 51개 클래스인가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      blank(1개) + 숫자 0-9(10개) + 한글 40자 = 51개예요. 한글 40자는 한국 번호판에 실제로 사용되는 글자들이에요. blank는 CTC에서 "글자 없음" 또는 "글자 경계"를 나타내는 특수 기호예요. blank의 인덱스는 반드시 0이어야 해요(CTC 규칙).
+    </div>
+
+  </div>
+
+  <h3 class="subsection-title">📊 성능과 평가</h3>
+  <div class="qa-list">
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. Comp Score(종합 점수)는 어떻게 계산하나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      Comp = 0.5 × Hard_acc + 0.3 × Rare_acc + 0.2 × Val_acc − ECE_penalty 로 계산해요. 가중치가 이렇게 설정된 이유: Hard(어려운 상황)를 가장 중요하게(50%), Rare(희귀 글자)도 중요하게(30%), 일반 정확도는 참고용(20%)으로 봐요. best.pt는 이 점수가 가장 높을 때 저장돼요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. ECE(보정 오차)가 뭔가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      Expected Calibration Error예요. AI가 "90% 확신한다"고 할 때 실제로 90%의 확률로 맞는지를 측정해요. ECE=0.0061이면 AI의 자신감과 실제 정확도의 차이가 0.61%라는 뜻이에요. ECE가 낮을수록 신뢰할 수 있는 AI예요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. ocrv6.3이 Rare는 97.48%인데 ocrv6.5가 99.52%인 이유가 뭔가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      ocrv6.5에서 희귀 글자 오버샘플링을 3배→4배로 늘리고, FocalCTC가 이 글자들에 더 집중해서 학습했어요. 또한 파인튜닝 기반(ocrv6.4 ep8 BEST)으로 시작해서 이미 좋은 기반 위에서 더 세밀하게 조정할 수 있었어요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. Hard 세트의 6개 카테고리는 왜 선택했나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      실제 도로 환경에서 OCR이 실패하는 주요 원인들을 분석해서 선택했어요: S(작은 번호판 - 멀리서 찍힘), B(모션 블러 - 빠른 차), N(야간 - 어두운 환경), C(잘린 이미지 - 가장자리 차량), K(기울어짐 - 카메라 각도), R(희귀 글자 - 데이터 부족). 이 6가지에서 100%라면 실제 도로에서도 잘 동작한다는 신뢰성을 가져요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. v5가 Rare 100%인데 왜 ocrv6.5보다 낮게 평가되나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      v5는 Hard 전체 98.00%로 특히 B(모션블러), N(야간) 등에서 약점이 있어요. ocrv6.5는 Hard 100.00%로 모든 어려운 상황을 커버해요. Rare 100%만 봐선 v5가 좋아보이지만, 다른 Hard 카테고리가 부족해서 종합 점수(Comp)는 ocrv6.5가 훨씬 높아요.
+    </div>
+
+  </div>
+
+  <h3 class="subsection-title">⚙️ 학습 과정</h3>
+  <div class="qa-list">
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 파인튜닝이 처음부터 학습하는 것보다 왜 좋은가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      ① 빠름: 좋은 기반에서 시작하므로 더 빨리 좋은 결과가 나와요. ② 안전: 이미 잘 하던 것을 잃지 않아요 (catastrophic forgetting 방지). ③ 효율: 적은 데이터로도 효과적으로 개선 가능. ocrv6.5는 ocrv6.4 ep8(이미 rare=99.04%)에서 시작해서 ep9만에 99.52%를 달성했어요!
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 커리큘럼 학습이 왜 효과적인가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      사람도 쉬운 것부터 배우는 게 효과적이듯, AI도 마찬가지예요. 처음부터 너무 어려운 사진(극심한 블러, 야간, 기울어짐)을 보여주면 AI가 혼란스러워해요. p1(쉬움)으로 기초를 익히고, p2→p3로 점점 어려워지면 더 체계적으로 학습할 수 있어요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. EMA가 좋은 기법인데 왜 ocrv6.5에서 제거했나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      EMA는 처음부터 학습할 때 유용해요. 학습 중간에 흔들리는 모델을 평균 내어 안정적으로 만들어줘요. 하지만 파인튜닝(LR=5e-5)처럼 변화가 작을 때 EMA_DECAY=0.9995를 쓰면 새 학습이 0.3%밖에 반영 안 돼요. 결과: 지표가 수 에폭 동안 전혀 변하지 않는 "동결" 현상. 이미 안정적인 파인튜닝에서는 EMA가 오히려 방해가 됐어요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. WeightedRandomSampler가 왜 필요한가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      데이터가 불균형하면 AI는 많은 데이터의 글자만 잘 배우게 돼요. '가', '나', '다'가 각각 1000개인데 '바', '배'가 각각 50개라면, AI는 '가나다'만 잘 배우고 '바배'는 못 배워요. WeightedRandomSampler로 희귀 글자를 4배 더 자주 뽑아서 AI가 골고루 배우도록 해요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. Focal CTC가 일반 CTC와 다른 점은?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      일반 CTC: 모든 샘플에 동일한 가중치로 학습. Focal CTC: 쉬운 샘플(loss 작음)은 가중치 낮게, 어려운 샘플(loss 큼)은 가중치 높게. 즉, "이미 잘 하는 건 조금만 공부하고, 못 하는 건 더 집중해서 공부하자!" 는 전략이에요. γ=1.2로 설정해서 어려운 번호판에 더 집중하게 해요.
+    </div>
+
+  </div>
+
+  <h3 class="subsection-title">🔧 실제 사용과 환경</h3>
+  <div class="qa-list">
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. YOLO와 ocrv6.5 중 어느 것이 더 중요한가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      둘 다 중요해요! YOLO는 "번호판이 어디 있나"를 찾고, ocrv6.5는 "번호판에 뭐라고 쓰여 있나"를 읽어요. YOLO가 번호판 위치를 잘못 찾으면 OCR이 좋아도 소용없고, OCR이 약하면 YOLO가 잘 찾아도 글자를 틀리게 읽어요. 두 모델이 협력해야 완전한 시스템이 돼요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. Windows에서 NUM_WORKERS를 0으로 해야 하는 이유는?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      Windows에서는 Python의 멀티프로세싱이 Linux/Mac과 다르게 동작해요. DataLoader의 NUM_WORKERS를 4 이상으로 설정하면 자식 프로세스 생성 방식 차이 때문에 오류나 데이터 로딩 문제가 생겨요. NUM_WORKERS=0이면 메인 프로세스에서 직접 데이터를 로드하므로 안전해요. 속도는 조금 느리지만 안정성이 훨씬 높아요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. GPU가 없어도 사용할 수 있나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      네! GPU가 없어도 CPU로 추론(inference)은 가능해요. <code>torch.load("best.pt", map_location="cpu")</code>로 로드하면 돼요. 단, 학습(training)은 GPU 없으면 몇 시간이 아닌 며칠이 걸릴 수 있어요. 추론 속도도 GPU 대비 10-50배 느릴 수 있어요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. best.pt 파일이 31.8 MB인 이유가 뭔가요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      모델의 모든 파라미터(약 900만 개)를 <strong>FP32(float32, 4바이트/값)</strong>로 저장하기 때문이에요. 900만 × 4바이트 = 약 36 MB에서 PyTorch 최적화로 31.8 MB가 됐어요. <strong>FP16으로 변환하면 약 16 MB</strong>로 줄일 수 있고, 이 모델에서 정확도 손실은 &lt;0.01%p로 거의 없어요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. FP16 변환이 뭔가요? 왜 하나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      <strong>FP32(32비트)</strong>로 저장된 모델을 <strong>FP16(16비트)</strong>으로 바꾸는 것이에요. 학습은 수치 안정성을 위해 FP32로 하지만, 배포할 때는 FP16으로 바꾸면 4가지 이점이 있어요:<br><br>
+      ① <strong>속도</strong>: GPU Tensor Core가 FP16 연산을 FP32보다 최대 2배 빠르게 처리<br>
+      ② <strong>크기</strong>: 31.8 MB → 약 16 MB (50% 절감)<br>
+      ③ <strong>배치 크기</strong>: 같은 VRAM으로 2배 더 많은 이미지 동시 처리 가능<br>
+      ④ <strong>정확도</strong>: 번호판 OCR처럼 클래스 간 확률 차이가 큰 경우엔 FP16 오차가 정답을 바꾸지 않아요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. FP16 변환 방법은 어떤 게 있나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      3가지 방법이 있어요:<br><br>
+      <strong>① model.half()</strong>: 한 줄로 끝나는 가장 단순한 방법. 단, 입력도 반드시 <code>.half()</code>로 변환해야 해요.<br>
+      <strong>② AMP (autocast)</strong>: PyTorch가 자동으로 연산별로 FP16/FP32를 골라줘요. 입력을 FP32로 줘도 되고, 불안정한 연산(STN의 grid_sample 등)은 알아서 FP32로 유지해줘서 <strong>실서비스에 가장 안전</strong>해요.<br>
+      <strong>③ ONNX FP16</strong>: PyTorch → ONNX 변환 후 FP16으로 바꾸는 방법. TensorRT와 연계해서 가장 빠른 배포가 가능해요. 사용법 페이지의 코드 예시를 참고하세요!<br><br>
+      <strong>주의</strong>: FP16은 CUDA GPU 전용! CPU에서는 오히려 느려질 수 있어요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. FP16 변환 시 주의할 점이 있나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      3가지 주의사항이 있어요:<br><br>
+      <strong>① STN(grid_sample) 불안정</strong>: <code>model.half()</code>를 쓸 때 STN의 grid_sample 연산이 FP16에서 오차가 생길 수 있어요. 해결: <code>model.stn.float()</code>로 STN만 다시 FP32로 유지하거나, AMP 방식을 사용하세요.<br><br>
+      <strong>② CTC log_softmax 언더플로우</strong>: log_softmax는 매우 작은 음수값을 다뤄서 FP16에서 -inf가 될 수 있어요. 해결: <code>logits.float()</code>로 FP32로 변환 후 log_softmax를 적용하세요.<br><br>
+      <strong>③ CPU 환경 금지</strong>: CPU는 FP16 SIMD 지원이 제한적이라 오히려 FP32보다 느려요. <code>device.type == "cuda"</code>일 때만 FP16을 적용하세요.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 모델을 더 가볍게 만들 수 있나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      FP16 외에도 여러 방법이 있어요: ① <strong>INT8 양자화(Quantization)</strong>: float32→int8, 4배 가벼움. TensorRT에서 지원하지만 정확도 손실이 FP16보다 커요. ② <strong>가지치기(Pruning)</strong>: 덜 중요한 파라미터를 0으로 만들어 제거. ③ <strong>지식 증류(Knowledge Distillation)</strong>: 큰 모델이 작은 모델을 가르쳐서 작은 모델에 성능 이전. 모두 정확도와 속도 간의 트레이드오프가 있어요. 이 모델의 경우 FP16만으로도 충분한 개선이 가능해요.</div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 어떤 상황에서 OCR이 실패할 수 있나요?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      Hard 6개 카테고리가 모두 100%이지만 극단적인 경우는 여전히 어려워요: ① 번호판이 진흙/눈으로 완전히 덮인 경우 ② 카메라 렌즈에 물방울이 가득 찬 경우 ③ 번호판이 심하게 파손되거나 가려진 경우 ④ 학습 데이터에 없는 외국 번호판 형식 ⑤ 해상도가 극히 낮아(8×32 이하) 글자 형태 자체가 손실된 경우.
+    </div>
+
+    <div class="qa-q" onclick="toggleQa(this)">
+      Q. 앞으로 더 개선할 수 있는 방향은?
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-a">
+      ocrv6.5가 Hard 100%를 달성했지만 여전히 개선 방향이 있어요: ① Transformer 어텐션 도입(ViT 기반) ② TensorRT/ONNX로 추론 속도 최적화 ③ 더 많은 야간/악천후 데이터 수집 ④ 다양한 지역 번호판(특수 번호판 등) 지원 ⑤ 실시간 스트림 처리 최적화. 99.80%에서 99.90%+를 목표로 할 수 있어요.
+    </div>
+
+  </div>
+
+  <div class="info-box" style="margin-top:32px;">
+    <h3>🎓 이 내용을 다 이해했다면?</h3>
+    <p>
+      축하해요! 이 Q&amp;A를 모두 읽었다면 한국 번호판 OCR 프로젝트의 모든 것을 이해한 거예요.
+      v1의 규칙 기반부터 ocrv6.5의 파인튜닝까지, AI가 어떻게 발전하는지 보셨죠?
+      어떤 질문이 들어와도 자신 있게 대답할 수 있을 거예요! 🚀
+    </p>
+  </div>
+</section>
+
+</main><!-- /#main -->
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1942 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HI-FIVE 종합 산출물 | AI 기반 미래형 스마트 톨링 시스템</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --paper: #ffffff;
+      --ink: #111827;
+      --sub: #475569;
+      --muted: #64748b;
+      --line: #d7deea;
+      --line-strong: #b8c3d4;
+      --navy: #0f1f4a;
+      --navy2: #172554;
+      --blue: #2563eb;
+      --blue2: #1d4ed8;
+      --blue-soft: #edf4ff;
+      --gray-soft: #f8fafc;
+      --green: #15803d;
+      --green-soft: #eefbf3;
+      --amber: #b45309;
+      --amber-soft: #fff7ed;
+      --red: #b91c1c;
+      --red-soft: #fff1f2;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 30%),
+        var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      line-height: 1.68;
+      letter-spacing: -0.014em;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 24px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .side {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      height: calc(100vh - 40px);
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .side h1 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      line-height: 1.32;
+      color: var(--navy);
+      letter-spacing: -0.04em;
+    }
+
+    .side p {
+      margin: 0 0 16px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .toc {
+      display: grid;
+      gap: 7px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    .toc a {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 8px;
+      align-items: center;
+      text-decoration: none;
+      color: #334155;
+      padding: 8px 9px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .toc a:hover {
+      background: var(--blue-soft);
+      color: var(--navy);
+    }
+
+    .toc .num {
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .hero {
+      overflow: hidden;
+      position: relative;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #0b1536 0%, #172554 48%, #1d4ed8 100%);
+      color: #fff;
+      box-shadow: var(--shadow);
+      padding: 42px 44px;
+      margin-bottom: 22px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 390px;
+      height: 390px;
+      right: -150px;
+      top: -160px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.11);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: 110px;
+      bottom: -95px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      font-size: 13px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: 40px;
+      line-height: 1.18;
+      letter-spacing: -0.055em;
+      max-width: 880px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero .subtitle {
+      margin: 16px 0 0;
+      color: rgba(255,255,255,0.86);
+      max-width: 900px;
+      font-size: 17px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-flow {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-flow span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      color: #eff6ff;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.22);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .hero-flow b {
+      color: rgba(255,255,255,0.70);
+      font-weight: 800;
+    }
+
+    .quick {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 24px 26px 17px;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-no {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.25;
+      color: var(--navy);
+      letter-spacing: -0.045em;
+    }
+
+    .section-head p {
+      margin: 6px 0 0;
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .section-body {
+      padding: 24px 26px 28px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      min-width: 0;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: #0f172a;
+      font-size: 18px;
+      line-height: 1.32;
+      letter-spacing: -0.03em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 14.5px;
+    }
+
+    .card.blue { background: var(--blue-soft); border-color: #c9dcff; }
+    .card.green { background: var(--green-soft); border-color: #bbf7d0; }
+    .card.amber { background: var(--amber-soft); border-color: #fed7aa; }
+    .card.red { background: var(--red-soft); border-color: #fecaca; }
+    .card.gray { background: var(--gray-soft); }
+
+    .grid { display: grid; gap: 14px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .lead {
+      margin: 0 0 16px;
+      font-size: 16px;
+      color: #1f2937;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .callout {
+      border: 1px solid #bfdbfe;
+      border-left: 6px solid var(--blue);
+      background: #f8fbff;
+      border-radius: 18px;
+      padding: 16px 18px;
+      color: #334155;
+      margin: 16px 0;
+    }
+
+    .callout strong {
+      color: var(--navy);
+    }
+
+    .compact-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: #334155;
+      font-size: 14.5px;
+    }
+
+    .compact-list li {
+      margin: 5px 0;
+    }
+
+    .big-flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      position: relative;
+      border: 1px solid #cbd5e1;
+      border-radius: 18px;
+      padding: 15px 14px;
+      min-height: 132px;
+      background: #fff;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 21px;
+      z-index: 2;
+    }
+
+    .flow-step .kicker {
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .flow-step strong {
+      color: var(--navy);
+      font-size: 16px;
+      line-height: 1.28;
+    }
+
+    .flow-step span {
+      color: var(--sub);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .lane-row {
+      display: grid;
+      grid-template-columns: 165px minmax(0,1fr);
+      border-top: 1px solid var(--line);
+    }
+
+    .lane-row:first-child { border-top: 0; }
+
+    .lane-title {
+      padding: 16px;
+      background: #f8fafc;
+      border-right: 1px solid var(--line);
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .lane-items {
+      padding: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .node {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 7px 10px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      border-radius: 12px;
+      color: #334155;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .node.primary {
+      background: var(--blue-soft);
+      border-color: #bfdbfe;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .arr {
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .mini-title {
+      margin: 24px 0 12px;
+      color: var(--navy);
+      font-size: 20px;
+      letter-spacing: -0.04em;
+    }
+
+    .detail-steps {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-step {
+      display: grid;
+      grid-template-columns: 150px 1fr 1fr 1fr;
+      gap: 10px;
+      align-items: stretch;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .detail-step .stage {
+      background: var(--navy);
+      color: #fff;
+      padding: 16px;
+      display: grid;
+      align-content: center;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .detail-step .cell {
+      padding: 14px 16px;
+      border-left: 1px solid var(--line);
+    }
+
+    .detail-step .cell b {
+      display: block;
+      color: #0f172a;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .detail-step .cell span {
+      color: var(--sub);
+      font-size: 13.5px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 780px;
+      background: #fff;
+    }
+
+    th, td {
+      padding: 13px 14px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    td { color: #334155; }
+    tr:last-child td { border-bottom: 0; }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .status {
+      border-radius: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+    }
+
+    .status h3 {
+      margin: 0 0 7px;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .status p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .status.accept { background: var(--green-soft); border-color: #bbf7d0; }
+    .status.accept h3 { color: var(--green); }
+    .status.review { background: var(--amber-soft); border-color: #fed7aa; }
+    .status.review h3 { color: var(--amber); }
+    .status.reject { background: var(--red-soft); border-color: #fecaca; }
+    .status.reject h3 { color: var(--red); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      color: #334155;
+      font-size: 12.5px;
+    }
+
+    .final-message {
+      border-radius: 24px;
+      padding: 24px;
+      background: linear-gradient(135deg, #eff6ff, #ffffff);
+      border: 1px solid #bfdbfe;
+    }
+
+    .final-message p {
+      margin: 0;
+      font-size: 18px;
+      color: #172554;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin: 22px 0 6px;
+    }
+
+    @media (max-width: 1180px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .side {
+        position: relative;
+        top: auto;
+        height: auto;
+      }
+      .toc {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .big-flow {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .flow-step:nth-child(3)::after {
+        display: none;
+      }
+      .quick {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .layout {
+        padding: 14px;
+      }
+      .hero {
+        padding: 30px 24px;
+      }
+      .hero h2 {
+        font-size: 30px;
+      }
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+      .grid.two, .grid.three, .grid.four, .split, .status-grid, .big-flow {
+        grid-template-columns: 1fr;
+      }
+      .flow-step::after {
+        display: none;
+      }
+      .lane-row {
+        grid-template-columns: 1fr;
+      }
+      .lane-title {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .detail-step {
+        grid-template-columns: 1fr;
+      }
+      .detail-step .cell {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+      .toc {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+      .layout {
+        display: block;
+        max-width: none;
+        padding: 0;
+      }
+      .side {
+        display: none;
+      }
+      .hero, section {
+        box-shadow: none;
+        border-radius: 14px;
+        break-inside: avoid;
+      }
+      section {
+        margin-bottom: 14px;
+      }
+      .section-body {
+        padding: 18px;
+      }
+      .big-flow {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .flow-step::after {
+        display: none;
+      }
+      a { text-decoration: none; color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="side">
+      <h1>HI-FIVE 종합 산출물</h1>
+      <p>AI 기반 미래형 스마트 톨링 시스템 구축<br />프로젝트 이해를 위한 통합 HTML 문서</p>
+      <nav class="toc">
+        <a href="#purpose"><span class="num">01</span><span>문서 목적</span></a>
+        <a href="#summary"><span class="num">02</span><span>30초 요약</span></a>
+        <a href="#overview"><span class="num">03</span><span>프로젝트 개요</span></a>
+        <a href="#architecture"><span class="num">04</span><span>한눈에 보는 구조</span></a>
+        <a href="#flow"><span class="num">05</span><span>종합 파이프라인</span></a>
+        <a href="#edge"><span class="num">06</span><span>Jetson 내부 처리</span></a>
+        <a href="#server"><span class="num">07</span><span>중앙 서버 처리</span></a>
+        <a href="#location"><span class="num">08</span><span>GPS/KPS 정합성</span></a>
+        <a href="#data"><span class="num">09</span><span>데이터 구조</span></a>
+        <a href="#tech"><span class="num">10</span><span>기술 설명</span></a>
+        <a href="#detail"><span class="num">11</span><span>기술 상세 보강</span></a>
+        <a href="#core"><span class="num">12</span><span>핵심 기술</span></a>
+        <a href="#effect"><span class="num">13</span><span>기대효과</span></a>
+        <a href="#scope"><span class="num">14</span><span>구현 범위</span></a>
+        <a href="#closing"><span class="num">15</span><span>최종 메시지</span></a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="hero">
+        <div class="eyebrow">Project Integrated Deliverable</div>
+        <h2>AI 기반 미래형 스마트 톨링 시스템 구축</h2>
+        <p class="subtitle">
+          Edge AI로 통행 이벤트를 생성하고, 중앙 서버에서 GPS/KPS 위치 정합성을 검증하는 스마트톨링 PoC 산출물
+        </p>
+        <div class="hero-flow">
+          <span>Camera</span><b>→</b>
+          <span>Jetson Edge AI</span><b>→</b>
+          <span>Passage Event</span><b>→</b>
+          <span>Ingress</span><b>→</b>
+          <span>Backend</span><b>→</b>
+          <span>GPS/KPS Match</span><b>→</b>
+          <span>Dashboard / Chatbot</span>
+        </div>
+      </header>
+
+      <div class="quick">
+        <div class="card blue">
+          <h3>문서 한 줄 정의</h3>
+          <p>
+            본 문서는 발표자료를 보지 않은 제3자도 HI-FIVE 프로젝트의 목적, 시스템 구조, 데이터 흐름,
+            주요 기술, 기대효과를 이해할 수 있도록 정리한 종합 HTML 산출물이다.
+          </p>
+        </div>
+        <div class="card green">
+          <h3>핵심 관점</h3>
+          <p>
+            Jetson은 현장 통행 이벤트 생성, 중앙 서버는 저장·검증·조회,
+            GPS/KPS는 위치 정합성 검증 데이터로 역할을 분리한다.
+          </p>
+        </div>
+      </div>
+
+      <section id="purpose">
+        <div class="section-head">
+          <div class="section-no">01</div>
+          <div>
+            <h2>문서 목적</h2>
+            <p>시연 순서가 아니라 산출물 기준으로 프로젝트 전체를 설명하기 위한 문서.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <p class="lead">
+            이 문서는 특정 시연 장면을 설명하기 위한 자료가 아니라, 프로젝트 결과물을 기준으로
+            <strong>시스템 목적, 구성, 파이프라인, 기술 요소, 데이터 구조, 기대효과</strong>를 통합 정리한 산출물이다.
+          </p>
+          <div class="grid three">
+            <div class="card">
+              <h3>이해 대상</h3>
+              <p>프로젝트를 처음 보는 검토자, 현업자, 발표 평가자, 인수인계 담당자가 빠르게 구조를 파악할 수 있도록 한다.</p>
+            </div>
+            <div class="card">
+              <h3>문서 범위</h3>
+              <p>Jetson Edge AI, 중앙 서버, 데이터 저장, GPS/KPS 위치 정합성, 운영 조회 구조를 포함한다.</p>
+            </div>
+            <div class="card">
+              <h3>제외 범위</h3>
+              <p>Q&A성 방어 문장, 멘토 대화 내용, 해외 정책 상세, 단순 시연 순서 중심 설명은 제외한다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="summary">
+        <div class="section-head">
+          <div class="section-no">02</div>
+          <div>
+            <h2>30초 요약</h2>
+            <p>처음 보는 사람이 가장 먼저 이해해야 하는 프로젝트 핵심.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="final-message">
+            <p>
+              HI-FIVE는 Jetson Edge AI가 차량과 번호판을 인식해 통행 이벤트를 생성하고,
+              중앙 서버가 GPS/KPS 위치 데이터와 정합성을 검증하는 스마트톨링 시스템이다.
+              핵심은 현장 추론, 이벤트 중심 데이터화, 중앙 검증, 위치 기반 확장성이다.
+            </p>
+          </div>
+
+          <div class="grid four" style="margin-top:14px;">
+            <div class="card">
+              <h3>현장</h3>
+              <p>Jetson에서 차량·번호판을 인식하고 OCR 결과를 누적한다.</p>
+            </div>
+            <div class="card">
+              <h3>이벤트</h3>
+              <p>번호판, 시간, 차로, 신뢰도 기반 통행 이벤트를 생성한다.</p>
+            </div>
+            <div class="card">
+              <h3>검증</h3>
+              <p>중앙 서버에서 GPS/KPS 위치 데이터와 정합성을 판단한다.</p>
+            </div>
+            <div class="card">
+              <h3>운영</h3>
+              <p>Dashboard와 Chatbot으로 통행 이벤트와 상태를 조회한다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="overview">
+        <div class="section-head">
+          <div class="section-no">03</div>
+          <div>
+            <h2>프로젝트 개요</h2>
+            <p>기존 하이패스 체계를 존중하면서 미래형 스마트톨링 확장 구조를 제안.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <p class="lead">
+            본 프로젝트는 기존 하이패스 체계를 부정하거나 대체하려는 목적이 아니다.
+            향후 정밀 위치 기반 스마트톨링 환경에서 필요해질 수 있는
+            <strong>차량 인식 자동화, 위치 정합성 검증, 이벤트 중심 데이터 관리, 장애 대응형 통신</strong>을
+            하나의 시스템 구조로 검토한 프로젝트이다.
+          </p>
+
+          <div class="callout">
+            <strong>핵심 방향:</strong>
+            중앙 서버가 AI 추론까지 모두 담당하는 구조는 차로·장비 수가 증가할수록 중앙 연산 자원과 응답성 부담이 커질 수 있다.
+            본 프로젝트는 현장 Edge에서 1차 통행 이벤트를 생성하고, 중앙 서버는 저장·검증·운영 판단에 집중하도록 역할을 분리한다.
+          </div>
+
+          <div class="grid two">
+            <div class="card">
+              <h3>기술 목표</h3>
+              <ul class="compact-list">
+                <li>Jetson 기반 차량·번호판 인식</li>
+                <li>OCR 후보 누적 및 Best-Fit 판정</li>
+                <li>통행 이벤트 생성 및 중앙 서버 전송</li>
+                <li>GPS/KPS 위치 정합성 검증</li>
+                <li>장애 대응형 통신 구조 구성</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>운영 목표</h3>
+              <ul class="compact-list">
+                <li>통행 이벤트의 구조화된 저장</li>
+                <li>위치 검증 결과의 상태 관리</li>
+                <li>운영자 Dashboard 조회</li>
+                <li>Chatbot 기반 이벤트 검색</li>
+                <li>향후 KPS 연계 확장성 확보</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <div class="section-head">
+          <div class="section-no">04</div>
+          <div>
+            <h2>한눈에 보는 시스템 구조</h2>
+            <p>각 구성요소가 담당하는 역할을 먼저 분리해서 이해한다.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="grid five" style="display:grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px;">
+            <div class="card blue">
+              <h3>Camera</h3>
+              <p>차량 통행 영상 입력. 실시간 카메라 또는 사전 영상 입력 가능.</p>
+            </div>
+            <div class="card blue">
+              <h3>Jetson</h3>
+              <p>YOLO/OCR/Best-Fit으로 통행 이벤트를 생성하는 현장 Edge AI 장비.</p>
+            </div>
+            <div class="card">
+              <h3>Ingress</h3>
+              <p>Jetson 이벤트를 수신하고 스키마 검증 및 Backend 전달 수행.</p>
+            </div>
+            <div class="card">
+              <h3>Backend/Data</h3>
+              <p>통행 이벤트 저장, GPS/KPS 위치 정합성 검증, 상태 관리.</p>
+            </div>
+            <div class="card green">
+              <h3>Operation</h3>
+              <p>Dashboard와 Chatbot으로 이벤트, 위치 검증, 장비 상태 조회.</p>
+            </div>
+          </div>
+
+          <h3 class="mini-title">역할 분리 원칙</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>구성요소</th>
+                  <th>주요 역할</th>
+                  <th>산출 데이터</th>
+                  <th>프로젝트 내 의미</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Jetson Edge AI</td>
+                  <td>차량·번호판 인식, OCR, Best-Fit, 통행 이벤트 생성</td>
+                  <td>Passage Event, OCR Candidate</td>
+                  <td>현장 통행 이벤트 생성 계층</td>
+                </tr>
+                <tr>
+                  <td>FastAPI Ingress</td>
+                  <td>이벤트 수신, 형식 검증, 전송 로그, Backend 전달</td>
+                  <td>Transmission Log</td>
+                  <td>Edge와 업무 서버 사이의 수신 계층</td>
+                </tr>
+                <tr>
+                  <td>Spring Boot Backend</td>
+                  <td>이벤트 저장, 위치 정합성 검증, 상태 관리, API 제공</td>
+                  <td>Match Result, Event Status</td>
+                  <td>운영 판단과 데이터 관리 계층</td>
+                </tr>
+                <tr>
+                  <td>PostgreSQL</td>
+                  <td>통행 이벤트, OCR 후보, 위치 로그, 검증 결과 저장</td>
+                  <td>Structured Operation Data</td>
+                  <td>시스템 기준 데이터 저장소</td>
+                </tr>
+                <tr>
+                  <td>Vue / Chatbot</td>
+                  <td>이벤트 조회, 상태 확인, 자연어 질의</td>
+                  <td>운영 화면, 조회 응답</td>
+                  <td>운영자 접근 계층</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="flow">
+        <div class="section-head">
+          <div class="section-no">05</div>
+          <div>
+            <h2>종합 파이프라인</h2>
+            <p>큰 흐름과 상세 흐름을 분리해 시스템 전체 데이터 이동을 설명한다.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <h3 class="mini-title">큰 흐름</h3>
+          <div class="big-flow">
+            <div class="flow-step">
+              <span class="kicker">STEP 1</span>
+              <strong>영상 입력</strong>
+              <span>Camera 또는 영상 파일에서 차량 통행 장면 입력</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">STEP 2</span>
+              <strong>Jetson 추론</strong>
+              <span>YOLO와 OCR로 차량·번호판 인식</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">STEP 3</span>
+              <strong>이벤트 생성</strong>
+              <span>Best-Fit 결과를 기반으로 통행 이벤트 구성</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">STEP 4</span>
+              <strong>Ingress 수신</strong>
+              <span>이벤트 수신, 검증, 전송 로그 기록</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">STEP 5</span>
+              <strong>Backend 검증</strong>
+              <span>이벤트 저장 및 GPS/KPS 위치 정합성 판단</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">STEP 6</span>
+              <strong>운영 조회</strong>
+              <span>Dashboard와 Chatbot으로 이벤트 상태 확인</span>
+            </div>
+          </div>
+
+          <h3 class="mini-title">상세 흐름</h3>
+          <div class="lane">
+            <div class="lane-row">
+              <div class="lane-title">Input</div>
+              <div class="lane-items">
+                <span class="node">Camera / Video</span><span class="arr">→</span>
+                <span class="node">GStreamer Input</span><span class="arr">→</span>
+                <span class="node">Frame Buffer</span>
+              </div>
+            </div>
+            <div class="lane-row">
+              <div class="lane-title">Jetson Edge</div>
+              <div class="lane-items">
+                <span class="node primary">ROI / 960x960 Crop</span><span class="arr">→</span>
+                <span class="node primary">YOLO Vehicle</span><span class="arr">→</span>
+                <span class="node primary">YOLO Plate</span><span class="arr">→</span>
+                <span class="node primary">Tracking / ROI Crossing</span><span class="arr">→</span>
+                <span class="node primary">Plate Crop</span><span class="arr">→</span>
+                <span class="node primary">CRNN-OCR</span><span class="arr">→</span>
+                <span class="node primary">Multi-Frame Best-Fit</span><span class="arr">→</span>
+                <span class="node primary">Passage Event</span>
+              </div>
+            </div>
+            <div class="lane-row">
+              <div class="lane-title">Ingress</div>
+              <div class="lane-items">
+                <span class="node">WebTransport / API</span><span class="arr">→</span>
+                <span class="node">Event Receiver</span><span class="arr">→</span>
+                <span class="node">Schema Validation</span><span class="arr">→</span>
+                <span class="node">Transmission Log</span>
+              </div>
+            </div>
+            <div class="lane-row">
+              <div class="lane-title">Backend</div>
+              <div class="lane-items">
+                <span class="node">Spring Boot API</span><span class="arr">→</span>
+                <span class="node">Event Save</span><span class="arr">→</span>
+                <span class="node">GPS/KPS Match</span><span class="arr">→</span>
+                <span class="node">Status Management</span>
+              </div>
+            </div>
+            <div class="lane-row">
+              <div class="lane-title">Data</div>
+              <div class="lane-items">
+                <span class="node">passage_event</span>
+                <span class="node">plate_ocr_candidate</span>
+                <span class="node">event_transmission_log</span>
+                <span class="node">location_telemetry</span>
+                <span class="node">location_event_match</span>
+                <span class="node">settlement_candidate</span>
+              </div>
+            </div>
+            <div class="lane-row">
+              <div class="lane-title">Operation</div>
+              <div class="lane-items">
+                <span class="node">Vue Dashboard</span><span class="arr">+</span>
+                <span class="node">Chatbot Query</span><span class="arr">→</span>
+                <span class="node">Event / Location / Network Status</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="mini-title">장애 대응 흐름</h3>
+          <div class="big-flow" style="grid-template-columns: repeat(5, minmax(0,1fr));">
+            <div class="flow-step">
+              <span class="kicker">NETWORK</span>
+              <strong>기본 유선망</strong>
+              <span>통행 이벤트 전송 기본 경로</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">WATCHDOG</span>
+              <strong>상태 감시</strong>
+              <span>유선망 상태와 전송 가능 여부 확인</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">FAIL</span>
+              <strong>장애 감지</strong>
+              <span>유선망 장애 또는 전송 실패 감지</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">SWITCH</span>
+              <strong>예비망 전환</strong>
+              <span>LTE 등 무선망으로 전송 경로 변경</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">CONTINUE</span>
+              <strong>이벤트 지속 전송</strong>
+              <span>전송 연속성 확보 및 로그 기록</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="edge">
+        <div class="section-head">
+          <div class="section-no">06</div>
+          <div>
+            <h2>Jetson 내부 처리</h2>
+            <p>현장 Edge AI 장비 내부에서 통행 이벤트가 생성되는 과정.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="callout">
+            <strong>역할 정의:</strong>
+            Jetson은 단순 영상 장비가 아니라, 차량·번호판을 인식하고 OCR 결과를 누적해
+            통행 이벤트 후보를 생성하는 현장 Edge AI 장비이다.
+          </div>
+
+          <div class="detail-steps">
+            <div class="detail-step">
+              <div class="stage">GStreamer Input</div>
+              <div class="cell"><b>역할</b><span>영상 프레임 수신 및 pipeline 구성</span></div>
+              <div class="cell"><b>필요 이유</b><span>입력부터 추론까지 안정적인 프레임 흐름 확보</span></div>
+              <div class="cell"><b>결과 데이터</b><span>Frame Buffer</span></div>
+            </div>
+            <div class="detail-step">
+              <div class="stage">ROI / Crop</div>
+              <div class="cell"><b>역할</b><span>차량·번호판 관심 영역 중심 Crop</span></div>
+              <div class="cell"><b>필요 이유</b><span>번호판 정보 밀도 유지 및 추론 입력 최적화</span></div>
+              <div class="cell"><b>결과 데이터</b><span>Preprocessed Frame</span></div>
+            </div>
+            <div class="detail-step">
+              <div class="stage">YOLO Detection</div>
+              <div class="cell"><b>역할</b><span>차량 영역과 번호판 영역 탐지</span></div>
+              <div class="cell"><b>필요 이유</b><span>OCR 수행 대상인 번호판 영역을 분리</span></div>
+              <div class="cell"><b>결과 데이터</b><span>vehicle_bbox, plate_bbox, lane_candidate</span></div>
+            </div>
+            <div class="detail-step">
+              <div class="stage">Tracking</div>
+              <div class="cell"><b>역할</b><span>차량을 track 단위로 관리하고 ROI 통과 여부 판단</span></div>
+              <div class="cell"><b>필요 이유</b><span>단순 탐지가 아니라 실제 통행 이벤트 단위로 구분</span></div>
+              <div class="cell"><b>결과 데이터</b><span>track_id, event_time, passage_candidate</span></div>
+            </div>
+            <div class="detail-step">
+              <div class="stage">CRNN-OCR</div>
+              <div class="cell"><b>역할</b><span>번호판 Crop 이미지에서 문자 후보 인식</span></div>
+              <div class="cell"><b>필요 이유</b><span>차량 식별을 위한 plate_text 후보 생성</span></div>
+              <div class="cell"><b>결과 데이터</b><span>ocr_candidate, confidence</span></div>
+            </div>
+            <div class="detail-step">
+              <div class="stage">Best-Fit</div>
+              <div class="cell"><b>역할</b><span>여러 프레임의 OCR 후보를 누적해 최종 번호판 선정</span></div>
+              <div class="cell"><b>필요 이유</b><span>일반적인 번호판 인식 상황에서 판정 안정성 향상</span></div>
+              <div class="cell"><b>결과 데이터</b><span>final_plate_text, agreement_ratio</span></div>
+            </div>
+            <div class="detail-step">
+              <div class="stage">Event Generation</div>
+              <div class="cell"><b>역할</b><span>중앙 서버가 저장·검증 가능한 통행 이벤트 생성</span></div>
+              <div class="cell"><b>필요 이유</b><span>AI 추론 결과를 운영 데이터로 전환</span></div>
+              <div class="cell"><b>결과 데이터</b><span>event_uuid, plate_text, confidence, lane_id</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="server">
+        <div class="section-head">
+          <div class="section-no">07</div>
+          <div>
+            <h2>중앙 서버 처리</h2>
+            <p>Edge에서 생성된 이벤트를 운영 가능한 데이터로 검증·저장·조회하는 계층.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <p class="lead">
+            중앙 서버는 AI 추론을 대신하는 계층이 아니라,
+            <strong>Edge에서 생성된 이벤트를 운영 가능한 데이터로 검증·저장·조회하는 계층</strong>이다.
+          </p>
+
+          <div class="big-flow" style="grid-template-columns: repeat(5, minmax(0,1fr));">
+            <div class="flow-step">
+              <span class="kicker">01</span>
+              <strong>Event Receive</strong>
+              <span>Jetson에서 생성된 통행 이벤트 수신</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">02</span>
+              <strong>Validation</strong>
+              <span>필수 필드, 장비 식별자, 이벤트 형식 검증</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">03</span>
+              <strong>Save</strong>
+              <span>passage_event, OCR 후보, 전송 로그 저장</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">04</span>
+              <strong>Location Match</strong>
+              <span>GPS/KPS 위치 데이터와 시간·거리 정합성 검증</span>
+            </div>
+            <div class="flow-step">
+              <span class="kicker">05</span>
+              <strong>Operation API</strong>
+              <span>Dashboard와 Chatbot 조회 API 제공</span>
+            </div>
+          </div>
+
+          <h3 class="mini-title">중앙 서버가 관리하는 핵심 판단 기준</h3>
+          <div class="grid three">
+            <div class="card">
+              <h3>이벤트 기준</h3>
+              <p>event_uuid, device_id, lane_id, plate_text, event_time, confidence</p>
+            </div>
+            <div class="card">
+              <h3>위치 기준</h3>
+              <p>recorded_at, latitude, longitude, accuracy_m, toll_zone radius</p>
+            </div>
+            <div class="card">
+              <h3>상태 기준</h3>
+              <p>match_result, event_status, needs_review, transmission_status</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="location">
+        <div class="section-head">
+          <div class="section-no">08</div>
+          <div>
+            <h2>GPS/KPS 위치 정합성 검증</h2>
+            <p>GPS/KPS는 결제수단이 아니라 통행 이벤트의 위치 정합성을 검증하기 위한 데이터.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="callout">
+            <strong>역할 구분:</strong>
+            Jetson은 영상 기반 통행 이벤트를 생성한다.
+            GPS/KPS 위치 데이터는 중앙 Backend/Data 영역에서 통행 이벤트와의 위치 정합성 검증에 사용된다.
+          </div>
+
+          <div class="grid three">
+            <div class="card">
+              <h3>GPS</h3>
+              <p>현재 구조에서 위치 데이터 또는 Replay 데이터로 활용한다. 통행 이벤트와 시간·거리 기준으로 매칭한다.</p>
+            </div>
+            <div class="card">
+              <h3>KPS</h3>
+              <p>향후 국내 정밀 위치 인프라 도입 시 같은 구조에서 더 정밀한 위치 검증으로 확장할 수 있는 요소이다.</p>
+            </div>
+            <div class="card">
+              <h3>정합성 검증</h3>
+              <p>위치 데이터와 영상 기반 통행 이벤트가 같은 시간·구역 기준에서 일치하는지 판단한다.</p>
+            </div>
+          </div>
+
+          <h3 class="mini-title">검증 기준</h3>
+          <div class="lane">
+            <div class="lane-row">
+              <div class="lane-title">입력 데이터</div>
+              <div class="lane-items">
+                <span class="node primary">Passage Event</span>
+                <span class="node">event_time</span>
+                <span class="node">plate_text</span>
+                <span class="node">lane_id</span>
+                <span class="arr">+</span>
+                <span class="node primary">GPS/KPS Location</span>
+                <span class="node">recorded_at</span>
+                <span class="node">lat/lon</span>
+                <span class="node">accuracy_m</span>
+              </div>
+            </div>
+            <div class="lane-row">
+              <div class="lane-title">검증 로직</div>
+              <div class="lane-items">
+                <span class="node">time_diff_ms</span>
+                <span class="node">distance_m</span>
+                <span class="node">toll_zone radius</span>
+                <span class="node">accuracy_m</span>
+                <span class="node">plate consistency</span>
+              </div>
+            </div>
+            <div class="lane-row">
+              <div class="lane-title">결과</div>
+              <div class="lane-items">
+                <span class="node">ACCEPT</span>
+                <span class="node">REVIEW</span>
+                <span class="node">REJECT</span>
+                <span class="node">match_result 저장</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="mini-title">정합성 상태</h3>
+          <div class="status-grid">
+            <div class="status accept">
+              <h3>ACCEPT</h3>
+              <p>영상 기반 통행 이벤트와 위치 데이터가 기준 시간·거리 범위 내에서 정상적으로 일치한 상태.</p>
+            </div>
+            <div class="status review">
+              <h3>REVIEW</h3>
+              <p>시간, 거리, 위치 정확도, OCR 신뢰도 등 일부 기준에서 추가 확인이 필요한 상태.</p>
+            </div>
+            <div class="status reject">
+              <h3>REJECT</h3>
+              <p>위치 또는 시간 기준상 통행 이벤트와 위치 데이터의 정합성이 실패한 상태.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="data">
+        <div class="section-head">
+          <div class="section-no">09</div>
+          <div>
+            <h2>데이터 구조</h2>
+            <p>통행 이벤트를 중심으로 OCR, 위치, 전송, 정산 후보 데이터가 연결된다.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>테이블</th>
+                  <th>역할</th>
+                  <th>주요 데이터</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>passage_event</td>
+                  <td>전체 시스템의 기준이 되는 통행 이벤트</td>
+                  <td>event_uuid, device_id, lane_id, plate_text, event_time, event_status</td>
+                </tr>
+                <tr>
+                  <td>plate_ocr_candidate</td>
+                  <td>다중 프레임 OCR 후보 결과 저장</td>
+                  <td>candidate_text, confidence, frame_index, track_id</td>
+                </tr>
+                <tr>
+                  <td>event_transmission_log</td>
+                  <td>Edge → Ingress → Backend 전송 상태 기록</td>
+                  <td>event_uuid, status, sent_at, received_at, retry_count</td>
+                </tr>
+                <tr>
+                  <td>location_telemetry</td>
+                  <td>GPS/KPS 위치 데이터 또는 Replay 로그 저장</td>
+                  <td>vehicle_id, recorded_at, latitude, longitude, accuracy_m</td>
+                </tr>
+                <tr>
+                  <td>location_event_match</td>
+                  <td>통행 이벤트와 위치 데이터의 정합성 검증 결과</td>
+                  <td>event_uuid, time_diff_ms, distance_m, match_result</td>
+                </tr>
+                <tr>
+                  <td>settlement_candidate</td>
+                  <td>향후 정산 후보로 확장 가능한 이벤트 관리</td>
+                  <td>event_uuid, candidate_status, amount_policy, review_required</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            <strong>데이터 모델 핵심:</strong>
+            passage_event가 중심 테이블이며, OCR 후보, 위치 로그, 정합성 검증 결과, 전송 로그가 event_uuid를 기준으로 연결된다.
+            이를 통해 이벤트 추적, 검증, 운영 조회, 고도화된 정산 후보 관리가 가능하다.
+          </div>
+        </div>
+      </section>
+
+      <section id="tech">
+        <div class="section-head">
+          <div class="section-no">10</div>
+          <div>
+            <h2>주요 기술 설명</h2>
+            <p>각 기술의 역할을 산출물 기준으로 정리.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>영역</th>
+                  <th>기술</th>
+                  <th>프로젝트 내 역할</th>
+                  <th>산출물에서 확인되는 결과</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Edge AI</td>
+                  <td>Jetson Orin Nano, TensorRT</td>
+                  <td>현장 차량·번호판 추론 및 통행 이벤트 생성</td>
+                  <td>통행 이벤트, 추론 결과, 장비 상태 지표</td>
+                </tr>
+                <tr>
+                  <td>Input Pipeline</td>
+                  <td>GStreamer, NVMM, CUDA Memory</td>
+                  <td>영상 입력과 전처리, 추론 구간의 pipeline 구성</td>
+                  <td>프레임 수신, Crop, 추론 입력 데이터</td>
+                </tr>
+                <tr>
+                  <td>Detection</td>
+                  <td>YOLO</td>
+                  <td>차량과 번호판 영역 탐지</td>
+                  <td>vehicle_bbox, plate_bbox, lane_candidate</td>
+                </tr>
+                <tr>
+                  <td>OCR</td>
+                  <td>CRNN-OCR, CTC</td>
+                  <td>번호판 문자 후보 인식</td>
+                  <td>ocr_candidate, confidence</td>
+                </tr>
+                <tr>
+                  <td>Stabilization</td>
+                  <td>Multi-Frame Accumulation, Best-Fit</td>
+                  <td>여러 OCR 후보를 누적해 최종 번호판 선정</td>
+                  <td>final_plate_text, agreement_ratio</td>
+                </tr>
+                <tr>
+                  <td>Ingress</td>
+                  <td>FastAPI, WebTransport/API, Protobuf/JSON</td>
+                  <td>Edge 이벤트 수신 및 Backend 전달</td>
+                  <td>전송 로그, 수신 상태, 이벤트 검증 결과</td>
+                </tr>
+                <tr>
+                  <td>Backend</td>
+                  <td>Spring Boot, JPA</td>
+                  <td>이벤트 저장, 위치 정합성 검증, 운영 API 제공</td>
+                  <td>event_status, match_result, API 응답</td>
+                </tr>
+                <tr>
+                  <td>Data</td>
+                  <td>PostgreSQL</td>
+                  <td>통행 이벤트 중심 데이터 저장</td>
+                  <td>이벤트, OCR 후보, 위치 로그, 검증 결과 테이블</td>
+                </tr>
+                <tr>
+                  <td>Location</td>
+                  <td>GPS Replay, GPS Telemetry, KPS-ready</td>
+                  <td>통행 이벤트와 위치 데이터의 정합성 검증</td>
+                  <td>ACCEPT / REVIEW / REJECT</td>
+                </tr>
+                <tr>
+                  <td>Operation</td>
+                  <td>Vue Dashboard, Chatbot</td>
+                  <td>운영자 조회 및 자연어 기반 이벤트 확인</td>
+                  <td>이벤트 목록, 상태 조회, 통계·검색 결과</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            <strong>Zero Copy 표현 기준:</strong>
+            본 프로젝트에서 Zero Copy는 전체 프로그램의 모든 구간에서 복사가 없다는 의미가 아니라,
+            GStreamer/NVMM/CUDA Memory 기반으로 입력·전처리·추론 구간의 메모리 이동을 최소화하는 구조를 의미한다.
+          </div>
+        </div>
+      </section>
+
+
+      <section id="detail">
+        <div class="section-head">
+          <div class="section-no">11</div>
+          <div>
+            <h2>기술 상세 보강</h2>
+            <p>최종 산출물 기준으로 빠지면 안 되는 Jetson 제원, Zero-Copy, 입력 최적화, OCR, 전송, GPS/KPS 세부 기준.</p>
+          </div>
+        </div>
+        <div class="section-body">
+
+          <h3 class="mini-title">11.1 Jetson Orin Nano 8GB 기준 제원</h3>
+          <div class="grid three">
+            <div class="card blue">
+              <h3>GPU</h3>
+              <p>Ampere Architecture 기반 GPU, 1024 CUDA Cores, 32 Tensor Cores 기준으로 Edge AI 추론을 수행한다.</p>
+            </div>
+            <div class="card blue">
+              <h3>CPU / Memory</h3>
+              <p>6-core Arm Cortex-A78AE CPU와 8GB LPDDR5 통합 메모리를 활용한다. 발표자료의 “8GB GPU Memory”는 Jetson 통합 메모리 기준으로 정리한다.</p>
+            </div>
+            <div class="card blue">
+              <h3>Edge AI 기준</h3>
+              <p>저전력 현장 AI 장비로, 차량·번호판 추론과 통행 이벤트 생성을 현장에서 처리하기 위한 PoC 기준 장비이다.</p>
+            </div>
+          </div>
+
+          <div class="table-wrap" style="margin-top:14px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>항목</th>
+                  <th>Jetson Orin Nano 8GB 기준</th>
+                  <th>본 프로젝트에서의 의미</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>GPU Architecture</td>
+                  <td>NVIDIA Ampere</td>
+                  <td>YOLO, OCR 등 반복 추론을 Edge에서 수행하는 GPU 기반</td>
+                </tr>
+                <tr>
+                  <td>CUDA Cores</td>
+                  <td>1024 CUDA Cores</td>
+                  <td>영상 전처리와 딥러닝 추론 병렬 처리 기반</td>
+                </tr>
+                <tr>
+                  <td>Tensor Cores</td>
+                  <td>32 Tensor Cores</td>
+                  <td>TensorRT 기반 FP16 추론 최적화에 활용</td>
+                </tr>
+                <tr>
+                  <td>CPU</td>
+                  <td>6-core Arm Cortex-A78AE</td>
+                  <td>후처리, 이벤트 생성, 상태 수집 등 Edge 제어 로직 처리</td>
+                </tr>
+                <tr>
+                  <td>Memory</td>
+                  <td>8GB LPDDR5 Unified Memory</td>
+                  <td>GPU 전용 VRAM이 아니라 CPU/GPU가 공유하는 통합 메모리 구조</td>
+                </tr>
+                <tr>
+                  <td>Pipeline KPI</td>
+                  <td>30ms / 1 Pipeline 기준</td>
+                  <td>전체 결제 완료 시간이 아니라 Edge 1회 처리 단위 기준 성능 목표</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            <strong>정리:</strong>
+            Jetson Orin Nano는 상용 최종 장비를 확정했다는 의미가 아니라, 현장 Edge AI 처리 구조를 검증하기 위한 기준 장비이다.
+            상용 단계에서는 차선 수, 카메라 수, 해상도, 프레임레이트, 온도, 방진·방수, 장기 운영 안정성에 따라 Orin NX, AGX Orin, 산업용 Jetson 장비를 비교 검토해야 한다.
+          </div>
+
+          <h3 class="mini-title">11.2 Zero-Copy / CUDA Memory / TensorRT 처리 전략</h3>
+          <div class="lane">
+            <div class="lane-row">
+              <div class="lane-title">Edge Pipeline</div>
+              <div class="lane-items">
+                <span class="node primary">GStreamer</span><span class="arr">→</span>
+                <span class="node primary">Zero-Copy 방향</span><span class="arr">→</span>
+                <span class="node primary">CUDA Memory</span><span class="arr">→</span>
+                <span class="node primary">TensorRT FP32→FP16</span><span class="arr">→</span>
+                <span class="node primary">Post Processing</span><span class="arr">→</span>
+                <span class="node primary">Passage Event</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid two" style="margin-top:14px;">
+            <div class="card">
+              <h3>Zero-Copy의 정확한 의미</h3>
+              <p>전체 프로그램의 모든 단계에서 복사가 0이라는 의미가 아니다. GStreamer/NVMM/CUDA Memory 경로를 활용해 입력·전처리·추론 구간의 CPU-GPU 메모리 이동을 최소화하는 구조이다.</p>
+            </div>
+            <div class="card">
+              <h3>TensorRT 적용 의미</h3>
+              <p>YOLO 등 딥러닝 모델을 NVIDIA GPU에 맞게 최적화하고, FP32에서 FP16으로 경량화하여 반복 추론 지연을 줄이는 방향이다.</p>
+            </div>
+          </div>
+
+          <h3 class="mini-title">11.3 입력 영상 최적화</h3>
+          <div class="grid four">
+            <div class="card">
+              <h3>원본 입력</h3>
+              <p>1920×1080 FHD 입력 프레임을 기준으로 차량·번호판 후보 영역을 탐색한다.</p>
+            </div>
+            <div class="card">
+              <h3>ROI Crop</h3>
+              <p>번호판 관심 영역 중심으로 960×960 Crop을 적용한다. 전체 Resize가 아니라 필요한 영역을 집중 처리하는 전략이다.</p>
+            </div>
+            <div class="card">
+              <h3>파일 크기 예시</h3>
+              <p>발표자료 기준 2.1MB 원본 입력을 0.9MB 수준의 최적화 영상으로 정리하는 예시를 제시했다.</p>
+            </div>
+            <div class="card">
+              <h3>데이터셋</h3>
+              <p>AI Hub 번호판 데이터 9만 장 기반 학습 구조를 사용하며, 번호판 ROI 중심 학습·추론 전략을 적용한다.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>핵심:</strong>
+            입력 최적화는 단순히 이미지를 줄이는 작업이 아니라, 번호판 인식에 필요한 정보를 보존하면서 불필요한 배경 연산을 줄이는 전략이다.
+          </div>
+
+          <h3 class="mini-title">11.4 CRNN-OCR 채택 논리와 인식 타겟</h3>
+          <div class="grid two">
+            <div class="card">
+              <h3>CRNN-OCR 구조</h3>
+              <p>CNN으로 이미지 특징을 추출하고, RNN/LSTM으로 문자 흐름을 처리한 뒤, CTC 방식으로 문자 시퀀스를 정렬한다.</p>
+            </div>
+            <div class="card">
+              <h3>인식 타겟</h3>
+              <p>발표자료 기준 숫자 10개와 한글 40개, 총 50글자를 번호판 OCR 인식 대상으로 설정한다.</p>
+            </div>
+          </div>
+
+          <div class="table-wrap" style="margin-top:14px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>OCR 방식</th>
+                  <th>특징</th>
+                  <th>본 프로젝트 판단</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CRNN</td>
+                  <td>CNN 특징 추출 + RNN/LSTM 시퀀스 처리 + CTC 정렬</td>
+                  <td>가볍고 빠른 반복 추론에 적합하여 Edge 실시간 처리 기준으로 채택</td>
+                </tr>
+                <tr>
+                  <td>Attention OCR</td>
+                  <td>다중 줄·왜곡 텍스트 대응에 유리하지만 디코더 연산 부담 증가</td>
+                  <td>향후 2줄 번호판, 왜곡 문자 대응 고도화 후보</td>
+                </tr>
+                <tr>
+                  <td>Transformer OCR</td>
+                  <td>문맥 기반 인식 성능 확장 가능성이 높지만 추론 비용 증가</td>
+                  <td>상용 고도화 단계에서 성능·지연 비교 필요</td>
+                </tr>
+                <tr>
+                  <td>VLM</td>
+                  <td>문자 인식 외 장면 이해까지 확장 가능하나 Edge 비용이 큼</td>
+                  <td>차세대 연구 과제로 분류</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="mini-title">11.5 Best-Fit 산출 데이터 구조</h3>
+          <div class="grid three">
+            <div class="card">
+              <h3>누적 방식</h3>
+              <p>차량이 ROI를 통과하는 동안 여러 프레임의 OCR 후보를 누적한다. 후보 수는 고정값보다 candidate_count와 agreement_ratio 기준으로 관리한다.</p>
+            </div>
+            <div class="card">
+              <h3>선정 기준</h3>
+              <p>plate_confidence, 반복 등장 횟수, 후보 간 일치율, 번호판 형식 적합성을 기준으로 최종 plate_text를 선정한다.</p>
+            </div>
+            <div class="card">
+              <h3>검토 기준</h3>
+              <p>신뢰도 또는 일치율 기준 미달 시 needs_review를 표시해 운영자 검토 흐름으로 연결한다.</p>
+            </div>
+          </div>
+
+          <div class="table-wrap" style="margin-top:14px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>필드</th>
+                  <th>의미</th>
+                  <th>활용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>vehicle_pass_id</td>
+                  <td>차량 통과 단위 식별자</td>
+                  <td>OCR 후보와 통행 이벤트 연결</td>
+                </tr>
+                <tr>
+                  <td>plate_text</td>
+                  <td>최종 번호판 인식 결과</td>
+                  <td>운영 조회 및 정산 후보 데이터의 핵심 값</td>
+                </tr>
+                <tr>
+                  <td>plate_confidence</td>
+                  <td>최종 결과 신뢰도</td>
+                  <td>ACCEPT/REVIEW 판단 보조 지표</td>
+                </tr>
+                <tr>
+                  <td>candidate_count</td>
+                  <td>누적 OCR 후보 수</td>
+                  <td>다중 프레임 누적 정도 확인</td>
+                </tr>
+                <tr>
+                  <td>agreement_ratio</td>
+                  <td>후보 간 결과 일치율</td>
+                  <td>최종 결과 안정성 판단</td>
+                </tr>
+                <tr>
+                  <td>needs_review</td>
+                  <td>수동 검토 필요 여부</td>
+                  <td>운영자 검토 및 이력 관리로 연결</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="mini-title">11.6 WebTransport vs MQTT 전송 비교 및 상태 관리</h3>
+          <div class="grid three">
+            <div class="card blue">
+              <h3>전송 비교</h3>
+              <p>프로젝트 성능 비교 기준으로 3000장 전송 테스트를 수행했고, WebTransport가 MQTT 대비 유선망에서 약 8배 높은 성능을 보인 것으로 정리했다.</p>
+            </div>
+            <div class="card blue">
+              <h3>LTE 환경</h3>
+              <p>열악한 LTE 환경에서도 WebTransport 기반 구조가 더 나은 전송 성능을 보인 것으로 산출물에 반영한다.</p>
+            </div>
+            <div class="card blue">
+              <h3>보안 통신</h3>
+              <p>QUIC과 TLS 1.3 기반 보안 통신 구조를 고려해 실시간 이벤트 전송의 안정성과 보안을 함께 다룬다.</p>
+            </div>
+          </div>
+
+          <div class="lane" style="margin-top:14px;">
+            <div class="lane-row">
+              <div class="lane-title">전송 상태</div>
+              <div class="lane-items">
+                <span class="node primary">SEND</span><span class="arr">→</span>
+                <span class="node primary">ACK</span>
+                <span class="node">성공 수신 확인</span>
+                <span class="node primary">RETRY</span>
+                <span class="node">재전송 필요</span>
+                <span class="node primary">REJECT</span>
+                <span class="node">스키마/정합성 기준 거부</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="mini-title">11.7 GPS 도로·구간 기반 / KPS 차선 기반 역할 구분</h3>
+          <div class="grid two">
+            <div class="card">
+              <h3>GPS: 도로·구간 기반 정합성</h3>
+              <p>GPS는 현재 또는 Replay 기반 위치 데이터로 활용하며, 통행 이벤트가 특정 도로·구간·톨링 영역과 일치하는지 검증하는 데 사용한다.</p>
+            </div>
+            <div class="card">
+              <h3>KPS: 차선 단위 검증 가능성</h3>
+              <p>KPS는 향후 국내 정밀 위치 인프라가 도입되었을 때, 도로 단위 검증을 넘어 차선 단위 위치 검증으로 확장하기 위한 KPS-ready 요소이다.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>정확한 표현:</strong>
+            GPS/KPS는 결제수단이 아니라 통행 이벤트의 위치 정합성을 검증하기 위한 데이터이다.
+            GPS는 도로·구간 기반 검증, KPS는 향후 차선 단위 검증 가능성으로 구분한다.
+          </div>
+
+          <h3 class="mini-title">11.8 관제 영상 표시와 이벤트 전송 분리</h3>
+          <div class="grid two">
+            <div class="card">
+              <h3>핵심 데이터</h3>
+              <p>시스템의 핵심은 영상 스트리밍이 아니라 Jetson에서 생성한 통행 이벤트를 중앙 서버로 전송하고 검증하는 구조이다.</p>
+            </div>
+            <div class="card">
+              <h3>관제 영상</h3>
+              <p>관제용 영상 표시는 SRT/HLS, MJPEG 등 운영 환경에 따라 선택 가능하다. Jetson Orin Nano 환경에서는 H.264 인코딩 부하와 장비 제약을 고려해 이벤트 전송과 분리 설계한다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="core">
+        <div class="section-head">
+          <div class="section-no">12</div>
+          <div>
+            <h2>핵심 기술</h2>
+            <p>본 프로젝트에서 반드시 부각되어야 하는 기술적 핵심.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="grid three">
+            <div class="card blue">
+              <h3>1. 현장 Edge AI 이벤트 생성</h3>
+              <p>Jetson이 차량·번호판을 인식하고 통행 이벤트를 생성한다.</p>
+            </div>
+            <div class="card blue">
+              <h3>2. YOLO + OCR 통합 Pipeline</h3>
+              <p>탐지와 OCR을 별개 기능이 아니라 통행 판단 pipeline으로 연결한다.</p>
+            </div>
+            <div class="card blue">
+              <h3>3. Multi-Frame Best-Fit</h3>
+              <p>여러 프레임의 OCR 후보를 누적해 번호판 결과를 안정화한다.</p>
+            </div>
+            <div class="card green">
+              <h3>4. 이벤트 중심 데이터 구조</h3>
+              <p>추론 결과를 event_uuid 기반 운영 데이터로 전환한다.</p>
+            </div>
+            <div class="card green">
+              <h3>5. GPS/KPS 위치 정합성</h3>
+              <p>영상 이벤트와 위치 데이터를 결합해 통행 검증 구조를 만든다.</p>
+            </div>
+            <div class="card green">
+              <h3>6. 장애 대응형 전송 구조</h3>
+              <p>Watchdog와 예비망 전환을 통해 이벤트 전송 연속성을 높인다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="effect">
+        <div class="section-head">
+          <div class="section-no">13</div>
+          <div>
+            <h2>기대효과</h2>
+            <p>기술 효과와 운영 효과를 분리해 산출물의 가치를 설명한다.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="grid three" style="margin-bottom:14px;">
+            <div class="card blue">
+              <h3>NO STOP</h3>
+              <p>무정차 통행 흐름을 유지하고, 차량 통행 이벤트를 현장 Edge에서 빠르게 생성하는 방향이다.</p>
+            </div>
+            <div class="card blue">
+              <h3>PRECISION</h3>
+              <p>GPS 기반 도로·구간 정합성에서 출발해, 향후 KPS 연계 시 차선 단위 위치 검증 가능성을 높인다.</p>
+            </div>
+            <div class="card blue">
+              <h3>OPERATION</h3>
+              <p>통행 이벤트가 관제, 정산 후보, 수동 검토, 운영 이력 관리로 이어지는 구조를 만든다.</p>
+            </div>
+          </div>
+          <div class="split">
+            <div class="card">
+              <h3>기술 효과</h3>
+              <ul class="compact-list">
+                <li><strong>현장 추론 기반 응답성 향상:</strong> 차량 통행 시점에 가까운 현장에서 AI 추론 수행</li>
+                <li><strong>중앙 AI 처리 부하 분산:</strong> 중앙 서버는 저장·검증·운영 로직에 집중</li>
+                <li><strong>번호판 판정 안정화:</strong> 다중 프레임 OCR 후보 누적 및 Best-Fit 적용</li>
+                <li><strong>이벤트 데이터 구조화:</strong> event_uuid 기반 추적 가능한 통행 이벤트 생성</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>운영 효과</h3>
+              <ul class="compact-list">
+                <li><strong>위치 기반 검증 확장:</strong> GPS에서 시작해 향후 KPS 정밀 위치 검증으로 확장</li>
+                <li><strong>장애 대응성 향상:</strong> Watchdog 기반 망 상태 감시와 Failover 흐름 구성</li>
+                <li><strong>운영 조회 편의성:</strong> Dashboard와 Chatbot을 통한 이벤트 확인</li>
+                <li><strong>상용 고도화 기반:</strong> 정산 후보, 검토 이력, 위치 검증 정책으로 확장 가능</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scope">
+        <div class="section-head">
+          <div class="section-no">14</div>
+          <div>
+            <h2>구현 범위와 상용 고도화 방향</h2>
+            <p>현재 산출물 기준 구현 범위와 향후 운영 시스템으로 확장하기 위한 방향.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="split">
+            <div class="card green">
+              <h3>현재 구현 범위</h3>
+              <ul class="compact-list">
+                <li>Jetson 기반 차량·번호판 탐지</li>
+                <li>CRNN-OCR 기반 번호판 인식</li>
+                <li>다중 프레임 OCR 후보 누적 및 Best-Fit</li>
+                <li>통행 이벤트 생성</li>
+                <li>FastAPI Ingress 수신 구조</li>
+                <li>Spring Boot Backend 저장·검증 구조</li>
+                <li>PostgreSQL 기반 이벤트 데이터 저장</li>
+                <li>GPS Replay 기반 위치 정합성 검증</li>
+                <li>Dashboard / Chatbot 조회 구조</li>
+                <li>Watchdog 기반 Failover 흐름</li>
+              </ul>
+            </div>
+            <div class="card amber">
+              <h3>상용 고도화 방향</h3>
+              <ul class="compact-list">
+                <li><strong>현장 검증:</strong> 실제 고속도로 조건의 장기 데이터 검증</li>
+                <li><strong>장비 운영:</strong> Edge 장비 이중화, OTA, 모델 버전 관리, 장애 복구</li>
+                <li><strong>위치 정책:</strong> GPS/KPS 정확도 기준, geofence 반경, REVIEW 정책 정교화</li>
+                <li><strong>개인정보·보안:</strong> 위치 데이터 최소 수집, 접근 통제, 보관 기간 정책</li>
+                <li><strong>정산 연계:</strong> 미납, 오과금, 이의제기, 정산 시스템 연동</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="mini-title">대규모 운영 고도화 항목</h3>
+          <div class="grid three">
+            <div class="card">
+              <h3>1000대 이상 Jetson 운영</h3>
+              <p>전국 단위 확장 시 장비 등록, 상태 모니터링, 원격 재시작, 장애 알림, 모델 버전 관리를 체계화해야 한다.</p>
+            </div>
+            <div class="card">
+              <h3>VPN Overlay / 보안 강화</h3>
+              <p>Edge 장비와 중앙 서버 간 통신 보안을 위해 인증서, VPN Overlay, 접근 제어, 장비별 키 관리가 필요하다.</p>
+            </div>
+            <div class="card">
+              <h3>OCR 모델 고도화 로드맵</h3>
+              <p>CRNN 기반 실시간 OCR에서 출발해 2줄·특수 번호판 대응을 위해 Attention OCR, Transformer OCR, VLM까지 검토할 수 있다.</p>
+            </div>
+            <div class="card">
+              <h3>특수 번호판 대응</h3>
+              <p>2줄 번호판, 훼손 번호판, 강한 역광, 악천후, 특수 차량 번호판은 데이터셋 보강과 후처리 정책이 필요하다.</p>
+            </div>
+            <div class="card">
+              <h3>운영 이력 관리</h3>
+              <p>이벤트 신뢰도, 검토 필요 여부, 운영자 처리 이력, 위치 정합성 결과를 남겨 추적 가능한 운영 구조로 확장한다.</p>
+            </div>
+            <div class="card">
+              <h3>멀티 모델 엔진</h3>
+              <p>차량 탐지, 번호판 탐지, OCR, 예외 감지 모델을 분리 또는 통합 운영하는 멀티 모델 엔진 구조를 검토한다.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>산출물 관점:</strong>
+            본 프로젝트는 상용 과금 시스템을 완성한 것이 아니라,
+            Edge AI 통행 이벤트 생성과 중앙 위치 정합성 검증을 연결한 스마트톨링 확장 구조를 구현한 산출물이다.
+          </div>
+        </div>
+      </section>
+
+      <section id="closing">
+        <div class="section-head">
+          <div class="section-no">15</div>
+          <div>
+            <h2>최종 메시지</h2>
+            <p>프로젝트 전체를 한 문장으로 정리.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="final-message">
+            <p>
+              현장 Edge AI로 통행 이벤트를 생성하고, 중앙 서버에서 GPS/KPS 위치 데이터와 정합성을 검증하며,
+              장애 상황에서도 이벤트 전송 연속성을 확보하는 차세대 스마트톨링 확장 구조.
+            </p>
+          </div>
+
+          <div class="tag-row">
+            <span class="tag">Edge AI</span>
+            <span class="tag">YOLO</span>
+            <span class="tag">CRNN-OCR</span>
+            <span class="tag">Best-Fit</span>
+            <span class="tag">Passage Event</span>
+            <span class="tag">FastAPI Ingress</span>
+            <span class="tag">Spring Boot</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">GPS/KPS Match</span>
+            <span class="tag">Failover</span>
+            <span class="tag">Dashboard</span>
+            <span class="tag">Chatbot</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        HI-FIVE · AI 기반 미래형 스마트 톨링 시스템 구축 · Integrated Project Deliverable · Final v2
+      </div>
+    </main>
+  </div>
+</body>
+</html>
